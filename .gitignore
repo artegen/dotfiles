@@ -1,0 +1,5 @@
+**/*.zwc
+antigen-bundles
+.zcompdump
+.zhistory
+

@@ -1,0 +1,8 @@
+
+[submodule "zsh/antigen"]
+	path = zsh/antigen
+	url = https://github.com/zsh-users/antigen.git
+
+[submodule "bin/git-friendly"]
+	path = bin/git-friendly
+	url = https://github.com/jamiew/git-friendly.git

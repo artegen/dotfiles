@@ -1,0 +1,224 @@
+alias mv='mv -v'
+alias rm='rm -i -v'
+alias cp='cp -v'
+alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
+alias ll='ls -FGlAhp'                       # Preferred 'ls' implementation
+alias less='less -FSRXc'                    # Preferred 'less' implementation
+alias qfind="find . -name "
+
+cd() { builtin cd "$@"; ll; }               # Always list directory contents upon 'cd'
+alias ..='cd ../'                           # Go back 1 directory level
+alias ...='cd ../../'                       # Go back 2 directory levels
+alias .3='cd ../../../'                     # Go back 3 directory levels
+alias .4='cd ../../../../'                  # Go back 4 directory levels
+alias .5='cd ../../../../../'               # Go back 5 directory levels
+alias .6='cd ../../../../../../'            # Go back 6 directory levels
+alias ~="cd ~" # `cd` is probably faster to type though
+alias -- -="cd -"
+
+alias h="history"
+alias j="jobs"
+
+alias chmox='chmod -x'
+
+alias hosts='sudo $EDITOR /etc/hosts'   # 127.0.0.1 twitter.com
+
+alias ag='ag -f --hidden'   # Searcher. Like ack, but faster
+
+alias f='open -a Finder ./'                 # f:            Opens current directory in MacOS Finder
+alias c='clear'                             # c:            Clear terminal display
+alias path='echo -e ${PATH//:/\\n}'         # path:         Echo all executable Paths
+alias show_options='shopt'                  # Show_options: display bash options settings
+alias fix_stty='stty sane'                  # fix_stty:     Restore terminal settings when screwed up
+
+alias DT='tee ~/Desktop/terminalOut.txt'    # DT:           Pipe content to file on MacOS Desktop
+
+alias ungz="gunzip -k"
+zipf () { zip -r "$1".zip "$1" ; }          # zipf:         To create a ZIP archive of a folder
+alias numFiles='echo $(ls -1 | wc -l)'      # numFiles:     Count of non-hidden files in current dir
+alias flsz="stat -f \"%z bytes\""           # File size
+alias make5mb='mkfile 5m ./5MB.dat'         # make5mb:      Creates a file of 5mb size (all zeros)
+
+
+#   showa: to remind yourself of an alias (given some part of it)
+#   ------------------------------------------------------------
+showa () { /usr/bin/grep --color=always -i -a1 $@ ~/Library/init/bash/aliases.bash | grep -v '^\s*$' | less -FSRXc ; }
+
+alias v="vim"
+
+
+###
+# time to upgrade `ls`
+
+# use coreutils `ls` if possible
+hash gls >/dev/null 2>&1 || alias gls="ls"
+
+# always use color, even when piping (to awk,grep,etc)
+if gls --color > /dev/null 2>&1; then colorflag="--color"; else colorflag="-G"; fi;
+export CLICOLOR_FORCE=1
+
+# ls options: A = include hidden (but not . or ..), F = put `/` after folders, h = byte unit suffixes
+alias ls='gls -AFh ${colorflag} --group-directories-first'
+alias lsd='ls -l | grep "^d"' # only directories
+
+# grc overides for ls
+# if $(gls &>/dev/null)
+# then
+#   alias ls="gls -F --color"
+#   alias l="gls -lAh --color"
+#   alias ll="gls -l --color"
+#   alias la='gls -A --color'
+# fi
+
+#   lr:  Full Recursive Directory Listing
+#   ------------------------------------------
+alias lr='ls -R | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'' | less'
+
+#    `la` defined in .functions
+###
+
+# Grep
+export GREP_COLORS='mt=37;45'
+alias grep="grep --color=auto"
+
+# Changes to a directory and lists its contents.
+function cdls {
+  builtin cd "$argv[-1]" && ls -la "${(@)argv[1,-2]}"
+}
+
+# `cat` with beautiful colors. requires: sudo easy_install -U Pygments
+alias catc='pygmentize -O style=monokai -f console256 -g'
+
+
+
+###
+# GIT STUFF
+
+alias g="git"
+
+function clone() {
+    git clone --depth=1 $1
+    cd $(basename ${1%.*})
+    yarn install
+}
+
+alias push="git push"
+
+# Undo a `git push`
+alias undopush="git push -f origin HEAD^:master"
+
+# git root
+alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
+alias master="git checkout master"
+
+#
+###
+
+
+# Networking. IP address, dig, DNS
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+# alias dig="dig +nocmd any +multiline +noall +answer"
+
+# wget sucks with certificates. Let's keep it simple.
+alias wget="curl -O"
+
+# Pipe my public key to my clipboard. 'more' - opens a file for interactive reading
+alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
+
+
+# Update installed Homebrew, npm, and their installed packages
+alias brew_update="brew -v update; brew upgrade --force-bottle --cleanup; brew cleanup; brew cask cleanup; brew prune; brew doctor; npm-check -g -u"
+alias update_brew_npm='brew_update; npm install npm -g; npm update -g'
+# brew cleanup -n   to see what would get cleaned up
+
+
+# Recursively delete `.DS_Store` files
+alias cleanup_dsstore="find . -name '*.DS_Store' -type f -ls -delete"
+
+alias diskspace_report="df -P -kHl"
+
+# Empty the Trash on all mounted volumes and the main HDD. Then clear sleepimage - won't last long but will give 1G.
+alias emptytrash=" \
+    sudo rm -rfv /Volumes/*/.Trashes; \
+    rm -rfv ~/.Trash/*; \
+    sudo rm -v /private/var/vm/sleepimage; \
+    rm -rv \"~/Library/Caches/Google/Chrome/Default\" \
+    rm -rv \"~/Library/Caches/Google/Chrome Canary/Default\" \
+"
+
+# System maintenance http://www.thexlab.com/faqs/maintscripts.html
+alias mntn='sudo periodic daily weekly monthly'
+alias lmntn='ls -al /var/log/*.out'     # last maintenance executed
+
+
+alias cask='brew cask'
+alias where=which # sometimes i forget
+alias brwe=brew  #typos
+
+
+# Nginx short-cuts.
+alias ngup='sudo nginx'
+alias ngdown='sudo nginx -s stop'
+alias ngre='sudo nginx -s stop && sudo nginx'
+alias nglog='tail -f /usr/local/var/log/nginx/access.log'
+alias ngerr='tail -f /usr/local/var/log/nginx/error.log'
+
+
+# Lists the ten most used commands.
+alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
+
+# View HTTP traffic
+alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
+alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+
+
+
+# File Download
+alias get='curl --continue-at - --location --progress-bar --remote-name --remote-time'
+
+### Download web page with all assets
+# alias getpage='wget --no-clobber --page-requisites --html-extension --convert-links --no-host-directories'
+
+# Stopwatch
+alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
+
+# IP addresses
+# alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+# alias localip="ipconfig getifaddr en0"
+# alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+
+# Canonical hex dump; some systems have this symlinked
+command -v hd > /dev/null || alias hd="hexdump -C"
+
+# OS X has no `md5sum`, so use `md5` as a fallback
+# command -v md5sum > /dev/null || alias md5sum="md5"
+
+# # OS X has no `sha1sum`, so use `shasum` as a fallback
+# command -v sha1sum > /dev/null || alias sha1sum="shasum"
+
+
+# Trim new lines and copy to clipboard
+alias c="tr -d '\n' | pbcopy"
+
+
+# Hide/show all desktop icons (useful when presenting)
+alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+
+# URL-encode strings
+alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+
+# Merge PDF files
+# Usage: `mergepdf -o output.pdf input{1,2,3}.pdf`
+alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py'
+
+# Intuitive map function
+# For example, to list all directories that contain a certain file:
+# find . -name .gitattributes | map dirname
+alias map="xargs -n1"
+
+# Lock the screen (when going AFK)
+alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+
+# Reload the shell (i.e. invoke as a login shell)
+alias reload="exec $SHELL -l"
