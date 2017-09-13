@@ -9,25 +9,6 @@ unset file
 
 
 
-
-##
-## better `cd`'ing
-##
-
-# n/a Case-insensitive globbing (used in pathname expansion)
-shopt -s nocaseglob;
-
-# n/a Correct spelling errors in arguments supplied to cd
-shopt -s cdspell;
-
-# Autocorrect on directory names to match a glob.
-shopt -s dirspell 2> /dev/null
-
-# Turn on recursive globbing (enables ** to recurse all directories, e.g. `echo **/*.txt`)
-shopt -s globstar 2> /dev/null
-
-
-
 # Do not override files using `>`, but it's still possible using `>!`
 set -o noclobber
 
@@ -44,7 +25,6 @@ fi
 
 
 
-
 ##
 ## Completion…
 ##
@@ -54,9 +34,11 @@ zpath="$(brew --prefix)/etc/profile.d/z.sh"
 [ -s $zpath ] && source $zpath
 
 
-if [[ -n "$ZSH_VERSION" ]]; then  # quit now if in zsh
+# The below applies only for bash, so exit if in zsh
+if [[ -n "$ZSH_VERSION" ]]; then
     return 1 2> /dev/null || exit 1;
 fi;
+
 
 # bash completion.
 if  which brew > /dev/null
@@ -75,15 +57,30 @@ if  which hub > /dev/null; then
     source "$(brew --prefix)/etc/bash_completion.d/hub.bash_completion.sh";
 fi;
 
-# complete n/a in zsh. Add tab completion for SSH hostnames based on ~/.ssh.config, ignoring wildcards
+# Add tab completion for SSH hostnames based on ~/.ssh.config, ignoring wildcards
 [ -e "$HOME/.ssh.config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh.config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
 
-# Enable tab completion for `g` by marking it as an alias for `git`
-# if type __git_complete &> /dev/null; then
-#     __git_complete g __git_main
-# fi;
 
-# Add tab completion for `defaults read|write NSGlobalDomain`
-# You could just use `-g` instead, but I like being explicit
-# complete -W "NSGlobalDomain" defaults
+# Enable tab completion for `g` by marking it as an alias for `git`
+if type __git_complete &> /dev/null; then
+    __git_complete g __git_main
+fi;
+
+
+
+##
+## better `cd`'ing
+##
+
+# Autocorrect on directory names to match a glob.
+shopt -s dirspell 2> /dev/null
+
+# Turn on recursive globbing (enables ** to recurse all directories, e.g. `echo **/*.txt`)
+shopt -s globstar 2> /dev/null
+
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob;
+
+# Correct spelling errors in arguments supplied to cd
+shopt -s cdspell;
 

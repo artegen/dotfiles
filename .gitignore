@@ -2,4 +2,7 @@
 antigen-bundles
 .zcompdump
 .zhistory
+antigen
+git-friendly
+
 
