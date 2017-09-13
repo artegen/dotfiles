@@ -25,8 +25,7 @@ alias hosts='sudo $EDITOR /etc/hosts'   # 127.0.0.1 twitter.com
 
 alias ag='ag -f --hidden'   # Searcher. Like ack, but faster
 
-alias f='open -a Finder ./'                 # f:            Opens current directory in MacOS Finder
-alias c='clear'                             # c:            Clear terminal display
+alias cl='clear'                             # c:            Clear terminal display
 alias path='echo -e ${PATH//:/\\n}'         # path:         Echo all executable Paths
 alias show_options='shopt'                  # Show_options: display bash options settings
 alias fix_stty='stty sane'                  # fix_stty:     Restore terminal settings when screwed up
@@ -47,9 +46,7 @@ showa () { /usr/bin/grep --color=always -i -a1 $@ ~/Library/init/bash/aliases.ba
 alias v="vim"
 
 
-###
-# time to upgrade `ls`
-
+# `ls` utils
 # use coreutils `ls` if possible
 hash gls >/dev/null 2>&1 || alias gls="ls"
 
@@ -57,43 +54,52 @@ hash gls >/dev/null 2>&1 || alias gls="ls"
 if gls --color > /dev/null 2>&1; then colorflag="--color"; else colorflag="-G"; fi;
 export CLICOLOR_FORCE=1
 
-# ls options: A = include hidden (but not . or ..), F = put `/` after folders, h = byte unit suffixes
+# ls options: A = include hidden, F = put `/` after folders, h = byte unit suffixes
 alias ls='gls -AFh ${colorflag} --group-directories-first'
-alias lsd='ls -l | grep "^d"' # only directories
-
-# grc overides for ls
-# if $(gls &>/dev/null)
-# then
-#   alias ls="gls -F --color"
-#   alias l="gls -lAh --color"
-#   alias ll="gls -l --color"
-#   alias la='gls -A --color'
-# fi
+alias lsd='gls -l ${colorflag} | grep "^d"' # only directories
+alias l="gls -lAh --color --group-directories-first"
 
 #   lr:  Full Recursive Directory Listing
 #   ------------------------------------------
-alias lr='ls -R | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'' | less'
+# alias lr='ls -R | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'' | less'
 
-#    `la` defined in .functions
-###
+# List all files, long format, colorized, permissions in octal
+function la(){
+ 	ls -l  "$@" | awk '
+    {
+      k=0;
+      for (i=0;i<=8;i++)
+        k+=((substr($1,i+2,1)~/[rwx]/) *2^(8-i));
+      if (k)
+        printf("%0o ",k);
+      printf(" %9s  %3s %2s %5s  %6s  %s %s %s\n", $3, $6, $7, $8, $5, $9,$10, $11);
+    }'
+}
 
-# Grep
-export GREP_COLORS='mt=37;45'
-alias grep="grep --color=auto"
+# `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
+# the `.git` directory, listing directories first. The output gets piped into
+# `less` with options to preserve color and line numbers, unless the output is
+# small enough for one screen.
+function tre() {
+	tree -aC -I '.git|node_modules' --dirsfirst "$@" | less -FRNX;
+}
 
 # Changes to a directory and lists its contents.
 function cdls {
   builtin cd "$argv[-1]" && ls -la "${(@)argv[1,-2]}"
 }
 
-# `cat` with beautiful colors. requires: sudo easy_install -U Pygments
+
+# Grep
+export GREP_COLORS='mt=37;45'
+alias grep="grep --color=auto"
+
+# `cat` with beautiful colors. requires: pip install Pygments
 alias catc='pygmentize -O style=monokai -f console256 -g'
 
 
 
-###
-# GIT STUFF
-
+# GIT aliases and functions
 alias g="git"
 
 function clone() {
@@ -102,8 +108,6 @@ function clone() {
     yarn install
 }
 
-alias push="git push"
-
 # Undo a `git push`
 alias undopush="git push -f origin HEAD^:master"
 
@@ -111,8 +115,16 @@ alias undopush="git push -f origin HEAD^:master"
 alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
 alias master="git checkout master"
 
-#
-###
+# git commit browser. needs fzf
+log() {
+  git log --graph --color=always \
+      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+  fzf --ansi --no-sort --reverse --tiebreak=index --toggle-sort=\` \
+      --bind "ctrl-m:execute:
+                echo '{}' | grep -o '[a-f0-9]\{7\}' | head -1 |
+                xargs -I % sh -c 'git show --color=always % | less -R'"
+}
+
 
 
 # Networking. IP address, dig, DNS
@@ -139,12 +151,12 @@ alias diskspace_report="df -P -kHl"
 
 # Empty the Trash on all mounted volumes and the main HDD. Then clear sleepimage - won't last long but will give 1G.
 alias emptytrash=" \
-    sudo rm -rfv /Volumes/*/.Trashes; \
     rm -rfv ~/.Trash/*; \
     sudo rm -v /private/var/vm/sleepimage; \
     rm -rv \"~/Library/Caches/Google/Chrome/Default\" \
-    rm -rv \"~/Library/Caches/Google/Chrome Canary/Default\" \
 "
+    # rm -rv \"~/Library/Caches/Google/Chrome Canary/Default\" \
+    # sudo rm -rfv /Volumes/*/.Trashes; \
 
 # System maintenance http://www.thexlab.com/faqs/maintscripts.html
 alias mntn='sudo periodic daily weekly monthly'

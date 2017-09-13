@@ -5,103 +5,10 @@ function f() {
 	find . -name "$1" 2>&1 | grep -v 'Permission denied'
 }
 
-# List all files, long format, colorized, permissions in octal
-function la(){
- 	ls -l  "$@" | awk '
-    {
-      k=0;
-      for (i=0;i<=8;i++)
-        k+=((substr($1,i+2,1)~/[rwx]/) *2^(8-i));
-      if (k)
-        printf("%0o ",k);
-      printf(" %9s  %3s %2s %5s  %6s  %s %s %s\n", $3, $6, $7, $8, $5, $9,$10, $11);
-    }'
+# preview csv files. source: http://stackoverflow.com/questions/1875305/command-line-csv-viewer
+function csvpreview() {
+      sed 's/,,/, ,/g;s/,,/, ,/g' "$@" | column -s, -t | less -#2 -N -S
 }
-
-mcd () { mkdir -p "$1" && cd "$1"; }        # mcd:          Makes new Dir and jumps inside
-# md() { mkdir -p "$@" && cd "$@" }
-trash () { command mv "$@" ~/.Trash ; }     # trash:        Moves a file to the MacOS trash
-ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           Opens any file in MacOS Quicklook Preview
-
-
-#   mans:   Search manpage given in agument '1' for term given in argument '2' (case insensitive)
-#           displays paginated result with colored search terms and two lines surrounding each hit. Example: mans mplayer codec
-mans () {
-		man $1 | grep -iC2 --color=always $2 | less
-}
-
-
-# cd into whatever is the forefront Finder window.
-
-#     cdf () {
-#         currFolderPath=$( /usr/bin/osascript <<EOT
-#             tell application "Finder"
-#                 try
-#             set currFolder to (folder of the front window as alias)
-#                 on error
-#             set currFolder to (path to desktop folder as alias)
-#                 end try
-#                 POSIX path of currFolder
-#             end tell
-# EOT
-#         )
-#         echo "cd to \"$currFolderPath\""
-#         cd "$currFolderPath"
-#     }
-
-cdf() {  # short for cdfinder
-  cd "`osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)'`"
-}
-
-# `code` with no arguments opens the current directory in VS Code, otherwise
-# opens the given location
-function code() {
-	if [ $# -eq 0 ]; then
-		code .;
-	else
-		code "$@";
-	fi;
-}
-
-# `o` with no arguments opens the current directory, otherwise opens the given
-# location
-function o() {
-	if [ $# -eq 0 ]; then
-		open .;
-	else
-		open "$@";
-	fi;
-}
-
-# `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
-# the `.git` directory, listing directories first. The output gets piped into
-# `less` with options to preserve color and line numbers, unless the output is
-# small enough for one screen.
-function tre() {
-	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
-}
-
-# git commit browser. needs fzf
-log() {
-  git log --graph --color=always \
-      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-  fzf --ansi --no-sort --reverse --tiebreak=index --toggle-sort=\` \
-      --bind "ctrl-m:execute:
-                echo '{}' | grep -o '[a-f0-9]\{7\}' | head -1 |
-                xargs -I % sh -c 'git show --color=always % | less -R'"
-}
-
-
-
-# Start an HTTP server from a directory, optionally specifying the port
-function server() {
-	local port="${1:-8000}"
-	open "http://localhost:${port}/" &
- 	# statikk is good because it won't expose hidden folders/files by default.
- 	# yarn global add statikk
- 	statikk --port "$port" .
-}
-
 
 # Copy w/ progress
 cp_p () {
@@ -113,8 +20,73 @@ function nullify() {
   "$@" >/dev/null 2>&1
 }
 
+# $ git log --no-merges --pretty=format:"%ae" | stats
+# => 514 a@example.com
+# => 200 b@example.com
+function stats() {
+  sort | uniq -c | sort -r
+}
+
+# git push --help | hterm "\-\-force"
+# will find the term and display its surrounding context - 3 lines.
+function hterm () {
+	 grep -iC3 $1
+}
+
+mcd () { mkdir -p "$1" && cd "$1"; }        # mcd:          Makes new Dir and jumps inside
+# md() { mkdir -p "$@" && cd "$@" }
+trash () { command mv "$@" ~/.Trash ; }     # trash:        Moves a file to the MacOS trash
+ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           Opens any file in MacOS Quicklook Preview
+
+# cd into whatever is the forefront Finder window.
+cdf () {
+	currFolderPath=$( /usr/bin/osascript <<EOT
+		tell application "Finder"
+			try
+		set currFolder to (folder of the front window as alias)
+			on error
+		set currFolder to (path to desktop folder as alias)
+			end try
+			POSIX path of currFolder
+		end tell
+EOT
+	)
+	echo "cd to \"$currFolderPath\""
+	cd "$currFolderPath"
+}
+
+# `o` with no arguments opens in Finder the current directory, otherwise opens the given
+# location
+function o() {
+	if [ $# -eq 0 ]; then
+		open .;
+	else
+		open "$@";
+	fi;
+}
+
+# `code` with no arguments opens the current directory in VS Code, otherwise
+# opens the given location
+function code() {
+	if [ $# -eq 0 ]; then
+		code .;
+	else
+		code "$@";
+	fi;
+}
 # visual studio code. a la `subl`
 # function code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCodeInsiders" --args $*; }
+
+
+# Start an HTTP server from a directory, optionally specifying the port
+function server() {
+	local port="${1:-8000}"
+	open "http://localhost:${port}/" &
+ 	# statikk is good because it won't expose hidden folders/files by default.
+ 	# yarn global add statikk
+ 	statikk --port "$port" .
+}
+
 
 # BASHPATH=$(brew --prefix)/bin/bash
 # #sudo echo $BASHPATH >> /etc/shells
@@ -130,13 +102,6 @@ shell () {
   		chsh -s $(brew --prefix)/bin/$1;
 	fi;
 }
-
-# preview csv files. source: http://stackoverflow.com/questions/1875305/command-line-csv-viewer
-function csvpreview(){
-      sed 's/,,/, ,/g;s/,,/, ,/g' "$@" | column -s, -t | less -#2 -N -S
-}
-
-
 
 
 
@@ -241,10 +206,6 @@ function extract() {
 # 		du $arg .[^.]* ./*;
 # 	fi;
 # }
-
-
-
-
 
 
 # Create a data URL from a file
@@ -377,7 +338,6 @@ function localip(){
 # 	echo -e "Recent camera uses:\n$usedby"
 # }
 
-
 # # animated gifs from any video
 # # from alex sexton   gist.github.com/SlexAxton/4989674
 # gifify() {
@@ -403,7 +363,6 @@ function localip(){
 # }
 
 
-
 # Gets password from OS X Keychain.
 # $ get-pass github
 # function get-pass() {
@@ -411,14 +370,6 @@ function localip(){
 #   security -q find-generic-password -g -l $@ $keychain 2>&1 |\
 #     awk -F\" '/password:/ {print $2}';
 # }
-
-
-# $ git log --no-merges --pretty=format:"%ae" | stats
-# # => 514 a@example.com
-# # => 200 b@example.com
-function stats() {
-  sort | uniq -c | sort -r
-}
 
 
 # #   ---------------------------

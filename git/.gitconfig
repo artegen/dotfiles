@@ -4,73 +4,13 @@
   ui = true
 
 [alias]
-	# Commit all changes
-	ca = !git add -A && git commit -av
-  c = commit -am
-
-  fpush = push --force
-	sclone = clone --depth=1
-	amend2 = commit --amend --all
-	hreset = reset --hard
-	lg = log --oneline
-  last = log -1 HEAD
-
-	# View abbreviated SHA, description, and history graph of the latest 20 commits
-	l20 = log --pretty=oneline -n 20 --graph --abbrev-commit
-
-	# View the current working tree status using the short format
-	s = status -s
-
-	# Show the diff between the latest commit and the current state
-	dlast = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
-	dflast = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
-
-  df = diff --color --color-words --abbrev
-
-	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
-	dfi = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
-
-	# Pull in remote changes for the current repository and all its submodules
-	# p = !"git pull; git submodule foreach git pull origin master"
-
-	# Switch to a branch, creating it if necessary
-	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
-
-	# Show verbose output about tags, branches or remotes
-	tags = tag -l
-	branches = branch -a
-	remotes = remote -v
-
-	# List aliases
-	aliases = config --get-regexp alias
-
-	# Amend the currently staged files to the latest commit
-	amend = commit --amend --reuse-message=HEAD
-
-	# Credit an author on the latest commit
-	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
-
 	# Interactive rebase with the given number of latest commits
 	reb = "!r() { git rebase -i HEAD~$1; }; r"
-
-	# Remove the old tag with this name and tag the latest commit with it.
-	retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
-
 	# Find branches containing commit
 	fb = "!f() { git branch -a --contains $1; }; f"
 
 	# Find tags containing commit
 	ft = "!f() { git describe --always --contains $1; }; f"
-
-	# Find commits by source code
-	fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
-
-	# Find commits by commit message
-	fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
-
-	# Remove branches that have already been merged with master
-	# a.k.a. ‘delete merged’
-	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
 
 	# List contributors with number of commits
 	contributors = shortlog --summary --numbered
@@ -92,31 +32,54 @@
 	}; f"
 
   # Misc
+  cld = clone --depth=1
+	tags = tag -l
+	branches = branch -a
+	remotes = remote -v
+	# List aliases
+	aliases = config --get-regexp alias
+	# Pull in remote changes for the current repository and all its submodules
+	pwsub = !"git pull; git submodule foreach git pull origin master"
+	# Show verbose output about tags, branches or remotes
   snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
   ls-snapshots = !git stash list --grep snapshot
   recent-branches = !git for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+	# Credit an author on the latest commit
+	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+  undo = '!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f'
 
   # Branch (b)
   b=branch
-  ba=branch --all --verbose --verbose
-  bl=branch --verbose --verbose
+	# Switch to a branch, creating it if necessary
+	gob = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+  ba=branch --all --verbose
+  bl=branch --verbose
   bc=checkout -b
   bx=branch --delete
+	# ! Switch first to master. Remove branches that have already been merged with master
+	bxm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
   bm=branch --move
   bs=show-branch
 
   # Commit (c)
   c=commit
-  # ca=commit --all
-  cm=commit --message
+  ca = !git add -A && git commit -am
+  # Add everything, but whitespace changes
+  awow = git diff --ignore-all-space | git apply --cached
   cam=commit --all --message
   co=checkout
   cop=checkout --patch
-  cf=commit --amend --reuse-message HEAD
+	# Amend the currently staged files to the latest commit
+  cf=commit --amend --reuse-message HEAD  # git commit --amend --no-edit
+  	# amend2 = commit --amend --all
   chp=cherry-pick
   cr=revert
   cres=reset "HEAD^"
   cs=show
+	# Find commits by source code
+	fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+	# Find commits by commit message
+	fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
 
   # Data (d)
   d=ls-files
@@ -131,9 +94,6 @@
   # Fetch (f)
   f=fetch
   fa=fetch --all
-  fc=clone
-  fp=pull
-  fr=pull --rebase
   fpr=pull --rebase
 
   # Grep (g)
@@ -153,11 +113,21 @@
   ir=reset
   irp=reset --patch
   ix=rm -r --cached
+	# Show the diff between the latest commit and the current state
+	dlast = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+	dflast = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+  df = diff --color --color-words --abbrev
+	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
+	dfi = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
 
   # Log (l)
   l1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
   l2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
   l = !git l1
+	lg = log --oneline
+  last = log -1 HEAD
+	# View abbreviated SHA, description, and history graph of the latest 20 commits
+	l20 = log --pretty=oneline -n 20 --graph --abbrev-commit
 
   # Merge (m)
   m=merge
@@ -173,6 +143,8 @@
   pa=push --all
   pt=push --tags
   pat=push --all && git push --tags
+	# Remove the old tag with this name and tag the latest commit with it.
+	retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
   pc=!git push --set-upstream origin "$(git-branch-current 2> /dev/null)"
   pp=!git pull origin "$(git-branch-current 2> /dev/null)" && git push origin "$(git-branch-current 2> /dev/null)"
 
@@ -187,7 +159,7 @@
   stsh = stash --keep-index
   staash = stash --include-untracked
   staaash = stash --all
-  s=stash
+  # s=stash
   sa=stash apply
   sx=stash drop
   sl=stash list
@@ -197,7 +169,8 @@
   ssu=stash save --include-untracked
 
   # Working Copy (w)
-  ws=status
+	# View the current working tree status using the short format
+  ws=status -s
   wd=diff --no-ext-diff
   wdw=diff --no-ext-diff --word-diff
   wrs=reset --soft
@@ -210,6 +183,8 @@
 
 [push]
   default = upstream
+[fetch]
+	prune = true
 [core]
   autocrlf = input
   editor = e
@@ -217,50 +192,42 @@
   attributesfile = ~/.gitattributes
 [rerere]
   enabled = true
-
 [commit]
   verbose = true
-[url "https://aur.archlinux.org/"]
-  insteadOf = "aur:"
-[url "ssh+git://aur4.archlinux.org/"]
-  pushInsteadOf = "aur:"
-[url "https://github.com/"]
-  insteadOf = "gh:"
-[url "git@github.com:"]
-  pushInsteadOf = "gh:"
-
-# # rewrites of repo paths
-# [url "git@github.com:"]
-# 	insteadOf = "gh:"
-# 	insteadOf = "git://github.com"
-# 	pushInsteadOf = "github:"
-# 	pushInsteadOf = "git://github.com/"
-#     pushInsteadOf = "https://github.com/"
-# [url "git@gist.github.com:"]
-# 	insteadOf = "gst:"
-# 	pushInsteadOf = "gist:"
-# 	pushInsteadOf = "git://gist.github.com/"
-# 	pushInsteadOf = "https://gist.github.com/"
-
-
 [pager]
 	# npm install -g diff-so-fancy
 	diff = diff-so-fancy | less --tabs=4 -RFX
 	show = diff-so-fancy | less --tabs=4 -RFX
-
 [interactive]
 	diffFilter = "diff-so-fancy"
-
-
 # correct typos
 [help]
 	autocorrect = 1
 
-# [fetch]
-# 	prune = true
+# rewrites of repo paths
+# [url "https://aur.archlinux.org/"]
+#   insteadOf = "aur:"
+# [url "ssh+git://aur4.archlinux.org/"]
+#   pushInsteadOf = "aur:"
+[url "https://github.com/"]
+  insteadOf = "gh:"
+[url "git@github.com:"]
+	insteadOf = "gh:"
+  pushInsteadOf = "gh:"
+	insteadOf = "git://github.com"
+	pushInsteadOf = "github:"
+	pushInsteadOf = "git://github.com/"
+  pushInsteadOf = "https://github.com/"
+[url "git@gist.github.com:"]
+	insteadOf = "gst:"
+	pushInsteadOf = "gist:"
+	pushInsteadOf = "git://gist.github.com/"
+	pushInsteadOf = "https://gist.github.com/"
 
-[apply]
-        whitespace = nowarn
+
+
+# [apply]
+#         whitespace = nowarn
 
 # push easily. http://stackoverflow.com/a/23918418/89484
 # [push]
@@ -275,7 +242,7 @@
 # [init]
 # 	templatedir = ~/.git_template
 
-# [filter "lfs"]
+# [filter "lfs"]  # large files, https://git-lfs.github.com/
 # 	clean = git-lfs clean %f
 # 	smudge = git-lfs smudge %f
 # 	required = true

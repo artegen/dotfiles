@@ -53,9 +53,6 @@ fi
 zpath="$(brew --prefix)/etc/profile.d/z.sh"
 [ -s $zpath ] && source $zpath
 
-# n/a complete. Add tab completion for SSH hostnames based on ~/.ssh.config, ignoring wildcards
-[ -e "$HOME/.ssh.config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh.config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
-
 
 if [[ -n "$ZSH_VERSION" ]]; then  # quit now if in zsh
     return 1 2> /dev/null || exit 1;
@@ -77,6 +74,9 @@ fi;
 if  which hub > /dev/null; then
     source "$(brew --prefix)/etc/bash_completion.d/hub.bash_completion.sh";
 fi;
+
+# complete n/a in zsh. Add tab completion for SSH hostnames based on ~/.ssh.config, ignoring wildcards
+[ -e "$HOME/.ssh.config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh.config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
 
 # Enable tab completion for `g` by marking it as an alias for `git`
 # if type __git_complete &> /dev/null; then

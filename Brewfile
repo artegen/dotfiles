@@ -68,9 +68,9 @@ brew 'z'
 # "run this script when this file changes"
 brew 'entr'
 
-# github util. gotta love `hub fork`, `hub create`, `hub checkout <PRurl>`
+# github util. gotta love `hub fork`, `hub create`, `hub checkout <PRurl>`, https://github.com/github/hub
 brew 'hub'
-# brew 'gh'
+# brew 'gh'  # n/a
 
 
 # mtr - ping & traceroute.
@@ -139,7 +139,7 @@ brew 'zsh'
 
 # brew 'dark-mode'
 # brew ' exiv2'
-brew 'git-lfs'
+brew 'git-lfs'  # https://git-lfs.github.com/
 # brew 'lua'
 # brew 'lynx'
 # brew 'p7zip'
