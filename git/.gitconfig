@@ -4,17 +4,6 @@
   ui = true
 
 [alias]
-	# Interactive rebase with the given number of latest commits
-	reb = "!r() { git rebase -i HEAD~$1; }; r"
-	# Find branches containing commit
-	fb = "!f() { git branch -a --contains $1; }; f"
-
-	# Find tags containing commit
-	ft = "!f() { git describe --always --contains $1; }; f"
-
-	# List contributors with number of commits
-	contributors = shortlog --summary --numbered
-
 	# Merge GitHub pull request on top of the current branch or,
 	# if a branch name is specified, on top of the specified branch
 	mpr = "!f() { \
@@ -28,7 +17,7 @@
 			git merge pr/$1 && \
 			git branch -D pr/$1 && \
 			git commit --amend -m \"$(git log -1 --pretty=%B)\n\nCloses #$1.\"; \
-		fi \
+		fi; \
 	}; f"
 
   # Misc
@@ -36,8 +25,9 @@
 	tags = tag -l
 	branches = branch -a
 	remotes = remote -v
+	contributors = shortlog --summary --numbered  # List contributors with number of commits
 	# List aliases
-	aliases = config --get-regexp alias
+	als = config --get-regexp alias
 	# Pull in remote changes for the current repository and all its submodules
 	pwsub = !"git pull; git submodule foreach git pull origin master"
 	# Show verbose output about tags, branches or remotes
@@ -47,6 +37,12 @@
 	# Credit an author on the latest commit
 	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
   undo = '!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f'
+	# Interactive rebase with the given number of latest commits
+	reb = "!r() { git rebase -i HEAD~$1; }; r"
+	# Find branches containing commit
+	fb = "!f() { git branch -a --contains $1; }; f"
+	# Find tags containing commit
+	ft = "!f() { git describe --always --contains $1; }; f"
 
   # Branch (b)
   b=branch

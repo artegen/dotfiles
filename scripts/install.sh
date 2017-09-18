@@ -23,7 +23,7 @@ symlink_dotfiles () {
   done
 
   # setting up the VS Code symlink
-  ln -sf "/Applications/Visual Studio Code.app/Contents/Resources/app/bin" ~/bin/code
+  ln -sf "/Applications/Visual Studio Code.app/Contents/Resources/app/bin" ~/.bin/code
 
 }
 
@@ -76,20 +76,10 @@ git clone git://github.com/jamiew/git-friendly.git "~/.dotfiles/bin/git-friendly
 #Install antigen
 git clone --recursive https://github.com/zsh-users/antigen.git "$HOME/.dotfiles/zsh/antigen"
 
-# !! need nvm
-# Type `git open` to open the GitHub page or website for a repository.
-# npm install -g git-open
-
-# # fancy listing of recent branches
-# npm install -g git-recent
-
-# # sexy git diffs
-# npm install -g diff-so-fancy
-
-# # trash as the safe `rm` alternative
-# npm install --global trash-cli
-
-
+# Install yarn, nvm from the binaries, run these periodically to update
+curl -o- -L https://yarnpkg.com/install.sh | bash
+# change version >
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.4/install.sh | bash
 
 
 

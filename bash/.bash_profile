@@ -2,7 +2,7 @@
 # Load our dotfiles like ~/.bash_prompt, etc…
 #   ~/.local can be used for settings you don’t want to commit,
 #   Use it to configure your PATH, thus it being first in line.
-for file in ~/.{config/.local,bash_prompt,exports,aliases,functions}; do
+for file in ~/.{bash_prompt,exports,aliases,functions,config/.local}; do
     [ -r "$file" ] && source "$file"
 done
 unset file
@@ -26,12 +26,17 @@ fi
 
 
 ##
-## Completion…
+## Tab Completion…
 ##
 
 # z beats cd most of the time. `brew install z`
 zpath="$(brew --prefix)/etc/profile.d/z.sh"
 [ -s $zpath ] && source $zpath
+
+# Enable tab completion for `g` by marking it as an alias for `git`, then alias g=git will autocomplete
+if type __git_complete &> /dev/null; then
+    __git_complete g __git_main
+fi;
 
 
 # The below applies only for bash, so exit if in zsh
@@ -39,14 +44,14 @@ if [[ -n "$ZSH_VERSION" ]]; then
     return 1 2> /dev/null || exit 1;
 fi;
 
-
-# bash completion.
+# bash completion
 if  which brew > /dev/null
     && [ -f "$(brew --prefix)/share/bash-completion/bash_completion" ]; then
     source "$(brew --prefix)/share/bash-completion/bash_completion";
 elif [ -f /etc/bash_completion ]; then
     source /etc/bash_completion;
 fi;
+
 # homebrew completion
 # if  which brew > /dev/null; then
 #     source "$(brew --prefix)/etc/bash_completion.d/brew"
@@ -61,15 +66,8 @@ fi;
 [ -e "$HOME/.ssh.config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh.config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
 
 
-# Enable tab completion for `g` by marking it as an alias for `git`
-if type __git_complete &> /dev/null; then
-    __git_complete g __git_main
-fi;
-
-
-
 ##
-## better `cd`'ing
+## better `cd`'ing in bash
 ##
 
 # Autocorrect on directory names to match a glob.

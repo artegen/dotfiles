@@ -15,8 +15,4 @@ brew cleanup
 brew cask cleanup
 brew prune
 brew doctor
-# npm-check -g -u
-
-# npm install npm -g
-# npm update -g'
 

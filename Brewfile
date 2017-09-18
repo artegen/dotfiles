@@ -214,7 +214,7 @@ cask 'rescuetime'
 # cask disk-inventory-x
 # cask screenflow
 # cask vlc
-# cask gpgtools
+cask gpgtools
 # cask licecap
 # cask utorrent
 

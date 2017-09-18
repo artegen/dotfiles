@@ -1,12 +1,19 @@
 alias mv='mv -v'
 alias rm='rm -i -v'
 alias cp='cp -v'
+cp_p () { rsync -WavP --human-readable --progress $1 $2 }  # Copy w/ progress
+
 alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
+mcd () { mkdir -p "$1" && cd "$1"; }        # mcd:          Makes new Dir and jumps inside
+# md() { mkdir -p "$@" && cd "$@" }
+
 alias ll='ls -FGlAhp'                       # Preferred 'ls' implementation
+cdl () { cd '$1' && ll }
+
 alias less='less -FSRXc'                    # Preferred 'less' implementation
 alias qfind="find . -name "
 
-cd() { builtin cd "$@"; ll; }               # Always list directory contents upon 'cd'
+# cd() { builtin cd "$@"; ll; }               # Always list directory contents upon 'cd'
 alias ..='cd ../'                           # Go back 1 directory level
 alias ...='cd ../../'                       # Go back 2 directory levels
 alias .3='cd ../../../'                     # Go back 3 directory levels
@@ -16,12 +23,27 @@ alias .6='cd ../../../../../../'            # Go back 6 directory levels
 alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
+alias n='npm'
+alias nls='npm ls -g --depth 0'
+alias nw='npm root -g'
+alias ng='npm config set prefix "~/.npm-global"'  # see paths
+# n i -g diff-so-fancy flow-bin flow-typed npm-run-all typescript updtr
+alias ngu='nvm use --delete-prefix v8.2.1 --silent'  # nvm will not work in a new session until you switch back
+alias om='npm docs'  # open module on github
+
+
+# trash () { command mv "$@" ~/.Trash ; }     # trash:        Moves a file to the MacOS trash
+ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           Opens any file in MacOS Quicklook Preview
+
 alias h="history"
 alias j="jobs"
 
 alias chmox='chmod -x'
 
 alias hosts='sudo $EDITOR /etc/hosts'   # 127.0.0.1 twitter.com
+
+alias ping="echo 'Pinging Google' && ping www.google.com";
+alias och="open -a 'Google Chrome' $1";
 
 alias ag='ag -f --hidden'   # Searcher. Like ack, but faster
 

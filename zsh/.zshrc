@@ -121,4 +121,3 @@ bindkey '^?' backward-delete-char
 
 # # uncomment to finish profiling
 # # zprof
-

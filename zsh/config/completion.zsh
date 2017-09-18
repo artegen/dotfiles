@@ -4,17 +4,21 @@
 autoload -Uz compinit
 zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
 # Rebuild only once per time interval
-interval=$((24*3600))
-if [[ -a "$zcompdump" ]]; then
-    if [[ $(($(date +%s) - $(stat -c '%Y' $zcompdump))) > "$interval" ]]; then
-      compinit -i
-    else
-      compinit -Ci
-    fi
-else
-    compinit -i
-fi
+# interval=$((24*3600))
+# if [[ -a "$zcompdump" ]] then
+#     if [[ ($($(date +%s) - $(stat -f '%Y' $zcompdump)) > "$interval") ]] then
+#       compinit -i
+#     else
+#       compinit -Ci
+#     fi
+# else
+#     compinit -i
+# fi
 
+# if want to use complete it is a bash builtin, but recent versions of ZSH come with a function
+# called bashcompinit that will create a complete in ZSH. If the user is in
+# ZSH, load and run bashcompinit before calling the complete function.
+    # autoload -U +X bashcompinit && bashcompinit;
 
 # Defines colors for completion system
 export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=32:bd=36;01:cd=33;01:su=31;40;07:sg=36;40;07:tw=32;40;07:ow=33;40;07:'

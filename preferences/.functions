@@ -6,37 +6,22 @@ function f() {
 }
 
 # preview csv files. source: http://stackoverflow.com/questions/1875305/command-line-csv-viewer
-function csvpreview() {
+function csvprev() {
       sed 's/,,/, ,/g;s/,,/, ,/g' "$@" | column -s, -t | less -#2 -N -S
 }
 
-# Copy w/ progress
-cp_p () {
-  rsync -WavP --human-readable --progress $1 $2
-}
-
 # direct it all to /dev/null
-function nullify() {
-  "$@" >/dev/null 2>&1
-}
+function nullify() { "$@" >/dev/null 2>&1 }
 
 # $ git log --no-merges --pretty=format:"%ae" | stats
 # => 514 a@example.com
 # => 200 b@example.com
-function stats() {
-  sort | uniq -c | sort -r
-}
+function stats() { sort | uniq -c | sort -r }
 
 # git push --help | hterm "\-\-force"
 # will find the term and display its surrounding context - 3 lines.
-function hterm () {
-	 grep -iC3 $1
-}
+function hterm () { grep -iC3 $1 }
 
-mcd () { mkdir -p "$1" && cd "$1"; }        # mcd:          Makes new Dir and jumps inside
-# md() { mkdir -p "$@" && cd "$@" }
-trash () { command mv "$@" ~/.Trash ; }     # trash:        Moves a file to the MacOS trash
-ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           Opens any file in MacOS Quicklook Preview
 
 # cd into whatever is the forefront Finder window.
 cdf () {
@@ -86,6 +71,8 @@ function server() {
  	# yarn global add statikk
  	statikk --port "$port" .
 }
+
+killport() { lsof -i tcp:"$@" | awk 'NR!=1 {print $2}' | xargs kill ;}
 
 
 # BASHPATH=$(brew --prefix)/bin/bash
