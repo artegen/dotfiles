@@ -24,13 +24,20 @@ alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
 alias n='npm'
-alias nls='npm ls -g --depth 0'
+alias nls='npm ls --depth 0'  #  -g
 alias nw='npm root -g'
-alias ng='npm config set prefix "~/.npm-global"'  # see paths
+alias ng='npm config set prefix "~/.npm-global" && nw'  # see paths in .exports
 # n i -g diff-so-fancy flow-bin flow-typed npm-run-all typescript updtr
-alias ngu='nvm use --delete-prefix v8.2.1 --silent'  # nvm will not work in a new session until you switch back
-alias om='npm docs'  # open module on github
+alias ngu='npm config delete prefix'  # nvm will not work in a new session until you switch back
+alias om='npm docs'  # open module on github. npm home and npm repo
+alias nrs="npm run start -s --"
 
+js5 () { json5 -c "$1".json5 }    # generates path/to/$1.json
+
+alias y='yarn'
+alias yrm='rm -rf node_modules yarn.lock'
+alias yup='yarn upgrade'
+ynftag () { yarn info --verbose --no-emoji "$@" dist-tags; }
 
 # trash () { command mv "$@" ~/.Trash ; }     # trash:        Moves a file to the MacOS trash
 ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           Opens any file in MacOS Quicklook Preview
@@ -41,6 +48,8 @@ alias j="jobs"
 alias chmox='chmod -x'
 
 alias hosts='sudo $EDITOR /etc/hosts'   # 127.0.0.1 twitter.com
+# alias fixEtcHosts="sudo -- sh -c \"echo '127.0.0.1 localhost.paypal.com' >> /etc/hosts\""
+
 
 alias ping="echo 'Pinging Google' && ping www.google.com";
 alias och="open -a 'Google Chrome' $1";
@@ -123,10 +132,13 @@ alias catc='pygmentize -O style=monokai -f console256 -g'
 
 # GIT aliases and functions
 alias g="git"
+# use hub for git
+# alias git='hub'
 
 function clone() {
     git clone --depth=1 $1
     cd $(basename ${1%.*})
+    code .
     yarn install
 }
 
@@ -255,4 +267,4 @@ alias map="xargs -n1"
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
 
 # Reload the shell (i.e. invoke as a login shell)
-alias reload="exec $SHELL -l"
+alias rl="exec $SHELL -l"

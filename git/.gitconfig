@@ -23,7 +23,6 @@
   # Misc
   cld = clone --depth=1
 	tags = tag -l
-	branches = branch -a
 	remotes = remote -v
 	contributors = shortlog --summary --numbered  # List contributors with number of commits
 	# List aliases

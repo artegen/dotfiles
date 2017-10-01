@@ -50,15 +50,16 @@ function o() {
 	fi;
 }
 
+# Doesn't work with the current "code" in path
 # `code` with no arguments opens the current directory in VS Code, otherwise
 # opens the given location
-function code() {
-	if [ $# -eq 0 ]; then
-		code .;
-	else
-		code "$@";
-	fi;
-}
+# function code() {
+# 	if [ $# -eq 0 ]; then
+# 		code .;
+# 	else
+# 		code "$@";
+# 	fi;
+# }
 # visual studio code. a la `subl`
 # function code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCodeInsiders" --args $*; }
 

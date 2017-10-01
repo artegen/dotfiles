@@ -1,5 +1,23 @@
 # Maybe, you'll need to do first things commented out in the bottom, if your machine is completely new.
 
+# Exit the script on any command with non 0 return code
+# set -e
+
+
+# Error messages are redirected to stderr
+function handle_error {
+  echo "$(basename $0): ERROR! An error was encountered executing line $1." 1>&2;
+  echo 'Exiting with error.' 1>&2;
+  exit 1
+}
+
+# Exit the script with a helpful error message when any error is encountered
+trap 'set +x; handle_error $LINENO $BASH_COMMAND' ERR
+
+# Echo every command being executed
+set -x
+
+
 if test ! "$(uname)" = "Darwin"
   then echo "› Your machine is not 'Darwin'. These dotfiles are not meant for other systems."
   exit 1
@@ -10,8 +28,11 @@ success() {
     printf "\e[0;32m  [✔] $1\e[0m\n"
 }
 
-cd "$(dirname $0)"/..
+# Go to root
+cd "$(dirname "$0")"/..
+root_path=$PWD
 
+# symbolic links are not aliases. They don't contain the inode name of the original object, so if its path changes the link is lost. But you can replace original object in this case. Hard links (3rd type) contain inode, but not the path, and you can't delete the object until you remove all the links.
 symlink_dotfiles () {
   echo '› Symlinking dotfiles'
 
@@ -22,8 +43,8 @@ symlink_dotfiles () {
     success "linked $src to $dst"
   done
 
-  # setting up the VS Code symlink
-  ln -sf "/Applications/Visual Studio Code.app/Contents/Resources/app/bin" ~/.bin/code
+  # setting up the VS Code symlink - doesn't work, add in path
+  # ln -sf "/Applications/Visual Studio Code.app/Contents/Resources/app/bin" ~/.bin/code
 
 }
 
@@ -78,7 +99,7 @@ git clone --recursive https://github.com/zsh-users/antigen.git "$HOME/.dotfiles/
 
 # Install yarn, nvm from the binaries, run these periodically to update
 curl -o- -L https://yarnpkg.com/install.sh | bash
-# change version >
+# change nvm version >
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.4/install.sh | bash
 
 

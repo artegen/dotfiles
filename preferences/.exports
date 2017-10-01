@@ -9,9 +9,15 @@ PATH=~/.npm-global/bin:$PATH  # common global utils
 # don't leave nvm with incompatible prefix or it will not work in new sessions.
 PATH=~/.nvm/versions/node/*/bin:$PATH
 
+# PATH=~/.npm-global/bin/flow:$PATH  # for flow support in vscode
+# PATH=~/.nvm/versions/node/v8.5.0/bin/node:$PATH
+
 PATH=$PATH:$HOME/{.dotfiles/bin,.bin}
 PATH=$PATH:/usr/{local/bin,sbin}
 PATH=$PATH:/bin
+
+# Add Visual Studio Code (code)
+PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 export PATH
 
