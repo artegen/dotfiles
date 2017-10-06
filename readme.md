@@ -10,4 +10,4 @@
 * https://github.com/holman/dotfiles/
 * https://dotfiles.github.io/
 
-Huge thank you to maintainers for nicely explained examples! 👏 👏 👏
+Huge THANK YOU's to maintainers for nicely explained examples! 👏 👏 👏
