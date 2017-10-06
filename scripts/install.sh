@@ -51,6 +51,7 @@ symlink_dotfiles () {
 symlink_dotfiles
 
 
+cd preferences/
 
 # Check for/install Homebrew
 if test ! $(which brew)

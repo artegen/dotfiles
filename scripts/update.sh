@@ -3,7 +3,7 @@ echo "› sudo softwareupdate -i -a"
 sudo softwareupdate -i -a
 
 
-# Update installed Homebrew, npm, and their installed packages
+# Update installed Homebrew + its installed packages
 brew -v update
 
 # uninstall all Homebrew formulae not listed in Brewfile

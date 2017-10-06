@@ -22,6 +22,8 @@ alias .5='cd ../../../../../'               # Go back 5 directory levels
 alias .6='cd ../../../../../../'            # Go back 6 directory levels
 alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
+alias libs='cd ~/Dev/libs/'
+alias stash='cd ~/Dev/stash/'
 
 alias n='npm'
 alias nls='npm ls --depth 0'  #  -g

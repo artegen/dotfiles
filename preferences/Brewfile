@@ -47,7 +47,7 @@ brew 'gnu-sed', args: ['--with-default-names']
 # Bash 4
 brew 'bash'
 brew 'bash-completion'
-brew 'homebrew/completions/brew-cask-completion'
+# brew 'homebrew/completions/brew-cask-completion'
 
 # generic colouriser  http://kassiopeia.juls.savba.sk/~garabik/software/grc/
 brew 'grc'
@@ -57,10 +57,9 @@ brew 'grc'
 
 # Install more recent versions of some OS X tools
 brew 'vim', args: ['--with-override-system-vi']
-# brew 'homebrew/dupes/nano'
-brew 'homebrew/dupes/grep'
-brew 'homebrew/dupes/openssh'
-brew 'homebrew/dupes/screen'
+brew 'grep'
+brew 'openssh'
+brew 'screen'
 
 # z hopping around folders
 brew 'z'
@@ -197,8 +196,8 @@ cask 'rescuetime'
 # cask 'iterm2'
 # cask 'imagealpha'
 # cask 'imageoptim'
-# tap 'caskroom/fonts'
-# cask 'font-fira-code'
+tap 'caskroom/fonts'
+cask 'font-fira-code'
 
 # fun
 # cask limechat
@@ -214,7 +213,7 @@ cask 'rescuetime'
 # cask disk-inventory-x
 # cask screenflow
 # cask vlc
-cask gpgtools
+cask 'gpgtools'
 # cask licecap
 # cask utorrent
 

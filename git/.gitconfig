@@ -21,7 +21,7 @@
 	}; f"
 
   # Misc
-  cld = clone --depth=1
+  cld = "!f() { $2; git clone --depth=1 $1; cd $(basename ${1%.*}); code .; }; f"
 	tags = tag -l
 	remotes = remote -v
 	contributors = shortlog --summary --numbered  # List contributors with number of commits
@@ -180,6 +180,8 @@
   default = upstream
 [fetch]
 	prune = true
+[merge]
+	tool = code
 [core]
   autocrlf = input
   editor = e
