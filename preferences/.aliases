@@ -1,17 +1,13 @@
 alias mv='mv -v'
-alias rm='rm -i -v'
+alias rm='rm -i -v' # to rm dirs, use -r, -f
 alias cp='cp -v'
 cp_p () { rsync -WavP --human-readable --progress $1 $2 }  # Copy w/ progress
 
-alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
-mcd () { mkdir -p "$1" && cd "$1"; }        # mcd:          Makes new Dir and jumps inside
-# md() { mkdir -p "$@" && cd "$@" }
+alias mkdir='mkdir -pv'
+mcd () { mkdir "$1" && cd "$1" && code .; }  # $@ = $1
 
-alias ll='ls -FGlAhp'                       # Preferred 'ls' implementation
+alias ll='ls -FGlAhp'
 cdl () { cd '$1' && ll }
-
-alias less='less -FSRXc'                    # Preferred 'less' implementation
-alias qfind="find . -name "
 
 # cd() { builtin cd "$@"; ll; }               # Always list directory contents upon 'cd'
 alias ..='cd ../'                           # Go back 1 directory level
@@ -22,8 +18,12 @@ alias .5='cd ../../../../../'               # Go back 5 directory levels
 alias .6='cd ../../../../../../'            # Go back 6 directory levels
 alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
+
 alias libs='cd ~/Dev/libs/'
 alias stash='cd ~/Dev/stash/'
+
+alias less='less -FSRXc'
+alias qfind="find . -name "
 
 alias n='npm'
 alias nls='npm ls --depth 0'  #  -g
