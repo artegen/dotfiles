@@ -20,3 +20,4 @@ Host *
 	TCPKeepAlive yes
 	ServerAliveInterval 20
 	ServerAliveCountMax 10
+	AddKeysToAgent yes

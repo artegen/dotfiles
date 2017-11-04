@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # See bash_profile for exports of History, Less
 
 # The top-most paths override

@@ -4,7 +4,12 @@
   ui = true
 
 [alias]
-	# Merge GitHub pull request on top of the current branch or,
+  # Misc
+	cld = "!f() { $2; git clone --depth=1 $1; cd $(basename ${1%.*}); code .; }; f"
+	tags = tag -l
+	remotes = remote -v
+  recent-branches = !git for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+  # Merge GitHub pull request on top of the current branch or,
 	# if a branch name is specified, on top of the specified branch
 	mpr = "!f() { \
 		declare currentBranch=\"$(git symbolic-ref --short HEAD)\"; \
@@ -19,42 +24,33 @@
 			git commit --amend -m \"$(git log -1 --pretty=%B)\n\nCloses #$1.\"; \
 		fi; \
 	}; f"
-
-  # Misc
-  cld = "!f() { $2; git clone --depth=1 $1; cd $(basename ${1%.*}); code .; }; f"
-	tags = tag -l
-	remotes = remote -v
 	contributors = shortlog --summary --numbered  # List contributors with number of commits
 	# List aliases
 	als = config --get-regexp alias
 	# Pull in remote changes for the current repository and all its submodules
 	pwsub = !"git pull; git submodule foreach git pull origin master"
-	# Show verbose output about tags, branches or remotes
   snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
   ls-snapshots = !git stash list --grep snapshot
-  recent-branches = !git for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'
 	# Credit an author on the latest commit
 	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
   undo = '!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f'
-	# Interactive rebase with the given number of latest commits
-	reb = "!r() { git rebase -i HEAD~$1; }; r"
-	# Find branches containing commit
-	fb = "!f() { git branch -a --contains $1; }; f"
-	# Find tags containing commit
-	ft = "!f() { git describe --always --contains $1; }; f"
 
   # Branch (b)
   b=branch
+  ba=branch --all --verbose
+  bl=branch -vv
+  bc=checkout -b
 	# Switch to a branch, creating it if necessary
 	gob = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
-  ba=branch --all --verbose
-  bl=branch --verbose
-  bc=checkout -b
   bx=branch --delete
 	# ! Switch first to master. Remove branches that have already been merged with master
 	bxm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
-  bm=branch --move
+  bm=branch --move # rename
   bs=show-branch
+  # Find branches containing commit
+	fb = "!f() { git branch -a --contains $1; }; f"
+	# Find tags containing commit
+	ft = "!f() { git describe --always --contains $1; }; f"
 
   # Commit (c)
   c=commit
@@ -147,8 +143,10 @@
   r=rebase
   ra=rebase --abort
   rc=rebase --continue
-  ri=rebase --interactive
   rs=rebase --skip
+  ri=rebase --interactive
+  # Interactive rebase with the given number of latest commits
+	rin = "!r() { git rebase -i HEAD~$1; }; r"
 
   # Stash (s)
   stsh = stash --keep-index

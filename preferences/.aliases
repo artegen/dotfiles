@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 alias mv='mv -v'
 alias rm='rm -i -v' # to rm dirs, use -r, -f
 alias cp='cp -v'

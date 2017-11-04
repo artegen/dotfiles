@@ -1,4 +1,4 @@
-
+#!/usr/bin/env bash
 # Load our dotfiles like ~/.bash_prompt, etc…
 #   ~/.local can be used for settings you don’t want to commit,
 #   Use it to configure your PATH, thus it being first in line.
