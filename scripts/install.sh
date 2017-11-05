@@ -19,7 +19,7 @@ set -x
 
 
 if test ! "$(uname)" = "Darwin"
-  then echo "› Your machine is not 'Darwin'. These dotfiles are not meant for other systems."
+  then echo "› Your machine is not 'Darwin'/running MacOS. These dotfiles are not meant for other systems."
   exit 1
 fi
 
@@ -43,9 +43,14 @@ symlink_dotfiles () {
     success "linked $src to $dst"
   done
 
-  # setting up the VS Code symlink - doesn't work, add in path
-  # ln -sf "/Applications/Visual Studio Code.app/Contents/Resources/app/bin" ~/.bin/code
+ ln -sf "$HOME/.dotfiles/preferences/config" "$HOME/.ssh/config"
 
+/Users/mac/Dev/env/1
+/Users/mac/Dev/my-apps/* '.tmp/'
+/Users/mac/Documents/Yandex.Disk.localized/fe/Dev/env/1
+
+  # setting up the VS Code symlink doesn't work, added it in the path
+  # ln -sf "/Applications/Visual Studio Code.app/Contents/Resources/app/bin" ~/.bin/code
 }
 
 symlink_dotfiles

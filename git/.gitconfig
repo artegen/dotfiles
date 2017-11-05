@@ -5,10 +5,12 @@
 
 [alias]
   # Misc
-	cld = "!f() { $2; git clone --depth=1 $1; cd $(basename ${1%.*}); code .; }; f"
+  # || cd $(basename ${1%.*}) . Clone only the main branch, no history
+	cld = "!f() { git clone --depth=1 $1 $2; cd $2;  code .; }; f"
 	tags = tag -l
-	remotes = remote -v
-  recent-branches = !git for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+	rems = remote -v
+  undo = '!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1}}; }; f'
+
   # Merge GitHub pull request on top of the current branch or,
 	# if a branch name is specified, on top of the specified branch
 	mpr = "!f() { \
@@ -33,20 +35,21 @@
   ls-snapshots = !git stash list --grep snapshot
 	# Credit an author on the latest commit
 	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
-  undo = '!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f'
 
   # Branch (b)
   b=branch
   ba=branch --all --verbose
-  bl=branch -vv
-  bc=checkout -b
+  bls=branch -vv
+  bc=checkout -b # create
 	# Switch to a branch, creating it if necessary
 	gob = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
   bx=branch --delete
 	# ! Switch first to master. Remove branches that have already been merged with master
-	bxm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+	bxm = g co master && "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
   bm=branch --move # rename
   bs=show-branch
+  # latest
+  bl = !git for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'
   # Find branches containing commit
 	fb = "!f() { git branch -a --contains $1; }; f"
 	# Find tags containing commit
@@ -85,7 +88,7 @@
   # Fetch (f)
   f=fetch
   fa=fetch --all
-  fpr=pull --rebase
+  # fpr=pull --rebase
 
   # Grep (g)
   g=grep
@@ -138,6 +141,7 @@
 	retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
   pc=!git push --set-upstream origin "$(git-branch-current 2> /dev/null)"
   pp=!git pull origin "$(git-branch-current 2> /dev/null)" && git push origin "$(git-branch-current 2> /dev/null)"
+  pb = "!f() { branchName=${1-master}; git checkout $branchName && git pull && git checkout - && git rebase -i $branchName; }; f"
 
   # Rebase (r)
   r=rebase
@@ -145,6 +149,7 @@
   rc=rebase --continue
   rs=rebase --skip
   ri=rebase --interactive
+  rp=rebase -p
   # Interactive rebase with the given number of latest commits
 	rin = "!r() { git rebase -i HEAD~$1; }; r"
 
@@ -179,14 +184,15 @@
 [fetch]
 	prune = true
 [merge]
-	tool = code
+	tool = "code"
 [core]
   autocrlf = input
-  editor = e
+  editor = "code"
 	excludesfile = ~/.gitignore
   attributesfile = ~/.gitattributes
 [rerere]
   enabled = true
+  autoupdate = true
 [commit]
   verbose = true
 [pager]
@@ -223,16 +229,6 @@
 
 # [apply]
 #         whitespace = nowarn
-
-# push easily. http://stackoverflow.com/a/23918418/89484
-# [push]
-# 	# default = current
-#         # See `git help config` (search for push.default)
-#         # for more information on different options of the below setting.
-#         #
-#         # Setting to git 2.0 default to suppress warning message
-#         default = simple
-
 
 # [init]
 # 	templatedir = ~/.git_template
