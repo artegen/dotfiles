@@ -5,11 +5,13 @@
 
 [alias]
   # Misc
-  # || cd $(basename ${1%.*}) . Clone only the main branch, no history
-	cld = "!f() { git clone --depth=1 $1 $2; cd $2;  code .; }; f"
+  # Clone only the main branch, no history.
+	cld = "!f() { repoName=${2-$(basename $1)};  git clone --depth=1 $1 $repoName; cd $repoName;  code .; }; f"
 	tags = tag -l
-	rems = remote -v
-  undo = '!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1}}; }; f'
+	rem = remote -v
+  rema = remote add  # ${1-origin} ${2-url}
+  rems = remote set-url
+  undo = reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1}}
 
   # Merge GitHub pull request on top of the current branch or,
 	# if a branch name is specified, on top of the specified branch
@@ -26,13 +28,13 @@
 			git commit --amend -m \"$(git log -1 --pretty=%B)\n\nCloses #$1.\"; \
 		fi; \
 	}; f"
-	contributors = shortlog --summary --numbered  # List contributors with number of commits
+	contribs = shortlog --summary --numbered  # List contributors with number of commits
 	# List aliases
 	als = config --get-regexp alias
 	# Pull in remote changes for the current repository and all its submodules
-	pwsub = !"git pull; git submodule foreach git pull origin master"
-  snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
-  ls-snapshots = !git stash list --grep snapshot
+	# pwsub = !"git pull; git submodule foreach git pull origin master"
+  # snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+  # ls-snapshots = !git stash list --grep snapshot
 	# Credit an author on the latest commit
 	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
 
@@ -65,7 +67,7 @@
   cop=checkout --patch
 	# Amend the currently staged files to the latest commit
   can=commit --amend --reuse-message HEAD  # git commit --amend --no-edit
-  	# amend2 = commit --amend --all
+    	# amend2 = commit --amend --all
   chp=cherry-pick
   cr=revert
   cres=reset "HEAD^"
@@ -89,6 +91,7 @@
   f=fetch
   fa=fetch --all
   # fpr=pull --rebase
+  fr=fetch origin/${1:-master} && git rebase origin/${1:-master}
 
   # Grep (g)
   g=grep
