@@ -14,7 +14,8 @@
 # mas is for Appstore apps: https://github.com/mas-cli/mas
 # mas "1Password", id: 443987910
 
-
+brew 'docker'
+brew 'docker-compose'
 # brew 'ack'
 # brew 'imagemagick'
 # brew 'jp2a'
@@ -25,7 +26,7 @@
 brew 'postgresql'
 brew 'mongodb' # https://www.mongodb.org/downloads#production
 brew 'python'
-# brew 'python3' - cannot be installed as a binary package and must be built from source.
+brew 'python3'
 brew 'openssl'
 # brew 'ruby-build'
 # brew 'rbenv'
@@ -169,10 +170,18 @@ cask_args appdir: '/Applications'
 brew 'cask'
 # brew 'brew-cask-completion' - n/a
 
-cask '1password'
+cask 'webstorm'
+cask 'java'
+cask 'intellij-idea'
+cask 'android-studio'
+cask 'visual-studio-code'
+
+mas 'Apple Configurator 2', id: 1037126344
+
+# cask '1password'
 cask 'skype'
 # cask 'adium'
-cask 'atom'
+# cask 'atom'
 cask 'firefox'
 # cask 'garmin-express'
 cask 'google-chrome'
@@ -180,7 +189,7 @@ cask 'google-chrome'
 # cask 'mapbox-studio'
 # cask 'seashore'
 # cask 'virtualbox'
-# cask 'slack'
+cask 'slack'
 # cask 'spotify'
 # cask 'steam'
 # cask 'transmission'
@@ -193,7 +202,7 @@ cask 'spectacle'
 cask 'rescuetime'
 
 # dev
-# cask 'iterm2'
+cask 'iterm2'
 # cask 'imagealpha'
 # cask 'imageoptim'
 tap 'caskroom/fonts'
@@ -213,7 +222,7 @@ cask 'font-fira-code'
 # cask disk-inventory-x
 # cask screenflow
 # cask vlc
-cask 'gpgtools'
+cask 'gpg-suite'
 # cask licecap
 # cask utorrent
 

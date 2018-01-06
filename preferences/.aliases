@@ -30,12 +30,14 @@ alias n='npm'
 alias nls='npm ls --depth 0'  #  -g
 alias nw='npm root -g'
 alias ng='npm config set prefix "~/.npm-global" && nw'  # see paths in .exports
-# n i -g diff-so-fancy flow-bin flow-typed npm-run-all typescript updtr
+# n i -g diff-so-fancy flow-bin npm-run-all typescript updtr
 alias ngu='npm config delete prefix'  # nvm will not work in a new session until you switch back
 alias om='npm docs'  # open module on github. npm home and npm repo
 alias nrs="npm run start -s --"
 
 js5 () { json5 -c "$1".json5 }    # generates path/to/$1.json
+
+alias rn='react-native'
 
 alias y='yarn'
 alias yrm='rm -rf node_modules yarn.lock'

@@ -4,11 +4,13 @@
 .vim/swaps/*
 .vim/undo
 
+
 # git credential file
 .gitconfig.local
 
 node_modules
 .tmp
+gradlew.bat
 
 # Folder view configuration files
 .DS_Store

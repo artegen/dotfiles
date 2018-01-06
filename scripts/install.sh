@@ -4,24 +4,24 @@
 # set -e
 
 
-# Error messages are redirected to stderr
-function handle_error {
-  echo "$(basename $0): ERROR! An error was encountered executing line $1." 1>&2;
-  echo 'Exiting with error.' 1>&2;
-  exit 1
-}
+# # Error messages are redirected to stderr
+# function handle_error {
+#   echo "$(basename $0): ERROR! An error was encountered executing line $1." 1>&2;
+#   echo 'Exiting with error.' 1>&2;
+#   exit 1
+# }
 
-# Exit the script with a helpful error message when any error is encountered
-trap 'set +x; handle_error $LINENO $BASH_COMMAND' ERR
+# # Exit the script with a helpful error message when any error is encountered
+# trap 'set +x; handle_error $LINENO $BASH_COMMAND' ERR
 
-# Echo every command being executed
-set -x
+# # Echo every command being executed
+# set -x
 
 
-if test ! "$(uname)" = "Darwin"
-  then echo "› Your machine is not 'Darwin'/running MacOS. These dotfiles are not meant for other systems."
-  exit 1
-fi
+# if test ! "$(uname)" = "Darwin"
+#   then echo "› Your machine is not 'Darwin'/running MacOS. These dotfiles are not meant for other systems."
+#   exit 1
+# fi
 
 success() {
     # Print output in green
@@ -43,12 +43,10 @@ symlink_dotfiles () {
     success "linked $src to $dst"
   done
 
- ln -sf "$HOME/.dotfiles/preferences/config" "$HOME/.ssh/config"
-
-/Users/mac/Dev/env/1
-/Users/mac/Dev/my-apps/* '.tmp/'
-/Users/mac/Documents/Yandex.Disk.localized/fe/Dev/env/1
-
+  ln -sf "$HOME/.dotfiles/preferences/config" "$HOME/.ssh/config"
+  ln -sf "$HOME/.dotfiles/vscode/snippets" "$HOME/Library/Application Support/Code/User/snippets"
+  ln -sf "$HOME/.dotfiles/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
+  ln -sf "$HOME/.dotfiles/vscode/keybindings.json" "$HOME/Library/Application Support/Code/User/keybindings.json"
   # setting up the VS Code symlink doesn't work, added it in the path
   # ln -sf "/Applications/Visual Studio Code.app/Contents/Resources/app/bin" ~/.bin/code
 }
@@ -90,7 +88,7 @@ sh my-macos.sh
 echo "› Installing dependencies"
 
 # for the c alias (syntax highlighted cat)
-pip install Pygments
+pip3 install Pygments
 
 # git clone https://github.com/rupa/z.git ~/.dotfiles/bin/z
 # installed with brew
@@ -98,7 +96,7 @@ pip install Pygments
 # z is hooked up in .bash_profile
 
 # https://github.com/jamiew/git-friendly
-git clone git://github.com/jamiew/git-friendly.git "~/.dotfiles/bin/git-friendly"
+curl -sS https://raw.githubusercontent.com/jamiew/git-friendly/master/install.sh | bash
 
 #Install antigen
 git clone --recursive https://github.com/zsh-users/antigen.git "$HOME/.dotfiles/zsh/antigen"

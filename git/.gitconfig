@@ -64,7 +64,7 @@
   co=checkout
   cop=checkout --patch
 	# Amend the currently staged files to the latest commit
-  cf=commit --amend --reuse-message HEAD  # git commit --amend --no-edit
+  can=commit --amend --reuse-message HEAD  # git commit --amend --no-edit
   	# amend2 = commit --amend --all
   chp=cherry-pick
   cr=revert
@@ -114,7 +114,7 @@
 	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
 	dfi = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
 
-  # Log (l)
+  # Log (l) !!! --oneline blocks
   l1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
   l2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
   l = !git l1
@@ -140,6 +140,8 @@
 	# Remove the old tag with this name and tag the latest commit with it.
 	retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
   pc=!git push --set-upstream origin "$(git-branch-current 2> /dev/null)"
+
+  # Pull
   pp=!git pull origin "$(git-branch-current 2> /dev/null)" && git push origin "$(git-branch-current 2> /dev/null)"
   pb = "!f() { branchName=${1-master}; git checkout $branchName && git pull && git checkout - && git rebase -i $branchName; }; f"
 
@@ -152,6 +154,8 @@
   rp=rebase -p
   # Interactive rebase with the given number of latest commits
 	rin = "!r() { git rebase -i HEAD~$1; }; r"
+  # Running git count develop will tell you the number of commits you have diverged from develop
+  count = "!f() { compareBranch=${1-master}; git rev-list --count HEAD ^$compareBranch; }; f"
 
   # Stash (s)
   stsh = stash --keep-index

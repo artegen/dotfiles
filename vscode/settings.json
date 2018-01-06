@@ -2,7 +2,9 @@
   /* Experimental settings */
   "eslint.autoFixOnSave": true,
   "flow.runOnEdit": true,
-  "flow.pathToFlow": "./node_modules/.bin",
+  // "flow.pathToFlow": "./node_modules/.bin",
+  "flow.useNPMPackagedFlow": true,
+  "editor.fontSize": 13,
   "editor.fontWeight": "500",
   "workbench.fontAliasing": "antialiased",
   "json.schemas": [
@@ -142,7 +144,7 @@
   "tslint.autoFixOnSave": true,
   "tslint.enable": true,
   "typescript.format.enable": false,
-  "typescript.npm": "/Users/mac/.nvm/versions/node/v8.5.0/bin/npm",
+  // "typescript.npm": "/Users/mac/.nvm/versions/node/v8.5.0/bin/npm",
   "typescript.referencesCodeLens.enabled": false,
   "vsicons.projectDetection.disableDetect": true,
   "window.newWindowDimensions": "inherit",
@@ -151,7 +153,6 @@
   "window.restoreWindows": "all",
   "window.titleBarStyle": "custom",
   "window.zoomLevel": 0,
-  "workbench.colorTheme": "Charcoal Oceanic Next",
   "workbench.colorCustomizations": {
     "tab.activeBackground": "#1245589f",
     "activityBar.background": "#1d82a79f",
@@ -162,5 +163,19 @@
   "workbench.iconTheme": "vscode-icons",
   "workbench.quickOpen.closeOnFocusLost": true,
   "workbench.sideBar.location": "right",
-  "workbench.startupEditor": "newUntitledFile"
+  "workbench.startupEditor": "newUntitledFile",
+  "workbench.colorTheme": "One Dark Pro",
+  "gitlens.advanced.messages": {
+    "suppressCommitHasNoPreviousCommitWarning": false,
+    "suppressCommitNotFoundWarning": false,
+    "suppressFileNotUnderSourceControlWarning": false,
+    "suppressGitVersionWarning": false,
+    "suppressLineUncommittedWarning": false,
+    "suppressNoRepositoryWarning": false,
+    "suppressUpdateNotice": false,
+    "suppressWelcomeNotice": true
+  },
+  "typescript.tsserver.log": "verbose",
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false
 }
