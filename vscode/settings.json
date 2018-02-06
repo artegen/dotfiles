@@ -1,5 +1,13 @@
 {
   /* Experimental settings */
+  "jumpy.wordRegexp": "([A-Z]+([0-9a-z])*)|[a-z0-9]{2,}",
+  "vetur.format.defaultFormatter.html": "js-beautify-html",
+  "beautify.language": {
+    "html": ["htm", "html"]
+  },
+  //   "[jsonc]": {
+  //     "editor.formatOnSave": true
+  // },
   "eslint.autoFixOnSave": true,
   "flow.runOnEdit": true,
   // "flow.pathToFlow": "./node_modules/.bin",
@@ -20,7 +28,7 @@
 
   /* Main settings */
   "files.associations": {
-    "*/bin/*": "shellscript",
+    "**/bin/*": "shellscript",
     "*bash*": "shellscript",
     "*rc": "shellscript",
     "*ssh*": "shellscript",
@@ -31,7 +39,8 @@
     "git*": "shellscript",
     "muc": "shellscript",
     "*.json5": "json",
-    ".eslintrc": "json"
+    ".eslintrc": "json",
+    "**/fastlane/*": "ruby"
   },
   "files.exclude": {
     "**/.DS_Store": true,
@@ -74,7 +83,7 @@
   "editor.folding": true,
   "editor.formatOnPaste": false,
   "editor.formatOnSave": true,
-  "editor.formatOnType": true,
+  "editor.formatOnType": false,
   "editor.glyphMargin": true,
   "editor.hideCursorInOverviewRuler": false,
   "editor.lineNumbers": "on",
@@ -103,7 +112,7 @@
   "eslint.enable": true,
   "eslint.nodePath": null,
   "eslint.run": "onType",
-  "eslint.validate": ["javascript", "javascriptreact", "html"],
+  "eslint.validate": ["javascript", "javascriptreact", "html", "vue", "jsonc"],
   "eslint.workingDirectories": [],
   "explorer.openEditors.dynamicHeight": false,
   "explorer.openEditors.visible": 4,
@@ -177,5 +186,7 @@
   },
   "typescript.tsserver.log": "verbose",
   "explorer.confirmDelete": false,
-  "explorer.confirmDragAndDrop": false
+  "explorer.confirmDragAndDrop": false,
+  "git.autofetch": true,
+  "cSpell.language": "en"
 }

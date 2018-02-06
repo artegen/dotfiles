@@ -46,7 +46,7 @@
 
   {
     "key": "a",
-    "when": "filesExplorerFocus",
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus",
     "command": "explorer.newFile"
   },
   {
@@ -332,5 +332,20 @@
     "key": "ctrl+shift+t",
     "command": "workbench.action.terminal.focusPrevious",
     "when": "terminalFocus"
+  },
+  {
+    "key": "shift+enter",
+    "command": "extension.jumpy-word",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "alt+space",
+    "command": "extension.jumpy-line",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "space",
+    "command": "extension.jumpy-exit",
+    "when": "editorTextFocus && jumpy.isJumpyMode"
   }
 ]

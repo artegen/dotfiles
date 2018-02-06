@@ -48,7 +48,7 @@
   bx=branch --delete
 	# ! Switch first to master. Remove branches that have already been merged with master
 	bxm = g co master && "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
-  bm=branch --move # rename
+  bm=branch --move # ren
   bs=show-branch
   # latest
   bl = !git for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'
@@ -110,14 +110,14 @@
   ir=reset
   irp=reset --patch
   ix=rm -r --cached
+  # `git dfi $number` shows the diff between the state `$number` revisions ago and the current state
+	dfi = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
 	# Show the diff between the latest commit and the current state
 	dlast = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
 	dflast = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
   df = diff --color --color-words --abbrev
-	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
-	dfi = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
 
-  # Log (l) !!! --oneline blocks
+  # Log (l)
   l1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
   l2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
   l = !git l1
@@ -128,6 +128,7 @@
 
   # Merge (m)
   m=merge
+  mc=merge --continue
   mnc=merge --no-commit
   mf=merge --ff
   mnf=merge --no-ff
@@ -161,10 +162,10 @@
   count = "!f() { compareBranch=${1-master}; git rev-list --count HEAD ^$compareBranch; }; f"
 
   # Stash (s)
-  stsh = stash --keep-index
-  staash = stash --include-untracked
-  staaash = stash --all
-  # s=stash
+  s=stash
+  sth = stash --keep-index
+  sthu = stash --include-untracked
+  stha = stash --all
   sa=stash apply
   sx=stash drop
   sl=stash list
@@ -213,10 +214,6 @@
 	autocorrect = 1
 
 # rewrites of repo paths
-# [url "https://aur.archlinux.org/"]
-#   insteadOf = "aur:"
-# [url "ssh+git://aur4.archlinux.org/"]
-#   pushInsteadOf = "aur:"
 [url "https://github.com/"]
   insteadOf = "gh:"
 [url "git@github.com:"]
