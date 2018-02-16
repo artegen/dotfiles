@@ -1,5 +1,6 @@
 {
   /* Experimental settings */
+  "git.promptToSaveFilesBeforeCommit": true,
   "jumpy.wordRegexp": "([A-Z]+([0-9a-z])*)|[a-z0-9]{2,}",
   "vetur.format.defaultFormatter.html": "js-beautify-html",
   "beautify.language": {

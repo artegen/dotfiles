@@ -29,8 +29,8 @@ success() {
 }
 
 # Go to root
-cd "$(dirname "$0")"/..
-root_path=$PWD
+cd ..
+# root_path=$PWD
 
 # symbolic links are not aliases. They don't contain the inode name of the original object, so if its path changes the link is lost. But you can replace original object in this case. Hard links (3rd type) contain inode, but not the path, and you can't delete the object until you remove all the links.
 symlink_dotfiles () {
