@@ -38,6 +38,7 @@ alias nrs="npm run start -s --"
 js5 () { json5 -c "$1".json5 }    # generates path/to/$1.json
 
 alias rn='react-native'
+alias rn-reset='watchman watch-del-all && rm -rf $TMPDIR/react-* && rm -rf node_modules/ && npm cache clean --force && yarn && cd ios && rm -rf Pods Podfile.lock && pod install && cd .. && rn start --reset-cache'
 
 alias y='yarn'
 alias yrm='rm -rf node_modules yarn.lock'

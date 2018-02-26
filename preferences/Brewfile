@@ -163,6 +163,7 @@ brew 'ssh-copy-id'
 ## Cask
 ##
 
+brew 'cocoapods'
 cask_args appdir: '/Applications'
 
 # cask is for Mac apps
@@ -170,11 +171,12 @@ cask_args appdir: '/Applications'
 brew 'cask'
 # brew 'brew-cask-completion' - n/a
 
-cask 'webstorm'
+# cask 'webstorm'
 cask 'java'
 cask 'intellij-idea'
 cask 'android-studio'
 cask 'visual-studio-code'
+cask 'fastlane'
 
 mas 'Apple Configurator 2', id: 1037126344
 

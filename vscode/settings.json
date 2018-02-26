@@ -39,6 +39,7 @@
     "brewfile": "shellscript",
     "git*": "shellscript",
     "muc": "shellscript",
+    ".env.*": "shellscript",
     "*.json5": "json",
     ".eslintrc": "json",
     "**/fastlane/*": "ruby"
@@ -189,5 +190,6 @@
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   "git.autofetch": true,
-  "cSpell.language": "en"
+  "cSpell.language": "en",
+  "vsicons.dontShowNewVersionMessage": true
 }

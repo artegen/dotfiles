@@ -66,6 +66,9 @@ defaults write NSGlobalDomain NSUseAnimatedFocusRing -bool false
 # Increase window resize speed for Cocoa applications
 defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
 
+# to copy text from the Quick Look preview
+defaults write com.apple.finder QLEnableTextSelection -bool true
+
 # Expand save panel by default
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
