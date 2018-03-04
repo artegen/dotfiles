@@ -114,7 +114,7 @@
   "eslint.enable": true,
   "eslint.nodePath": null,
   "eslint.run": "onType",
-  "eslint.validate": ["javascript", "javascriptreact", "html", "vue", "jsonc"],
+  "eslint.validate": ["javascript", "javascriptreact", "html", "vue", "jsonc", { "language": "css", "autoFix": false }],
   "eslint.workingDirectories": [],
   "explorer.openEditors.dynamicHeight": false,
   "explorer.openEditors.visible": 4,

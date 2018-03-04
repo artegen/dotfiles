@@ -46,6 +46,7 @@
 	# Switch to a branch, creating it if necessary
 	gob = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
   bx=branch --delete
+  bxr="!f() { git push origin  :$1; }; f"
 	# ! Switch first to master. Remove branches that have already been merged with master
 	bxm = g co master && "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
   bm=branch --move # ren
@@ -56,6 +57,8 @@
 	fb = "!f() { git branch -a --contains $1; }; f"
 	# Find tags containing commit
 	ft = "!f() { git describe --always --contains $1; }; f"
+  # find the latest release branch by version number, ex. "release/2.1.4"
+  fr = "git branch --all | grep release | sort -r | head -n 1 | sed 's/.*origin\\///'"
 
   # Commit (c)
   c=commit
