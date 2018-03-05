@@ -28,6 +28,7 @@ brew 'mongodb' # https://www.mongodb.org/downloads#production
 brew 'python'
 brew 'python3'
 brew 'openssl'
+brew 'ruby'
 # brew 'ruby-build'
 # brew 'rbenv'
 # brew 'roundup'

@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # See bash_profile for exports of History, Less
 
+PATH=/usr/{local/bin,sbin}:$PATH
+PATH=$PATH:/bin
+PATH=$PATH:$HOME/{.dotfiles/bin,.bin}
+
 # The top-most paths override
 PATH=$HOME/.yarn/bin:$PATH  # for using yarn
 PATH=./node_modules/.bin:$PATH  # first project's local modules
@@ -13,10 +17,6 @@ PATH=~/.nvm/versions/node/*/bin:$PATH
 # PATH=~/.npm-global/bin/flow:$PATH  # for flow support in vscode
 # PATH=~/.nvm/versions/node/v8.5.0/bin/node:$PATH
 
-PATH=$PATH:$HOME/{.dotfiles/bin,.bin}
-PATH=$PATH:/usr/{local/bin,sbin}
-PATH=$PATH:/bin
-
 # Add Visual Studio Code (code)
 PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
@@ -26,6 +26,7 @@ PATH=$PATH:$ANDROID_HOME/platform-tools
 JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 PATH=$PATH:$JAVA_HOME
 PATH=$HOME/.fastlane/bin:$PATH
+PATH=$PATH:/usr/local/opt/openssl/bin
 
 export PATH
 

@@ -195,10 +195,10 @@
 [fetch]
 	prune = true
 [merge]
-	tool = "code"
+	tool = "code --wait"
 [core]
   autocrlf = input
-  editor = "code"
+  editor = "code --wait"
 	excludesfile = ~/.gitignore
   attributesfile = ~/.gitattributes
 [rerere]
