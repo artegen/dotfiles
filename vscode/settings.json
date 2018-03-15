@@ -6,6 +6,7 @@
   "beautify.language": {
     "html": ["htm", "html"]
   },
+  "spellright.notificationClass": "information",
   //   "[jsonc]": {
   //     "editor.formatOnSave": true
   // },

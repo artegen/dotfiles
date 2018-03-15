@@ -23,7 +23,8 @@
   ft=fetch --tags
   pt=push --tags
 
-  undo = reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1}}
+  # undo = reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1}}
+
   # Merge GitHub pull request on top of the current branch or,
 	# if a branch name is specified, on top of the specified branch
 	mpr = "!f() { \
