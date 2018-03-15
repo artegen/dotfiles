@@ -7,12 +7,23 @@
   # Misc
   # Clone only the main branch, no history.
 	cld = "!f() { repoName=${2-$(basename $1)};  git clone --depth=1 $1 $repoName; cd $repoName;  code .; }; f"
-	tags = tag -l
-	rem = remote -v
+
+	rem = remote -v # ls-remote origin
   rema = remote add  # ${1-origin} ${2-url}
   rems = remote set-url
-  undo = reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1}}
+  remp= remote prune origin  # cleans up locally tracking branches for which the remote branch has been deleted.
 
+  # git tag v2.5 1b2e1d63ff, git tag -a v1 -m "Version 1 release"
+  # git show v1.1.1
+	# git tag -l "v1.8.5*", git tag, ls-remote -t origin, git show-ref --tags
+  # Remove the old tag with this name and tag the latest commit with it.
+	retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
+  # Delete simultaniously local and remote. If smb has this tag in it's local the tag will remain. Tags will keep a seperate old commit history after rebase.
+	tx = "!r() { git tag -d $1 && git push origin :refs/tags/$1; }; r"
+  ft=fetch --tags
+  pt=push --tags
+
+  undo = reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1}}
   # Merge GitHub pull request on top of the current branch or,
 	# if a branch name is specified, on top of the specified branch
 	mpr = "!f() { \
@@ -62,7 +73,7 @@
 
   # Commit (c)
   c=commit
-  ca = !git add -A && git commit -am
+  ca = git add -A && git commit -am
   # Add everything, but whitespace changes
   awow = git diff --ignore-all-space | git apply --cached
   cam=commit --all --message
@@ -72,8 +83,9 @@
   can=commit --amend --reuse-message HEAD  # git commit --amend --no-edit
     	# amend2 = commit --amend --all
   chp=cherry-pick
-  cr=revert
-  cres=reset "HEAD^"
+  chpa=cherry-pick --abort
+  crev=revert
+	cr = "!f() { git reset HEAD~$1 || git reset HEAD^; }; f"
   cs=show
 	# Find commits by source code
 	fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
@@ -90,14 +102,8 @@
   dk=ls-files --killed
   di=!git status --porcelain --short --ignored | sed -n '"s/^!! //p"'
 
-  # Fetch (f)
-  f=fetch
-  fa=fetch --all
-  # fpr=pull --rebase
-  fr=fetch origin/${1:-master} && git rebase origin/${1:-master}
-
   # Grep (g)
-  g=grep
+  # g=grep
   gi=grep --ignore-case
   gl=grep --files-with-matches
   gL=grep --files-without-matches
@@ -106,7 +112,8 @@
 
   # Index (i)
   ia=add
-  iap=add --patch
+  # git add -i
+  iap=add --patch # partially add
   iu=add --update
   id=diff --no-ext-diff --cached
   idw=diff --no-ext-diff --cached --word-diff
@@ -128,29 +135,14 @@
   last = log -1 HEAD
 	# View abbreviated SHA, description, and history graph of the latest 20 commits
 	l20 = log --pretty=oneline -n 20 --graph --abbrev-commit
-
-  # Merge (m)
-  m=merge
-  mc=merge --continue
-  mnc=merge --no-commit
-  mf=merge --ff
-  mnf=merge --no-ff
-  ma=merge --abort
-  mt=mergetool
+  la = log --author=$1
 
   # Push (p)
   p=push
   pf=push --force-with-lease
   pa=push --all
-  pt=push --tags
   pat=push --all && git push --tags
-	# Remove the old tag with this name and tag the latest commit with it.
-	retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
   pc=!git push --set-upstream origin "$(git-branch-current 2> /dev/null)"
-
-  # Pull
-  pp=!git pull origin "$(git-branch-current 2> /dev/null)" && git push origin "$(git-branch-current 2> /dev/null)"
-  pb = "!f() { branchName=${1-master}; git checkout $branchName && git pull && git checkout - && git rebase -i $branchName; }; f"
 
   # Rebase (r)
   r=rebase
@@ -189,6 +181,27 @@
   wcfd=clean -df
   wx=rm -r
   wxf=rm -rf
+
+  ## Other
+  # Merge (m)
+  m=merge
+  mc=merge --continue
+  mnc=merge --no-commit
+  mf=merge --ff
+  mnf=merge --no-ff
+  ma=merge --abort
+  mt=mergetool
+
+  # Fetch (f)
+  f=fetch
+  fa=fetch --all
+  # fpr=pull --rebase
+  fr=fetch origin/${1:-master} && git rebase origin/${1:-master}
+
+  # Pull and push current branch
+  # pp=!git pull origin "$(git-branch-current 2> /dev/null)" && git push origin "$(git-branch-current 2> /dev/null)"
+  # pull a branch and rebase the current branch on it
+  pb = "!f() { branchName=${1-master}; git checkout $branchName && git pull && git checkout - && git rebase -i $branchName; }; f"
 
 [push]
   default = upstream

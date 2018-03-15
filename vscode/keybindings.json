@@ -299,7 +299,7 @@
     "when": "editorTextFocus"
   },
   {
-    "key": "alt+cmd+[",
+    "key": "shift+alt+[",
     "command": "editor.foldAll",
     "when": "editorTextFocus"
   },
@@ -309,7 +309,7 @@
     "when": "editorTextFocus"
   },
   {
-    "key": "alt+cmd+]",
+    "key": "shift+alt+]",
     "command": "editor.unfoldAll",
     "when": "editorTextFocus"
   },
