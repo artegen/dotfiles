@@ -173,7 +173,7 @@ brew 'cask'
 # brew 'brew-cask-completion' - n/a
 
 # cask 'webstorm'
-cask 'java'
+cask 'java8' # react-native needs this version for android studio to build apk
 cask 'intellij-idea'
 cask 'android-studio'
 cask 'visual-studio-code'

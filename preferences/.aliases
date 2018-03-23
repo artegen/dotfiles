@@ -41,6 +41,7 @@ alias rn='react-native'
 alias rn-reset='watchman watch-del-all && rm -rf $TMPDIR/react-* && rm -rf node_modules/ && npm cache clean --force && yarn && cd ios && rm -rf Pods Podfile.lock && pod install && cd .. && rn start --reset-cache'
 
 alias y='yarn'
+alias yrc='yarn start —- --reset-cache' # when a new dependency does not work/can’t be found
 alias yrm='rm -rf node_modules yarn.lock'
 alias yup='yarn upgrade'
 ynftag () { yarn info --verbose --no-emoji "$@" dist-tags; }

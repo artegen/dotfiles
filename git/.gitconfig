@@ -23,8 +23,6 @@
   ft=fetch --tags
   pt=push --tags
 
-  # undo = reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1}}
-
   # Merge GitHub pull request on top of the current branch or,
 	# if a branch name is specified, on top of the specified branch
 	mpr = "!f() { \
@@ -43,10 +41,6 @@
 	contribs = shortlog --summary --numbered  # List contributors with number of commits
 	# List aliases
 	als = config --get-regexp alias
-	# Pull in remote changes for the current repository and all its submodules
-	# pwsub = !"git pull; git submodule foreach git pull origin master"
-  # snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
-  # ls-snapshots = !git stash list --grep snapshot
 	# Credit an author on the latest commit
 	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
 
@@ -57,11 +51,11 @@
   bc=checkout -b # create
 	# Switch to a branch, creating it if necessary
 	gob = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
-  bx=branch --delete
-  bxr="!f() { git push origin  :$1; }; f"
-	# ! Switch first to master. Remove branches that have already been merged with master
-	bxm = g co master && "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
-  bm=branch --move # ren
+  bx=branch -D # force delete even if not merged
+  bxr="!f() { git push origin  :$1; }; f" # remove remote branch
+	# Remove branches that have already been merged with master
+	bxm = co master && "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+  bm=branch --move # rename
   bs=show-branch
   # latest
   bl = !git for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'
@@ -74,7 +68,7 @@
 
   # Commit (c)
   c=commit
-  ca = git add -A && git commit -am
+  # ca = git add -A && git commit -am
   # Add everything, but whitespace changes
   awow = git diff --ignore-all-space | git apply --cached
   cam=commit --all --message
@@ -83,6 +77,7 @@
 	# Amend the currently staged files to the latest commit
   can=commit --amend --reuse-message HEAD  # git commit --amend --no-edit
     	# amend2 = commit --amend --all
+  caa="!f() { git add -A && git commit --amend --reuse-message HEAD; }; f"
   chp=cherry-pick
   chpa=cherry-pick --abort
   crev=revert

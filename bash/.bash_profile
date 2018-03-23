@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Load our dotfiles like ~/.bash_prompt, etc…
-#   ~/.local can be used for settings you don’t want to commit,
+#   ~/config/.local can be used for settings you don’t want to commit,
 #   Use it to configure your PATH, thus it being first in line.
 for file in ~/.{bash_prompt,exports,aliases,functions,config/.local}; do
     [ -r "$file" ] && source "$file"
