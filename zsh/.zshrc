@@ -121,3 +121,8 @@ bindkey '^?' backward-delete-char
 
 # # uncomment to finish profiling
 # # zprof
+
+# tabtab source for qnm package
+# uninstall by removing these lines or running `tabtab uninstall qnm`
+[[ -f /Users/mac/.nvm/versions/node/v9.5.0/lib/node_modules/qnm/node_modules/tabtab/.completions/qnm.zsh ]] && . /Users/mac/.nvm/versions/node/v9.5.0/lib/node_modules/qnm/node_modules/tabtab/.completions/qnm.zsh
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

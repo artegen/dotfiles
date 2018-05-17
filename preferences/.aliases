@@ -30,7 +30,7 @@ alias n='npm'
 alias nls='npm ls --depth 0'  #  -g
 alias nw='npm root -g'
 alias ng='npm config set prefix "~/.npm-global" && nw'  # see paths in .exports
-# n i -g diff-so-fancy flow-bin npm-run-all typescript updtr
+# n i -g qnm live-server serve diff-so-fancy flow-bin npm-run-all typescript updtr
 alias ngu='npm config delete prefix'  # nvm will not work in a new session until you switch back
 alias om='npm docs'  # open module on github. npm home and npm repo
 alias nrs="npm run start -s --"
@@ -144,7 +144,7 @@ alias g="git"
 
 function clone() {
     git clone --depth=1 $1
-    cd $(basename ${1%.*})
+    cd $1 # $(basename ${1%.*})
     code .
     yarn install
 }

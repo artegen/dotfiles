@@ -1,11 +1,17 @@
 {
   /* Experimental settings */
+  // "[css]": {
+  //   "editor.formatOnSave": false
+  // },
+  "prettier.disableLanguages": [
+    "css" //better use beautify.js
+  ],
   "git.promptToSaveFilesBeforeCommit": true,
   "jumpy.wordRegexp": "([A-Z]+([0-9a-z])*)|[a-z0-9]{2,}",
-  "vetur.format.defaultFormatter.html": "js-beautify-html",
-  "beautify.language": {
-    "html": ["htm", "html"]
-  },
+  // "vetur.format.defaultFormatter.html": "js-beautify-html",
+  // "beautify.language": {
+  //   "css": ["css", "scss"]
+  // },
   "spellright.notificationClass": "information",
   //   "[jsonc]": {
   //     "editor.formatOnSave": true
@@ -115,9 +121,13 @@
   "eslint.enable": true,
   "eslint.nodePath": null,
   "eslint.run": "onType",
-  "eslint.validate": ["javascript", "javascriptreact", "html", "vue", "jsonc", { "language": "css", "autoFix": false }],
+  // "eslint.validate": [
+  //   "javascript", "javascriptreact", "html", "vue", "jsonc",
+  //   { "language": "css", "autoFix": false },
+  //   // { "language": "html", "autoFix": false }
+  // ],
   "eslint.workingDirectories": [],
-  "explorer.openEditors.dynamicHeight": false,
+  // "explorer.openEditors.dynamicHeight": false,
   "explorer.openEditors.visible": 4,
   "extensions.autoUpdate": true,
   "extensions.ignoreRecommendations": true,
@@ -140,6 +150,9 @@
   "prettier.trailingComma": "es5",
   "prettier.semi": true,
   "prettier.eslintIntegration": true,
+  // "prettier.stylelintIntegration": true, stylelint can't fix issues
+  "prettier.ignorePath": "~/.prettierignore",
+  "prettier.cssEnable": [""],
   "problems.autoReveal": true,
   "python.venvPath": "~/.virtualenvs",
   "python.linting.pylintEnabled": false,
@@ -169,7 +182,8 @@
     "tab.activeBackground": "#1245589f",
     "activityBar.background": "#1d82a79f",
     "editorGroup.background": "#1245589f",
-    "sideBar.background": "#1245589f",
+    "sideBar.background": "#c7e1eb9f",
+    "sideBar.background": "#2669819f",
     "statusBar.background": "#1d82a79f"
   },
   "workbench.iconTheme": "vscode-icons",
@@ -177,16 +191,6 @@
   "workbench.sideBar.location": "right",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.colorTheme": "One Dark Pro",
-  "gitlens.advanced.messages": {
-    "suppressCommitHasNoPreviousCommitWarning": false,
-    "suppressCommitNotFoundWarning": false,
-    "suppressFileNotUnderSourceControlWarning": false,
-    "suppressGitVersionWarning": false,
-    "suppressLineUncommittedWarning": false,
-    "suppressNoRepositoryWarning": false,
-    "suppressUpdateNotice": false,
-    "suppressWelcomeNotice": true
-  },
   "typescript.tsserver.log": "verbose",
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,

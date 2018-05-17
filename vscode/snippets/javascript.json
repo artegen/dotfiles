@@ -113,8 +113,7 @@
   },
   "class extends": {
     "prefix": "clx",
-    "body":
-      "class ${1:name} extends ${2:base} {\n  constructor (${3:arguments}) {\n    super(${3:arguments})\n    $0\n  }\n}"
+    "body": "class ${1:name} extends ${2:base} {\n  constructor (${3:arguments}) {\n    super(${3:arguments})\n    $0\n  }\n}"
   },
   "export module": {
     "prefix": "e",
@@ -258,8 +257,87 @@
     ],
     "description": "Logs for React class"
   },
-  "Node - event handler": {
-    "prefix": "ne",
+  "Node - Express server": {
+    "prefix": "nes",
+    "body": [
+      "const express = require(‘express’);",
+      "const app = require(‘./dist/server’);",
+      "",
+      "const server = express();",
+      "server.use(express.static(‘./dist/public’))",
+      "",
+      "server.get(‘*’, app.default);",
+      "",
+      "server.listen(3000);",
+    ]
+  },
+  "Node - api Express router": {
+    "prefix": "nar",
+    "body": [
+      "const express = require('express')",
+      "",
+      "const router = express.Router()",
+      "router.use(function(req, res, next) {",
+      "  res.header('Access-Control-Allow-Origin', '*')",
+      "  next()",
+      "})",
+      "",
+      "router.get('/', function(req, res, next) {",
+      "  res.json({})",
+      "})",
+      "",
+      "module.exports = router",
+    ]
+  },
+  "Node - Express server advanced": {
+    "prefix": "nesa",
+    "body": [
+      "require('ignore-styles')",
+      "const bodyParser = require('body-parser')",
+      "const compression = require('compression')",
+      "const express = require('express')",
+      "const morgan = require('morgan')",
+      "const path = require('path')",
+      "const fs = require('fs')",
+      "",
+      "require('babel-register')({",
+      "  ignore: /\/(build|node_modules)\//,",
+      "  presets: ['env', 'react-app']",
+      "})",
+      "",
+      "const index = require('./routes/index')",
+      "const api = require('./routes/api')",
+      "",
+      "const app = express()",
+      "",
+      "// Support Gzip",
+      "app.use(compression())",
+      "",
+      "// Support post requests with body data (doesn't support multipart, use multer)",
+      "app.use(bodyParser.json())",
+      "app.use(bodyParser.urlencoded({ extended: false }))",
+      "",
+      "// Setup logger",
+      "app.use(morgan('combined'))",
+      "",
+      "// Serve static assets",
+      "app.use(express.static(path.resolve(__dirname, '..', 'build')))",
+      "",
+      "app.use('/api', api)",
+      "",
+      "// Always return the main index.html, so react-router render the route in the client",
+      "app.use('/', index)",
+      "",
+      "const PORT = process.env.PORT || 3001",
+      "",
+      "app.listen(PORT, () => {",
+      "  console.log(`App listening on port ${PORT}!`)",
+      "})",
+      "// app.on('error', onError)",
+    ]
+  },
+  "Node - event emitter handler": {
+    "prefix": "neh",
     "body": "${1:emitter}.on('${2:event}', (${3:arguments}) => {\n  $0\n})"
   },
   "DOM - event cancel": {
@@ -287,11 +365,11 @@
     "body": "Array.from(${1:document}.getElementsByTagName('${2:tag}'))"
   },
   "DOM - querySelector": {
-    "prefix": "ds",
+    "prefix": "dq",
     "body": "${1:document}.querySelector('${2:selector}')"
   },
   "DOM - querySelectorAll": {
-    "prefix": "dsa",
+    "prefix": "dqa",
     "body": "Array.from(${1:document}.querySelectorAll('${2:selector}'))"
   },
   "DOM - createDocumentFragment": {
@@ -420,8 +498,7 @@
   },
   "utils - prototype method": {
     "prefix": "upro",
-    "body":
-      "${1:Class}.prototype.${2:method} = function (${3:arguments}) {\n  $0\n}"
+    "body": "${1:Class}.prototype.${2:method} = function (${3:arguments}) {\n  $0\n}"
   },
   "Object - Object.assign": {
     "prefix": "oa",

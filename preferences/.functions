@@ -372,11 +372,11 @@ function localip(){
 
 # Gets password from OS X Keychain.
 # $ get-pass github
-# function get-pass() {
-#   keychain="$HOME/Library/Keychains/login.keychain"
-#   security -q find-generic-password -g -l $@ $keychain 2>&1 |\
-#     awk -F\" '/password:/ {print $2}';
-# }
+function get-pass() {
+  keychain="$HOME/Library/Keychains/login.keychain"
+  security -q find-generic-password -g -l $@ $keychain 2>&1 |\
+    awk -F\" '/password:/ {print $2}';
+}
 
 
 # #   ---------------------------
