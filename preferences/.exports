@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 # See bash_profile for exports of History, Less
 
-PATH=/usr/{local/bin,sbin}:$PATH
+PATH=/usr/local/bin:/usr/sbin:/usr/local/sbin:$PATH
 PATH=$PATH:/bin
-PATH=$PATH:$HOME/{.dotfiles/bin,.bin}
+PATH=$PATH:$HOME/.dotfiles/bin:$HOME/.bin}
 
 # The top-most paths override
 PATH=$HOME/.yarn/bin:$PATH  # for using yarn
 PATH=./node_modules/.bin:$PATH  # first project's local modules
-PATH=~/.npm-global/bin:$PATH  # common global utils
+PATH=$HOME/.npm-global/bin:$PATH  # common global utils
 # specific utils for node versions, it's not ideal managing global deps witn nvm.
 # careful! This will require to switch npm config prefix if using nvm
 # don't leave nvm with incompatible prefix or it will not work in new sessions.
-PATH=~/.nvm/versions/node/*/bin:$PATH
+PATH=$HOME/.nvm/versions/node/*/bin:$PATH
 
 # PATH=~/.npm-global/bin/flow:$PATH  # for flow support in vscode
 # PATH=~/.nvm/versions/node/v8.5.0/bin/node:$PATH
@@ -30,6 +30,10 @@ PATH=$PATH:/usr/local/opt/openssl/bin
 
 export PATH
 
+export AWS_SDK_LOAD_CONFIG=1
+export AWS_SHARED_CREDENTIALS_FILE=~/.aws/credentials
+export AWS_CONFIG_FILE=~/.aws/config
+
 # to help editor linters etc with finding my PATHS
 # case $- in
 #    *i*) source ~/.local
@@ -38,6 +42,8 @@ export PATH
 export MANPATH="/usr/local/man:/usr/local/*/man:$MANPATH"
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X"
+
+export PAGER="less -X"
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8

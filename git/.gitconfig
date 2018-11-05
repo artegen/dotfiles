@@ -2,11 +2,18 @@
   path=~/.config/.gitconfig.local
 [color]
   ui = true
+# [credential]
+#   helper=osxkeychain
 
 [alias]
   # Misc
+  conf=config --list
   # Clone only the main branch, no history.
+  cl=clone
 	cld = "!f() { repoName=${2-$(basename $1)};  git clone --depth=1 $1 $repoName; cd $repoName;  code .; }; f"
+
+	rao = remote add origin # add upstream repo "origin" url
+	pom = push -u origin master # push local master and create master branch on origin
 
 	rem = remote -v # ls-remote origin
   rema = remote add  # ${1-origin} ${2-url}
@@ -144,6 +151,7 @@
 
   # Rebase (r)
   r=rebase
+  ri=rebase -i
   ra=rebase --abort
   rc=rebase --continue
   rs=rebase --skip
@@ -167,6 +175,8 @@
   ss=stash save
   ssu=stash save --include-untracked
 
+  rl=reflog --all #all registered git objects (when e.g. stash list doesn't work)
+
   # Working Copy (w)
 	# View the current working tree status using the short format
   ws=status -s
@@ -180,13 +190,12 @@
   wx=rm -r
   wxf=rm -rf
 
-  ## Other
   # Merge (m)
   m=merge
+  mnf=merge --no-ff
   mc=merge --continue
   mnc=merge --no-commit
   mf=merge --ff
-  mnf=merge --no-ff
   ma=merge --abort
   mt=mergetool
 
@@ -197,7 +206,7 @@
   fr=fetch origin/${1:-master} && git rebase origin/${1:-master}
 
   # Pull and push current branch
-  # pp=!git pull origin "$(git-branch-current 2> /dev/null)" && git push origin "$(git-branch-current 2> /dev/null)"
+  pp=!git pull origin "$(git-branch-current 2> /dev/null)" && git push origin "$(git-branch-current 2> /dev/null)"
   # pull a branch and rebase the current branch on it
   pb = "!f() { branchName=${1-master}; git checkout $branchName && git pull && git checkout - && git rebase -i $branchName; }; f"
 
@@ -209,6 +218,10 @@
 	tool = "code --wait"
 [core]
   autocrlf = input
+  # autocrlf = false
+  # safecrlf = true
+  # fscache = true
+  # preloadindex = true
   editor = "code --wait"
 	excludesfile = ~/.gitignore
   attributesfile = ~/.gitattributes
@@ -223,6 +236,10 @@
 	show = diff-so-fancy | less --tabs=4 -RFX
 [interactive]
 	diffFilter = "diff-so-fancy"
+[diff]
+    tool = default-difftool
+[difftool "default-difftool"]
+    cmd = code --wait --diff $LOCAL $REMOTE
 # correct typos
 [help]
 	autocorrect = 1

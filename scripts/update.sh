@@ -1,6 +1,6 @@
 #  updates and installables from the Mac App Store
-echo "› sudo softwareupdate -i -a"
-sudo softwareupdate -i -a
+# echo "› sudo softwareupdate -i -a"
+# sudo softwareupdate -i -a
 
 
 # Update installed Homebrew + its installed packages

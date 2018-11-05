@@ -3,6 +3,15 @@
   // "[css]": {
   //   "editor.formatOnSave": false
   // },
+  "workbench.editor.labelFormat": "short",
+  "terminal.integrated.drawBoldTextInBrightColors": false,
+  "emmet.showSuggestionsAsSnippets": true,
+  "emmet.includeLanguages": { "javascript": "javascriptreact" },
+  "emmet.excludeLanguages": [],
+  "emmet.syntaxProfiles": {},
+  "emmet.triggerExpansionOnTab": true,
+  "html-css-class-completion.enableEmmetSupport": false,
+  "csv-preview.separator": ";",
   "prettier.disableLanguages": [
     "css" //better use beautify.js
   ],
@@ -12,10 +21,12 @@
   // "beautify.language": {
   //   "css": ["css", "scss"]
   // },
-  "spellright.notificationClass": "information",
+  // "spellright.notificationClass": "information",
   //   "[jsonc]": {
   //     "editor.formatOnSave": true
   // },
+  "terminal.integrated.confirmOnExit": true,
+  "terminal.integrated.scrollback": 30000,
   "eslint.autoFixOnSave": true,
   "flow.runOnEdit": true,
   // "flow.pathToFlow": "./node_modules/.bin",
@@ -45,6 +56,7 @@
     ".functions": "shellscript",
     "brewfile": "shellscript",
     "git*": "shellscript",
+    "Jenkinsfile*": "groovy",
     "muc": "shellscript",
     ".env.*": "shellscript",
     "*.json5": "json",
@@ -114,9 +126,6 @@
   "editor.wordBasedSuggestions": false,
   "editor.wordWrap": "bounded",
   "editor.wordWrapColumn": 100,
-  "emmet.excludeLanguages": [],
-  "emmet.syntaxProfiles": {},
-  "emmet.triggerExpansionOnTab": true,
   "eslint._legacyModuleResolve": false,
   "eslint.enable": true,
   "eslint.nodePath": null,
@@ -137,6 +146,7 @@
   "files.trimTrailingWhitespace": true,
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
+  "git.autofetch": true,
   "html.format.enable": false,
   "html.suggest.html5": true,
   "html.validate.scripts": true,
@@ -151,8 +161,8 @@
   "prettier.semi": true,
   "prettier.eslintIntegration": true,
   // "prettier.stylelintIntegration": true, stylelint can't fix issues
-  "prettier.ignorePath": "~/.prettierignore",
-  "prettier.cssEnable": [""],
+  // "prettier.ignorePath": "~/.prettierignore",
+  // "prettier.cssEnable": [""],
   "problems.autoReveal": true,
   "python.venvPath": "~/.virtualenvs",
   "python.linting.pylintEnabled": false,
@@ -190,11 +200,16 @@
   "workbench.quickOpen.closeOnFocusLost": true,
   "workbench.sideBar.location": "right",
   "workbench.startupEditor": "newUntitledFile",
-  "workbench.colorTheme": "One Dark Pro",
   "typescript.tsserver.log": "verbose",
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
-  "git.autofetch": true,
   "cSpell.language": "en",
-  "vsicons.dontShowNewVersionMessage": true
+  "vsicons.dontShowNewVersionMessage": true,
+  "workbench.colorTheme": "One Dark Pro",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "breadcrumbs.enabled": true,
+  "workbench.editor.showTabs": true,
+  "cSpell.userWords": [
+    "haspopup"
+  ]
 }

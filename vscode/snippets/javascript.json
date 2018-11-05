@@ -1,11 +1,16 @@
 {
-  "function": {
-    "prefix": "f",
-    "body": ["const ${1:name} = ({ ${2:arguments} }) => ($0)"]
+  "function - arrow with statement": {
+    "prefix": "fas",
+    "body": [
+      "const ${1:name} = ({ ${2:arguments} }) => {",
+      "  $0",
+      "  return ",
+      "}"
+    ]
   },
   "function - arrow unnamed": {
     "prefix": "fa",
-    "body": ["({${1:arguments}}) => {", "  $0", "  return ", "}"]
+    "body": ["($1) => $0"]
   },
   "function - named": {
     "prefix": "fn",
@@ -16,38 +21,70 @@
       "}"
     ]
   },
-  "function - async": {
-    "prefix": "fas",
+  "promise": {
+    "prefix": "prom",
+    "body": ["Promise.resolve($0)"]
+  },
+  "promise - then": {
+    "prefix": "then",
+    "body": [".then((${1:args}) => {}$0 )"]
+  },
+  "promise - catch": {
+    "prefix": "catch",
+    "body": [".catch((e) => console.log(${1:e.message}) )"]
+  },
+  "promise - finally": {
+    "prefix": "finally",
+    "body": [".finally(clean-up$0)"]
+  },
+  "fetch": {
+    "prefix": "fetch",
     "body": [
-      "async function ${1:name}({ ${2:arguments} }) {",
-      "  $0",
-      "  return ",
-      "}"
+      "fetch('{1:endpoint}')",
+      ".then( (response) => {",
+      "  if (!response.ok) {",
+      "    throw new Error(response.statusText);",
+      "  }",
+      "  return response.json()",
+      "})",
+      ".then(data => data)",
+      ".catch( (error) => {",
+      "  console.log('Looks like there was a problem with network connection: \n', error);",
+      "});"
     ]
   },
-  "async arrow function": {
-    "prefix": "faa",
-    "body": ["async ({${1:arguments}}) => {", "  $0", "  return ", "}"]
-  },
-  "function - generator": {
-    "prefix": "fg",
-    "body": ["function* ${1:name}({ ${2:arguments} }) {", "  $0", "}"]
-  },
+
+  // const opts = {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  //   mode: 'cors',
+  // };
+
+  // export const fetchUser = data =>
+  //   fetch(`${apiUrl}/security/token`, {
+  //     ...opts,
+  //     body: JSON.stringify(data),
+  //   })
+  //     .then(res => (res.ok ? res.json() : res.text().then(msg => new Error(msg))))
+  //     .catch(e => console.log(e.message));
+  //   },
   "function - iife": {
     "prefix": "fii",
     "body": ["(function (${1:arguments}) {", "  $0", "})(${2})"]
   },
   "function apply": {
     "prefix": "fap",
-    "body": ["${1:fn}.apply(${2:this}, ${3:argsArray})"]
+    "body": ["${1:fn}.apply(${2:thisObject}, ${3:argsArray})"]
   },
   "function call": {
     "prefix": "fc",
-    "body": ["${1:fn}.call(${2:this}, ${3:arg, arg,...})"]
+    "body": ["${1:fn}.call(${2:thisObject}, ${3:arg, arg,...})"]
   },
   "function bind": {
     "prefix": "fb",
-    "body": ["${1:fn}.bind(${2:this}, ${3:argsArray})"]
+    "body": ["${1:fn}.bind(${2:thisObject}, ${3:argsArray})"]
   },
   "flow type checking": {
     "prefix": "fl",
@@ -67,7 +104,7 @@
     "body": ["${1:iterable}.map((${2:item}) => {", "  $0", "  return $3", "})"]
   },
   "array.reduce": {
-    "prefix": "ar",
+    "prefix": "aredc",
     "body": [
       "${1:iterable}.reduce((${2:accumulator}, ${3:current}) => {",
       "  $0",
@@ -76,59 +113,63 @@
     ]
   },
   "array.filter": {
-    "prefix": "af",
+    "prefix": "afilt",
     "body": "${1:iterable}.filter((${2:item}) => $0)"
   },
   "array.find": {
-    "prefix": "afi",
+    "prefix": "afind",
     "body": "${1:iterable}.find((${2:item}) => $0)"
   },
   "array.every": {
-    "prefix": "ae",
+    "prefix": "aev",
     "body": "${1:iterable}.every((${2:item}) => $0)"
   },
   "array.some": {
-    "prefix": "as",
+    "prefix": "asm",
     "body": "${1:iterable}.some((${2:item}) => $0)"
   },
   "let statement": {
-    "prefix": "l",
+    "prefix": "let",
     "body": "let ${1:name} = ${2:value}"
   },
   "const statement": {
-    "prefix": "c",
+    "prefix": "cns",
     "body": "const ${1:name} = ${2:value}"
   },
   "const statement from destructuring": {
-    "prefix": "cd",
+    "prefix": "cnsd",
     "body": ["const {${1:name} , $0} = ${2:object}"]
   },
   "const assignment awaited": {
-    "prefix": "ca",
-    "body": "const ${1:name} = await ${2:function}"
+    "prefix": "cnsa",
+    "body": "const ${1:name} = await ${2:promise}"
   },
   "const assignment yielded": {
-    "prefix": "cy",
+    "prefix": "cnsy",
     "body": "const ${1:name} = yield ${2:value}"
   },
   "class extends": {
     "prefix": "clx",
-    "body": "class ${1:name} extends ${2:base} {\n  constructor (${3:arguments}) {\n    super(${3:arguments})\n    $0\n  }\n}"
+    "body": "class ${1:name} extends ${2:base} {\n    $0\n}"
+  },
+  "cls ctor": {
+    "prefix": "ctor",
+    "body": ["constructor(props) {", "  super(props);", "  $0", "}"]
   },
   "export module": {
-    "prefix": "e",
-    "body": "export "
+    "prefix": "excns",
+    "body": "export const ${1:name} = () => {}$0"
   },
   "export module default": {
-    "prefix": "ed",
+    "prefix": "exdef",
     "body": "export default "
   },
   "exports - CommonJS member": {
-    "prefix": "ecm",
+    "prefix": "excm",
     "body": "exports.${1:member} = ${2:value}"
   },
   "exports - CommonJS": {
-    "prefix": "em",
+    "prefix": "excjs",
     "body": "module.exports = ${1:name}"
   },
   "import module destructured": {
@@ -155,9 +196,8 @@
     "prefix": "rducS",
     "body": [
       "export const ${1: name } = (state = ${3:initialState} , action = {}) =>",
-      "  action.type === ${2:TYPE} ? action.payload.$1 : state;$0"
-    ],
-    "description": "Uses one type "
+      "  action.type === ${2:TYPE} ? action.payload : state;$0"
+    ]
   },
   "reducer medium": {
     "prefix": "rducM",
@@ -204,7 +244,7 @@
   },
   "reactImport": {
     "prefix": "irc",
-    "body": ["import React, {Component} from 'react'", ""],
+    "body": ["import React, {Component, Fragment $0} from 'react'", ""],
     "description": "Import React Component"
   },
   "reactFunctionalExportComponent": {
@@ -213,9 +253,7 @@
       "import React from 'react'",
       "",
       "export default ({ ${1:name}, $2 }) => (",
-      "  <div>",
       "    $0",
-      "  </div>",
       ")"
     ],
     "description": "Creates and exports a React Functional Component"
@@ -223,7 +261,7 @@
   "reactFunctionalComponent": {
     "prefix": "rfc",
     "body": [
-      "const ${1:name} ({ ${2:propName}, ${3:restProps} }) => (",
+      "const ${1:name} = ({ ${2:propName}, ${3:restProps} }) => (",
       "  $0",
       ")"
     ],
@@ -240,22 +278,11 @@
       "  ",
       "  render() {",
       "    ",
-      "    return $5",
+      "    return ($5)",
       "  }",
       "}"
     ],
     "description": "Creates a React Class Component"
-  },
-  "reactClassLogs": {
-    "prefix": "rcl",
-    "body": [
-      "constructor(props) {",
-      "  super(props);",
-      "  console.log({ props });",
-      "}",
-      "<Text>{JSON.stringify(this.props, null, 2)}</Text>"
-    ],
-    "description": "Logs for React class"
   },
   "Node - Express server": {
     "prefix": "nes",
@@ -268,7 +295,7 @@
       "",
       "server.get(‘*’, app.default);",
       "",
-      "server.listen(3000);",
+      "server.listen(3000);"
     ]
   },
   "Node - api Express router": {
@@ -286,7 +313,7 @@
       "  res.json({})",
       "})",
       "",
-      "module.exports = router",
+      "module.exports = router"
     ]
   },
   "Node - Express server advanced": {
@@ -301,7 +328,7 @@
       "const fs = require('fs')",
       "",
       "require('babel-register')({",
-      "  ignore: /\/(build|node_modules)\//,",
+      "  ignore: //(build|node_modules)//,",
       "  presets: ['env', 'react-app']",
       "})",
       "",
@@ -333,7 +360,7 @@
       "app.listen(PORT, () => {",
       "  console.log(`App listening on port ${PORT}!`)",
       "})",
-      "// app.on('error', onError)",
+      "// app.on('error', onError)"
     ]
   },
   "Node - event emitter handler": {
@@ -412,6 +439,15 @@
     "prefix": "drc",
     "body": "${1:el}.removeChild(${2:elem})"
   },
+  "DOM - insert element": {
+    "prefix": "dins",
+    "body": [
+      "const attachTo = window.document.createElement('${1:HTMLElement}');",
+      "attachTo.className = '${2}';",
+      "attachTo.setAttribute('id', 'app'$3);",
+      "document.body.insertBefore(attachTo, document.body.firstChild);"
+    ]
+  },
   "utils - typeof": {
     "prefix": "ut",
     "body": "typeof ${1:source} ==$0 '${2:undefined}'"
@@ -421,7 +457,7 @@
     "body": "${1:source} instanceof ${2:Object}"
   },
   "utils - Array.isArray()": {
-    "prefix": "uia",
+    "prefix": "uisa",
     "body": "Array.isArray(${1:source})"
   },
   "utils - if statement": {
@@ -454,7 +490,14 @@
   },
   "utils - console.log": {
     "prefix": "ucl",
-    "body": "console.log($0)"
+    "body": [
+      "\nconsole.log('\\n\\n\\n====================================\\n',",
+      "  $0\n);\n"
+    ]
+  },
+  "utils - question": {
+    "prefix": "uquest",
+    "body": [" // ?: $0"]
   },
   "utils - console.error": {
     "prefix": "uce",
@@ -468,20 +511,16 @@
     "prefix": "ucd",
     "body": "console.dir($0)"
   },
-  "utils - constructor": {
-    "prefix": "uCtor",
-    "body": "constructor ( { ${1:props} } ) {\n  $0\n}"
-  },
   "utils - use strict": {
     "prefix": "us",
     "body": "'use strict';"
   },
   "utils - JSON.stringify()": {
-    "prefix": "us",
+    "prefix": "ustr",
     "body": "JSON.stringify($0)"
   },
   "utils - JSON.parse()": {
-    "prefix": "up",
+    "prefix": "uprs",
     "body": "JSON.parse($0)"
   },
   "utils - method": {
@@ -501,11 +540,11 @@
     "body": "${1:Class}.prototype.${2:method} = function (${3:arguments}) {\n  $0\n}"
   },
   "Object - Object.assign": {
-    "prefix": "oa",
+    "prefix": "objas",
     "body": "Object.assign(${1:dest}, ${2:source})"
   },
   "Object - Object.create": {
-    "prefix": "oc",
+    "prefix": "objcr",
     "body": "Object.create(null$0)"
   },
   "Object - Object.hasOwnProperty": {
@@ -517,15 +556,15 @@
     "body": "Object.defineProperty(${1:dest}, '${2:prop}', {\n  $0\n})"
   },
   "Object - Object.keys": {
-    "prefix": "ok",
+    "prefix": "objk",
     "body": "Object.keys(${1:obj})"
   },
   "utils - section": {
     "prefix": "usc",
-    "body": "/* 👨‍💻 >> ${1:Short section name} << */\n$0"
+    "body": "/* >> ${1:Short section name} << */\n$0"
   },
   "utils - emoji": {
-    "prefix": "uji",
+    "prefix": "umoji",
     "body": "👨‍💻🛵🔸🔷⚙️🔜🃏🏁💯💖🎉🔖⌚️🏔️🏞️🌅🚀🎠🚤🚁🏄‍♂️🤸‍♂️⛷️🍾🔥⚡️✨🌟💥👇🤖"
   },
   "utils - return": {

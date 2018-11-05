@@ -30,7 +30,7 @@ alias n='npm'
 alias nls='npm ls --depth 0'  #  -g
 alias nw='npm root -g'
 alias ng='npm config set prefix "~/.npm-global" && nw'  # see paths in .exports
-# n i -g qnm live-server serve diff-so-fancy flow-bin npm-run-all typescript updtr
+# n i -g qnm live-server serve diff-so-fancy flow-bin npm-run-all typescript updtr eslint-plugin-{flowtype,import,prettier} babel-eslint eslint-config-{airbnb-base,prettier} eslint
 alias ngu='npm config delete prefix'  # nvm will not work in a new session until you switch back
 alias om='npm docs'  # open module on github. npm home and npm repo
 alias nrs="npm run start -s --"
@@ -46,11 +46,17 @@ alias yrm='rm -rf node_modules yarn.lock'
 alias yup='yarn upgrade'
 ynftag () { yarn info --verbose --no-emoji "$@" dist-tags; }
 
+alias smc='./node_modules/.bin/sequelize migration:create --name'
+
+alias dc='docker-compose'
+alias d='docker'
+
 # trash () { command mv "$@" ~/.Trash ; }     # trash:        Moves a file to the MacOS trash
 ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           Opens any file in MacOS Quicklook Preview
 
 alias h="history"
 alias j="jobs"
+alias homebrew="brew"
 
 alias chmox='chmod -x'
 

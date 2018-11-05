@@ -126,3 +126,10 @@ bindkey '^?' backward-delete-char
 # uninstall by removing these lines or running `tabtab uninstall qnm`
 [[ -f /Users/mac/.nvm/versions/node/v9.5.0/lib/node_modules/qnm/node_modules/tabtab/.completions/qnm.zsh ]] && . /Users/mac/.nvm/versions/node/v9.5.0/lib/node_modules/qnm/node_modules/tabtab/.completions/qnm.zsh
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /Users/mac/Dev/apps/front2back/api-channels/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/mac/Dev/apps/front2back/api-channels/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /Users/mac/Dev/apps/front2back/api-channels/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/mac/Dev/apps/front2back/api-channels/node_modules/tabtab/.completions/sls.zsh

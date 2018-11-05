@@ -30,8 +30,7 @@
     // system language toggle
     "key": "ctrl+cmd+space",
     "command": "editor.action.triggerSuggest",
-    "when":
-      "editorHasCompletionItemProvider && editorTextFocus && !editorReadonly"
+    "when": "editorHasCompletionItemProvider && editorTextFocus && !editorReadonly"
   },
 
   // spectacle conflicts
@@ -50,7 +49,7 @@
     "command": "explorer.newFile"
   },
   {
-    "key": "shift+a",
+    "key": "alt+a",
     "when": "filesExplorerFocus",
     "command": "explorer.newFolder"
   },
@@ -257,26 +256,22 @@
   {
     "key": "ctrl+.",
     "command": "editor.action.previewDeclaration",
-    "when":
-      "editorHasDefinitionProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+    "when": "editorHasDefinitionProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
   },
   {
     "key": "alt+f12",
     "command": "-editor.action.previewDeclaration",
-    "when":
-      "editorHasDefinitionProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+    "when": "editorHasDefinitionProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
   },
   {
     "key": "ctrl+,",
     "command": "editor.action.openDeclarationToTheSide",
-    "when":
-      "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
   },
   {
     "key": "cmd+k f12",
     "command": "-editor.action.openDeclarationToTheSide",
-    "when":
-      "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
   },
   {
     "key": "ctrl+shift+[",
@@ -347,5 +342,49 @@
     "key": "space",
     "command": "extension.jumpy-exit",
     "when": "editorTextFocus && jumpy.isJumpyMode"
+  },
+  {
+    "key": "ctrl+alt+l",
+    "command": "extension.insertLogStatement",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+cmd+l",
+    "command": "-extension.insertLogStatement",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+alt+d",
+    "command": "extension.deleteAllLogStatements"
+  },
+  {
+    "key": "shift+cmd+d",
+    "command": "-extension.deleteAllLogStatements"
+  },
+  {
+    "key": "ctrl+down",
+    "command": "editor.emmet.action.balanceIn"
+  },
+  {
+    "key": "ctrl+up",
+    "command": "editor.emmet.action.balanceOut"
+  },
+  {
+    "key": "ctrl+z",
+    "command": "editor.emmet.action.wrapWithAbbreviation"
+  },
+  {
+    "key": "ctrl+shift+z",
+    "command": "editor.emmet.action.wrapIndividualLinesWithAbbreviation"
+  },
+  {
+    "key": "cmd+k cmd+down",
+    "command": "toggleSuggestionDetails",
+    "when": "suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "key": "ctrl+space",
+    "command": "-toggleSuggestionDetails",
+    "when": "suggestWidgetVisible && textInputFocus"
   }
 ]

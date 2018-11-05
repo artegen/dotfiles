@@ -14,8 +14,9 @@
 # mas is for Appstore apps: https://github.com/mas-cli/mas
 # mas "1Password", id: 443987910
 
-brew 'docker'
-brew 'docker-compose'
+# brew 'docker'
+# brew 'docker-compose' # use docker for mac https://docs.docker.com/v17.09/docker-for-mac/install/
+
 # brew 'ack'
 # brew 'imagemagick'
 # brew 'jp2a'
@@ -23,7 +24,8 @@ brew 'docker-compose'
 # brew 'libgit2'
 # brew 'readline'
 # brew 'go'
-brew 'postgresql'
+# brew 'postgresql' # install via http://postgresapp.com/
+brew 'pgcli' # https://www.mongodb.org/downloads#production
 brew 'mongodb' # https://www.mongodb.org/downloads#production
 brew 'python'
 brew 'python3'
@@ -90,7 +92,10 @@ brew 'fzf'
 
 brew 'git'
 # brew 'imagemagick'# --with-webp'
-# brew 'node' # This installs `npm` too using the recommended installation method
+
+# This installs `npm` too using the recommended installation method
+# brew 'node' # use nvm
+
 brew 'pv'
 brew 'rename'
 brew 'tree'
@@ -178,6 +183,8 @@ cask 'intellij-idea'
 cask 'android-studio'
 cask 'visual-studio-code'
 cask 'fastlane'
+cask 'virtualbox'
+cask 'postico'
 
 mas 'Apple Configurator 2', id: 1037126344
 
@@ -234,9 +241,12 @@ cask 'gpg-suite'
 
 
 # Not on homebrew
-
 # VS Code
-# Ydisk
-
 # File Multi Tool 5
 # Phosphor
+# postico, postgres,
+# postman
+# mongodb compass
+# openvpn, tunnelblick
+# docker
+
