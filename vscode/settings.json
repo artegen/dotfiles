@@ -93,7 +93,7 @@
   "debug.inlineValues": true,
   "diffEditor.ignoreTrimWhitespace": true,
   "diffEditor.renderIndicators": true,
-  "diffEditor.renderSideBySide": true,
+  "diffEditor.renderSideBySide": false,
   "editor.acceptSuggestionOnCommitCharacter": true,
   "editor.acceptSuggestionOnEnter": "smart",
   "editor.autoClosingBrackets": true,
@@ -193,7 +193,7 @@
     "activityBar.background": "#1d82a79f",
     "editorGroup.background": "#1245589f",
     "sideBar.background": "#c7e1eb9f",
-    "sideBar.background": "#2669819f",
+    // "sideBar.background": "#2669819f",
     "statusBar.background": "#1d82a79f"
   },
   "workbench.iconTheme": "vscode-icons",
@@ -209,7 +209,5 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
   "breadcrumbs.enabled": true,
   "workbench.editor.showTabs": true,
-  "cSpell.userWords": [
-    "haspopup"
-  ]
+  "cSpell.userWords": ["haspopup"]
 }

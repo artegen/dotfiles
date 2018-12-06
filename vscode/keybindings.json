@@ -386,5 +386,23 @@
     "key": "ctrl+space",
     "command": "-toggleSuggestionDetails",
     "when": "suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "key": "alt+'",
+    "command": "cursorLineEnd",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "ctrl+e",
+    "command": "-cursorLineEnd",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "alt+cmd+\\",
+    "command": "workbench.action.splitEditorOrthogonal"
+  },
+  {
+    "key": "cmd+k cmd+\\",
+    "command": "-workbench.action.splitEditorOrthogonal"
   }
 ]

@@ -481,15 +481,15 @@
     "body": "throw new $0Error('$1')"
   },
   "utils - try/catch": {
-    "prefix": "utc",
-    "body": "try {\n  $0\n} \ncatch (err) => {}"
+    "prefix": "try/catch",
+    "body": "try {\n  $0\n} \ncatch (e) {}"
   },
   "utils - try/finally": {
     "prefix": "utf",
     "body": "finally {}"
   },
   "utils - console.log": {
-    "prefix": "ucl",
+    "prefix": "con.log",
     "body": [
       "\nconsole.log('\\n\\n\\n====================================\\n',",
       "  $0\n);\n"
