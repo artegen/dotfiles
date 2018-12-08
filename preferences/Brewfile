@@ -26,7 +26,7 @@ brew 'bash-completion'
 # brew 'wget'
 
 # Install more recent versions of some OS X tools
-brew 'vim', args: ['--with-override-system-vi']
+# brew 'vim', args: ['--with-override-system-vi']
 brew 'grep'
 brew 'openssh'
 
@@ -58,7 +58,7 @@ brew 'tree'
 
 brew 'terminal-notifier'
 
-brew 'pidcat'   # colored logcat guy
+brew 'pidcat'   # colored logcat
 
 brew 'ncdu' # find where your diskspace went
 
@@ -69,7 +69,6 @@ brew 'git-lfs'  # https://git-lfs.github.com/
 ##
 ## Cask
 ##
-
 
 # tap "caskroom/cask"
 brew 'cask'
@@ -87,6 +86,7 @@ cask_args appdir: '/Applications'
 
 cask 'visual-studio-code'
 cask 'postico'
+cask 'dbeaver-community'
 cask 'skype'
 cask 'firefox'
 cask 'google-chrome'
@@ -99,8 +99,9 @@ tap 'caskroom/fonts'
 cask 'font-fira-code'
 
 # Not on homebrew
-# dbeaver, teamsql
+# teamsql
 # mongodb compass
 # openvpn, tunnelblick
 # docker
+# http://postgresapp.com/
 
