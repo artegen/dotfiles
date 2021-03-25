@@ -44,12 +44,12 @@
   },
 
   {
-    "key": "a",
+    "key": "alt+cmd+=",
     "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus",
     "command": "explorer.newFile"
   },
   {
-    "key": "alt+a",
+    "key": "alt+cmd+-",
     "when": "filesExplorerFocus",
     "command": "explorer.newFolder"
   },
@@ -404,5 +404,53 @@
   {
     "key": "cmd+k cmd+\\",
     "command": "-workbench.action.splitEditorOrthogonal"
+  },
+  {
+    "key": "ctrl+cmd+s",
+    "command": "workbench.action.files.saveWithoutFormatting"
+  },
+  {
+    "key": "cmd+k s",
+    "command": "-workbench.action.files.saveWithoutFormatting"
+  },
+  {
+    "key": "alt+/",
+    "command": "editor.action.blockComment",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "shift+alt+a",
+    "command": "-editor.action.blockComment",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+cmd+k",
+    "command": "bookmarks.jumpToNext",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "alt+cmd+l",
+    "command": "-bookmarks.jumpToNext",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+cmd+k",
+    "command": "bookmarks.jumpToPrevious",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "alt+cmd+j",
+    "command": "-bookmarks.jumpToPrevious",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+cmd+b",
+    "command": "bookmarks.toggle",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "alt+cmd+k",
+    "command": "-bookmarks.toggle",
+    "when": "editorTextFocus"
   }
 ]

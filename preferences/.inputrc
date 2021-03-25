@@ -12,6 +12,10 @@ set mark-symlinked-directories on
 # commands (basically more intelligent Up/Down behavior)
 "\e[B": history-search-forward
 "\e[A": history-search-backward
+# mappings for "page up" and "page down" to step to the beginning/end
+# of the history
+"\e[5~": beginning-of-history
+"\e[6~": end-of-history
 
 # ctrl left, ctrl right for moving on the readline by word
 "\e[1;5C": forward-word

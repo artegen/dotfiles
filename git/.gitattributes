@@ -19,13 +19,13 @@
 *.scss text
 *.less text
 *.styl text
-*.js text eol=lf
+*.js text
 *.coffee text
 *.json text
 *.htm text
 *.html text
 *.xml text
-*.svg text
+*.svg -crlf
 *.txt text
 *.ini text
 *.inc text
@@ -66,6 +66,7 @@
 *.yaml text
 *.yml text
 .editorconfig text
+*.env text
 
 # build config
 *.npmignore text

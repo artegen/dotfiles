@@ -1,14 +1,24 @@
 
-# mas is for Appstore apps: https://github.com/mas-cli/mas
-# mas "1Password", id: 443987910
+# Not on homebrew:
+# teamsql, DBeaver
+# openvpn, tunnelblick, Wireshark
+# Itsycal, Be Focused, Google Backup and sync
+# RecordIt
+# RN: Xcode, # brew 'cocoapods' # cask 'java8' # react-native needs this version for android studio to build apk # cask 'intellij-idea' # cask 'android-studio' # mas 'Apple Configurator 2', id: 1037126344 # cask 'fastlane'
+
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/core"
 
 # brew 'docker'
-# brew 'docker-compose' # use docker for mac https://docs.docker.com/v17.09/docker-for-mac/install/
-
+# brew 'docker-compose' # use Docker Desktop https://docs.docker.com/v17.09/docker-for-mac/install/
 # brew 'postgresql' # install via http://postgresapp.com/
 # brew 'pgcli'
-brew 'mongodb' # https://www.mongodb.org/downloads#production
-brew 'python'
+# brew 'node' # use nvm
+brew 'nvm' # nvm use 8
+# GraphiQL
+# brew 'mongodb' # use mongodb compass
+# brew 'python'
 brew 'python3'
 brew 'ruby'
 
@@ -16,74 +26,43 @@ brew 'coreutils'
 brew 'moreutils'
 brew 'findutils'
 brew 'gnu-sed', args: ['--with-default-names']
-
 brew 'bash'
 brew 'bash-completion'
-
-# generic colouriser  http://kassiopeia.juls.savba.sk/~garabik/software/grc/
-# brew 'grc'
-
-# brew 'wget'
-
-# Install more recent versions of some OS X tools
-# brew 'vim', args: ['--with-override-system-vi']
+brew 'wget'
+# More recent versions of some OS X tools
+brew 'vim', args: ['--with-override-system-vi']
 brew 'grep'
 brew 'openssh'
-
 # z hopping around folders
 brew 'z'
-
-# github util. gotta love `hub fork`, `hub create`, `hub checkout <PRurl>`, https://github.com/github/hub
+# `hub fork`, `hub create`, `hub checkout <PRurl>`, https://github.com/github/hub
 brew 'hub'
-
 # mtr - ping & traceroute.
-# brew 'mtr'
-
+brew 'mtr'
     # allow mtr to run without sudo
-    # mtrlocation=$(brew info mtr | grep Cellar | sed -e 's/ (.*//')
+    # mtrlocation=$(brew info mtr | grep Cellar | sed -e 's/ (.*)//'
     #  e.g. `/Users/name/.homebrew/Cellar/mtr/0.86`
     # sudo chmod 4755 $mtrlocation/sbin/mtr
     # sudo chown root $mtrlocation/sbin/mtr
 
-
-# other useful binaries
+brew "bat" # cat(1) with syntax highlighting and Git integration
+brew "exa" # for 'ls'
 brew 'the_silver_searcher'
 brew 'fzf'
-
-# brew 'node' # use nvm
-
 brew 'pv'
 brew 'rename'
 brew 'tree'
-
 brew 'terminal-notifier'
-
 brew 'pidcat'   # colored logcat
-
 brew 'ncdu' # find where your diskspace went
-
 brew 'zsh'
-
 brew 'git-lfs'  # https://git-lfs.github.com/
+brew 'jq'
 
-##
-## Cask
-##
 
-# tap "caskroom/cask"
-brew 'cask'
 cask_args appdir: '/Applications'
 
-# brew 'cocoapods'
-# cask 'webstorm'
-# cask 'java8' # react-native needs this version for android studio to build apk
-# cask 'intellij-idea'
-# cask 'android-studio'
-# mas 'Apple Configurator 2', id: 1037126344
-# cask 'fastlane'
-# cask 'virtualbox'
-# cask 'atom'
-
+cask 'virtualbox'
 cask 'visual-studio-code'
 cask 'postico'
 cask 'dbeaver-community'
@@ -94,14 +73,9 @@ cask 'slack'
 cask 'spectacle'
 cask 'iterm2'
 cask 'postman'
+cask 'insomnia'
 
 tap 'caskroom/fonts'
 cask 'font-fira-code'
 
-# Not on homebrew
-# teamsql
-# mongodb compass
-# openvpn, tunnelblick
-# docker
-# http://postgresapp.com/
 

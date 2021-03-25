@@ -247,6 +247,10 @@
     "body": ["import React, {Component, Fragment $0} from 'react'", ""],
     "description": "Import React Component"
   },
+  "reactFnCmpHandler": {
+    "prefix": "handle",
+    "body": ["const ${1:handle} = useCallback(($2) => $3, [$4])"]
+  },
   "reactFunctionalExportComponent": {
     "prefix": "rfe",
     "body": [
@@ -283,6 +287,10 @@
       "}"
     ],
     "description": "Creates a React Class Component"
+  },
+  "flex Box": {
+    "prefix": "flex",
+    "body": "display=\"flex\" justifyContent=\"center\" alignItems=\"center\" $0"
   },
   "Node - Express server": {
     "prefix": "nes",
@@ -568,12 +576,16 @@
     "body": "👨‍💻🛵🔸🔷⚙️🔜🃏🏁💯💖🎉🔖⌚️🏔️🏞️🌅🚀🎠🚤🚁🏄‍♂️🤸‍♂️⛷️🍾🔥⚡️✨🌟💥👇🤖"
   },
   "utils - return": {
-    "prefix": "r",
+    "prefix": "rtrn",
     "body": "return $0"
   },
   "utils - yield": {
     "prefix": "y",
     "body": "yield $0"
+  },
+  "section": {
+    "prefix": "section",
+    "body": ["//////////////////////", "/// $0", "//////////////////////"]
   }
   // "t.pass()": {
   // 	"prefix": "t.pass",

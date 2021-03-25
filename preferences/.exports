@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
-# See bash_profile for exports of History, Less
 
 PATH=/usr/local/bin:/usr/sbin:/usr/local/sbin:$PATH
 PATH=$PATH:/bin
-PATH=$PATH:$HOME/.dotfiles/bin:$HOME/.bin}
+PATH=$PATH:$HOME/.dotfiles/bin:$HOME/.bin
 
 # The top-most paths override
 PATH=$HOME/.yarn/bin:$PATH  # for using yarn

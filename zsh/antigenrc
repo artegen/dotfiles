@@ -3,7 +3,8 @@
 antigen bundle mafredri/zsh-async
 
 #Theme
-antigen bundle sindresorhus/pure
+# antigen bundle sindresorhus/pure
+antigen bundle marszall87/lambda-pure
 # POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/dritter/powerlevel9k-async_all_the_segments/powerlevel9k.zsh-theme
 # antigen theme dritter/powerlevel9k powerlevel9k --branch=async_all_the_segments
 

@@ -1,115 +1,63 @@
 #!/usr/bin/env bash
+
+[[ -f ./.docker_aliases ]] && source ./.docker_aliases
+
 alias mv='mv -v'
-alias rm='rm -i -v' # to rm dirs, use -r, -f
+alias rm='rm -i -v'
 alias cp='cp -v'
-cp_p () { rsync -WavP --human-readable --progress $1 $2 }  # Copy w/ progress
+cp_p () { rsync -WavP --human-readable --progress "$1" "$2" ; }  # Copy w/ progress
+trash () { mv "$@" ~/.Trash ; }
 
 alias mkdir='mkdir -pv'
-mcd () { mkdir "$1" && cd "$1" && code .; }  # $@ = $1
+mcd () { mkdir "$1" && cd "$1" && code . ; }
 
-alias ll='ls -FGlAhp'
-cdl () { cd '$1' && ll }
-
-# cd() { builtin cd "$@"; ll; }               # Always list directory contents upon 'cd'
-alias ..='cd ../'                           # Go back 1 directory level
-alias ...='cd ../../'                       # Go back 2 directory levels
-alias .3='cd ../../../'                     # Go back 3 directory levels
-alias .4='cd ../../../../'                  # Go back 4 directory levels
-alias .5='cd ../../../../../'               # Go back 5 directory levels
-alias .6='cd ../../../../../../'            # Go back 6 directory levels
-alias ~="cd ~" # `cd` is probably faster to type though
-alias -- -="cd -"
-
-alias libs='cd ~/Dev/libs/'
-alias stash='cd ~/Dev/stash/'
+cdl () { cd '$@' && ll; }
+alias ..='cd ../'
+alias ...='cd ../../'
 
 alias less='less -FSRXc'
-alias qfind="find . -name "
+alias fnd="find . -name "
+alias findgrep="find . -print0 | xargs -0 grep"
+alias ln="ln -v" # print name of each linked file
 
-alias n='npm'
-alias nls='npm ls --depth 0'  #  -g
-alias nw='npm root -g'
-alias ng='npm config set prefix "~/.npm-global" && nw'  # see paths in .exports
-# n i -g qnm live-server serve diff-so-fancy flow-bin npm-run-all typescript updtr eslint-plugin-{flowtype,import,prettier} babel-eslint eslint-config-{airbnb-base,prettier} eslint
-alias ngu='npm config delete prefix'  # nvm will not work in a new session until you switch back
-alias om='npm docs'  # open module on github. npm home and npm repo
-alias nrs="npm run start -s --"
+alias bashrc='source ~/.bashrc'
+alias dos2unix='perl -pi -e "tr/\r//d"'
+alias unix2dos='perl -pi -e "s/\n$/\r\n/g"'
+alias path='echo $PATH | tr -s ":" "\n"'
 
-js5 () { json5 -c "$1".json5 }    # generates path/to/$1.json
-
-alias rn='react-native'
-alias rn-reset='watchman watch-del-all && rm -rf $TMPDIR/react-* && rm -rf node_modules/ && npm cache clean --force && yarn && cd ios && rm -rf Pods Podfile.lock && pod install && cd .. && rn start --reset-cache'
-
-alias y='yarn'
-alias yrc='yarn start —- --reset-cache' # when a new dependency does not work/can’t be found
-alias yrm='rm -rf node_modules yarn.lock'
-alias yup='yarn upgrade'
-ynftag () { yarn info --verbose --no-emoji "$@" dist-tags; }
-
-alias smc='./node_modules/.bin/sequelize migration:create --name'
-
-alias dc='docker-compose'
-alias d='docker'
-
-# trash () { command mv "$@" ~/.Trash ; }     # trash:        Moves a file to the MacOS trash
-ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           Opens any file in MacOS Quicklook Preview
-
+alias vi="vim"
 alias h="history"
 alias j="jobs"
+alias cl='clear'
 alias homebrew="brew"
+alias numFiles='echo $(ls -1 | wc -l)'      # Count of non-hidden files in current dir
+
+alias py='python3'
+alias py2='python2'
+alias pip='pip3' # use \pip for pip2
+alias pipup='pip install -U pip setuptools' # upgrade
 
 alias chmox='chmod -x'
+alias hosts='sudo $EDITOR /etc/hosts'
+alias make5mb='mkfile 5m ./5MB.dat'         # Creates a file of 5mb size (all zeros)
 
-alias hosts='sudo $EDITOR /etc/hosts'   # 127.0.0.1 twitter.com
-# alias fixEtcHosts="sudo -- sh -c \"echo '127.0.0.1 localhost.paypal.com' >> /etc/hosts\""
-
-
-alias ping="echo 'Pinging Google' && ping www.google.com";
-alias och="open -a 'Google Chrome' $1";
-
-alias ag='ag -f --hidden'   # Searcher. Like ack, but faster
-
-alias cl='clear'                             # c:            Clear terminal display
-alias path='echo -e ${PATH//:/\\n}'         # path:         Echo all executable Paths
-alias show_options='shopt'                  # Show_options: display bash options settings
-alias fix_stty='stty sane'                  # fix_stty:     Restore terminal settings when screwed up
-
-alias DT='tee ~/Desktop/terminalOut.txt'    # DT:           Pipe content to file on MacOS Desktop
-
-alias ungz="gunzip -k"
-zipf () { zip -r "$1".zip "$1" ; }          # zipf:         To create a ZIP archive of a folder
-alias numFiles='echo $(ls -1 | wc -l)'      # numFiles:     Count of non-hidden files in current dir
-alias flsz="stat -f \"%z bytes\""           # File size
-alias make5mb='mkfile 5m ./5MB.dat'         # make5mb:      Creates a file of 5mb size (all zeros)
-
-
-#   showa: to remind yourself of an alias (given some part of it)
-#   ------------------------------------------------------------
-showa () { /usr/bin/grep --color=always -i -a1 $@ ~/Library/init/bash/aliases.bash | grep -v '^\s*$' | less -FSRXc ; }
-
-alias v="vim"
-
-
+# alias ll='ls -FGlAhp'
+# alias ls='ls --color=tty'
 # `ls` utils
 # use coreutils `ls` if possible
 hash gls >/dev/null 2>&1 || alias gls="ls"
-
 # always use color, even when piping (to awk,grep,etc)
 if gls --color > /dev/null 2>&1; then colorflag="--color"; else colorflag="-G"; fi;
 export CLICOLOR_FORCE=1
-
 # ls options: A = include hidden, F = put `/` after folders, h = byte unit suffixes
 alias ls='gls -AFh ${colorflag} --group-directories-first'
 alias lsd='gls -l ${colorflag} | grep "^d"' # only directories
 alias l="gls -lAh --color --group-directories-first"
-
-#   lr:  Full Recursive Directory Listing
-#   ------------------------------------------
-# alias lr='ls -R | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'' | less'
+alias lr='ls -R | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'' | less'  # Full Recursive Directory Listing
 
 # List all files, long format, colorized, permissions in octal
 function la(){
- 	ls -l  "$@" | awk '
+ 	ls -l "$@" | awk '
     {
       k=0;
       for (i=0;i<=8;i++)
@@ -128,155 +76,44 @@ function tre() {
 	tree -aC -I '.git|node_modules' --dirsfirst "$@" | less -FRNX;
 }
 
-# Changes to a directory and lists its contents.
-function cdls {
-  builtin cd "$argv[-1]" && ls -la "${(@)argv[1,-2]}"
-}
-
-
 # Grep
 export GREP_COLORS='mt=37;45'
 alias grep="grep --color=auto"
-
-# `cat` with beautiful colors. requires: pip install Pygments
+# `cat` with colors. requires: pip install Pygments
 alias catc='pygmentize -O style=monokai -f console256 -g'
-
-
 
 # GIT aliases and functions
 alias g="git"
-# use hub for git
-# alias git='hub'
-
-function clone() {
-    git clone --depth=1 $1
-    cd $1 # $(basename ${1%.*})
-    code .
-    yarn install
-}
-
 # Undo a `git push`
 alias undopush="git push -f origin HEAD^:master"
-
 # git root
 alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
+alias co="!git stash push -m \"co backup\"; git stash apply; git checkout '$1'"
 
-# git commit browser. needs fzf
-log() {
-  git log --graph --color=always \
-      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-  fzf --ansi --no-sort --reverse --tiebreak=index --toggle-sort=\` \
-      --bind "ctrl-m:execute:
-                echo '{}' | grep -o '[a-f0-9]\{7\}' | head -1 |
-                xargs -I % sh -c 'git show --color=always % | less -R'"
-}
+alias ip="ipconfig getifaddr en0"
+alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
 
+alias dig="dig +nocmd any +multiline +noall +answer"
+alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
+alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 
-
-# Networking. IP address, dig, DNS
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-# alias dig="dig +nocmd any +multiline +noall +answer"
-
-# wget sucks with certificates. Let's keep it simple.
-alias wget="curl -O"
+alias memHogsTop='top -l 1 -o rsize | head -20'
+alias memHogsPs='ps wwaxm -o pid,stat,vsize,rss,time,command | head -10'
+alias cpu_hogs='ps wwaxr -o pid,stat,%cpu,time,command | head -10'
+alias htopm='top -l 9999999 -s 10 -o cpu'  # every 10 seconds
+alias ttop="top -R -F -s 10 -o rsize"
 
 # Pipe my public key to my clipboard. 'more' - opens a file for interactive reading
 alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
 
-
 # Update installed Homebrew, npm, and their installed packages
 alias brew_update="brew -v update; brew upgrade --force-bottle --cleanup; brew cleanup; brew cask cleanup; brew prune; brew doctor; npm-check -g -u"
-alias update_brew_npm='brew_update; npm install npm -g; npm update -g'
-# brew cleanup -n   to see what would get cleaned up
-
 
 # Recursively delete `.DS_Store` files
 alias cleanup_dsstore="find . -name '*.DS_Store' -type f -ls -delete"
 
-alias diskspace_report="df -P -kHl"
-
-# Empty the Trash on all mounted volumes and the main HDD. Then clear sleepimage - won't last long but will give 1G.
-alias emptytrash=" \
-    rm -rfv ~/.Trash/*; \
-    sudo rm -v /private/var/vm/sleepimage; \
-    rm -rv \"~/Library/Caches/Google/Chrome/Default\" \
-"
-    # rm -rv \"~/Library/Caches/Google/Chrome Canary/Default\" \
-    # sudo rm -rfv /Volumes/*/.Trashes; \
-
-# System maintenance http://www.thexlab.com/faqs/maintscripts.html
-alias mntn='sudo periodic daily weekly monthly'
-alias lmntn='ls -al /var/log/*.out'     # last maintenance executed
-
-
-alias cask='brew cask'
-alias where=which # sometimes i forget
-alias brwe=brew  #typos
-
-
-# Nginx short-cuts.
-alias ngup='sudo nginx'
-alias ngdown='sudo nginx -s stop'
-alias ngre='sudo nginx -s stop && sudo nginx'
-alias nglog='tail -f /usr/local/var/log/nginx/access.log'
-alias ngerr='tail -f /usr/local/var/log/nginx/error.log'
-
-
-# Lists the ten most used commands.
-alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
-
-# View HTTP traffic
-alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
-alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
-
-
-
 # File Download
 alias get='curl --continue-at - --location --progress-bar --remote-name --remote-time'
 
-### Download web page with all assets
-# alias getpage='wget --no-clobber --page-requisites --html-extension --convert-links --no-host-directories'
-
-# Stopwatch
-alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
-
-# IP addresses
-# alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-# alias localip="ipconfig getifaddr en0"
-# alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
-
-# Canonical hex dump; some systems have this symlinked
-command -v hd > /dev/null || alias hd="hexdump -C"
-
-# OS X has no `md5sum`, so use `md5` as a fallback
-# command -v md5sum > /dev/null || alias md5sum="md5"
-
-# # OS X has no `sha1sum`, so use `shasum` as a fallback
-# command -v sha1sum > /dev/null || alias sha1sum="shasum"
-
-
-# Trim new lines and copy to clipboard
-alias c="tr -d '\n' | pbcopy"
-
-
-# Hide/show all desktop icons (useful when presenting)
-alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
-
-# URL-encode strings
-alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
-
-# Merge PDF files
-# Usage: `mergepdf -o output.pdf input{1,2,3}.pdf`
-alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py'
-
-# Intuitive map function
-# For example, to list all directories that contain a certain file:
-# find . -name .gitattributes | map dirname
-alias map="xargs -n1"
-
-# Lock the screen (when going AFK)
-alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
-
 # Reload the shell (i.e. invoke as a login shell)
-alias rl="exec $SHELL -l"
+alias rl="exec \$SHELL -l"

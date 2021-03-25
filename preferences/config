@@ -21,3 +21,14 @@ Host *
 	ServerAliveInterval 20
 	ServerAliveCountMax 10
 	AddKeysToAgent yes
+
+Host devbitbucket.cyberport.de
+  User sbuzko_ext
+
+Host git.kruschecompany.com
+  Preferredauthentications publickey
+  IdentityFile ~/.ssh/id_rsa-work-2
+
+# Host git.etixlabs.com
+ # # Hostname ssh.git.etixlabs.com
+ # Port 443

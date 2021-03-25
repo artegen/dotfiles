@@ -2,7 +2,7 @@
 # Load our dotfiles like ~/.bash_prompt, etc…
 #   ~/config/.local can be used for settings you don’t want to commit,
 #   Use it to configure your PATH, thus it being first in line.
-for file in ~/.{bash_prompt,exports,aliases,functions,config/.local}; do
+for file in ~/.{bash_prompt,exports,aliases,functions,docker_aliases,config/.local}; do
     [ -r "$file" ] && source "$file"
 done
 unset file
@@ -81,4 +81,36 @@ shopt -s nocaseglob;
 
 # Correct spelling errors in arguments supplied to cd
 shopt -s cdspell;
+
+# added by Anaconda3 2019.07 installer
+# >>> conda init >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$(CONDA_REPORT_ERRORS=false '/Applications/anaconda3/bin/conda' shell.bash hook 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    \eval "$__conda_setup"
+else
+    if [ -f "/Applications/anaconda3/etc/profile.d/conda.sh" ]; then
+# . "/Applications/anaconda3/etc/profile.d/conda.sh"  # commented out by conda initialize
+        CONDA_CHANGEPS1=false conda activate base
+    else
+        \export PATH="/Applications/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda init <<<
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Applications/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Applications/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Applications/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Applications/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
 

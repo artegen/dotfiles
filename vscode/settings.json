@@ -12,11 +12,33 @@
   "emmet.triggerExpansionOnTab": true,
   "html-css-class-completion.enableEmmetSupport": false,
   "csv-preview.separator": ";",
+  "git.promptToSaveFilesBeforeCommit": true,
+  "jumpy.wordRegexp": "([A-Z]+([0-9a-z])*)|[a-z0-9]{2,}",
+
+  "eslint._legacyModuleResolve": false,
+  "eslint.enable": true,
+  "eslint.nodePath": null,
+  "eslint.run": "onSave",
+  "eslint.workingDirectories": [],
+  "eslint.alwaysShowStatus": true,
+  "eslint.autoFixOnSave": true,
   "prettier.disableLanguages": [
     "css" //better use beautify.js
   ],
-  "git.promptToSaveFilesBeforeCommit": true,
-  "jumpy.wordRegexp": "([A-Z]+([0-9a-z])*)|[a-z0-9]{2,}",
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "es5",
+  "prettier.semi": true,
+  // "prettier.stylelintIntegration": true, stylelint can't fix issues
+  // "prettier.ignorePath": "~/.prettierignore",
+  // "prettier.cssEnable": [""],
+
+  // "vetur.format.defaultFormatterOptions": {
+  //   "prettier": {
+  //     // add your prettier settings here
+  //     "singleQuote": true,
+  //     "semi": false
+  //   }
+  // },
   // "vetur.format.defaultFormatter.html": "js-beautify-html",
   // "beautify.language": {
   //   "css": ["css", "scss"]
@@ -27,7 +49,6 @@
   // },
   "terminal.integrated.confirmOnExit": true,
   "terminal.integrated.scrollback": 30000,
-  "eslint.autoFixOnSave": true,
   "flow.runOnEdit": true,
   // "flow.pathToFlow": "./node_modules/.bin",
   "flow.useNPMPackagedFlow": true,
@@ -47,11 +68,12 @@
 
   /* Main settings */
   "files.associations": {
+    ".htaccess": "shellscript",
     "**/bin/*": "shellscript",
     "*bash*": "shellscript",
-    "*rc": "shellscript",
+    // "*rc": "shellscript",
     "*ssh*": "shellscript",
-    ".aliases": "shellscript",
+    "*aliases": "shellscript",
     ".exports": "shellscript",
     ".functions": "shellscript",
     "brewfile": "shellscript",
@@ -93,7 +115,7 @@
   "debug.inlineValues": true,
   "diffEditor.ignoreTrimWhitespace": true,
   "diffEditor.renderIndicators": true,
-  "diffEditor.renderSideBySide": false,
+  "diffEditor.renderSideBySide": true,
   "editor.acceptSuggestionOnCommitCharacter": true,
   "editor.acceptSuggestionOnEnter": "smart",
   "editor.autoClosingBrackets": true,
@@ -125,17 +147,7 @@
   "editor.useTabStops": true,
   "editor.wordBasedSuggestions": false,
   "editor.wordWrap": "bounded",
-  "editor.wordWrapColumn": 100,
-  "eslint._legacyModuleResolve": false,
-  "eslint.enable": true,
-  "eslint.nodePath": null,
-  "eslint.run": "onType",
-  // "eslint.validate": [
-  //   "javascript", "javascriptreact", "html", "vue", "jsonc",
-  //   { "language": "css", "autoFix": false },
-  //   // { "language": "html", "autoFix": false }
-  // ],
-  "eslint.workingDirectories": [],
+  "editor.wordWrapColumn": 120,
   // "explorer.openEditors.dynamicHeight": false,
   "explorer.openEditors.visible": 4,
   "extensions.autoUpdate": true,
@@ -154,15 +166,6 @@
   "javascript.format.enable": false,
   "javascript.validate.enable": false,
   "json.format.enable": false,
-  "prettier.parser": "flow",
-  "prettier.printWidth": 80,
-  "prettier.singleQuote": true,
-  "prettier.trailingComma": "es5",
-  "prettier.semi": true,
-  "prettier.eslintIntegration": true,
-  // "prettier.stylelintIntegration": true, stylelint can't fix issues
-  // "prettier.ignorePath": "~/.prettierignore",
-  // "prettier.cssEnable": [""],
   "problems.autoReveal": true,
   "python.venvPath": "~/.virtualenvs",
   "python.linting.pylintEnabled": false,
@@ -181,22 +184,20 @@
   "typescript.format.enable": false,
   // "typescript.npm": "/Users/mac/.nvm/versions/node/v8.5.0/bin/npm",
   "typescript.referencesCodeLens.enabled": false,
-  "vsicons.projectDetection.disableDetect": true,
   "window.newWindowDimensions": "inherit",
   "window.openFilesInNewWindow": "default",
   "window.openFoldersInNewWindow": "on",
   "window.restoreWindows": "all",
   "window.titleBarStyle": "custom",
   "window.zoomLevel": 0,
-  "workbench.colorCustomizations": {
-    "tab.activeBackground": "#1245589f",
-    "activityBar.background": "#1d82a79f",
-    "editorGroup.background": "#1245589f",
-    // "sideBar.background": "#c7e1eb9f",
-    "sideBar.background": "#2669819f",
-    "statusBar.background": "#1d82a79f"
-  },
-  "workbench.iconTheme": "vscode-icons",
+  // "workbench.colorCustomizations": {
+  //   "tab.activeBackground": "#1245589f",
+  //   "activityBar.background": "#1d82a79f",
+  //   "editorGroup.background": "#1245589f",
+  //   // "sideBar.background": "#c7e1eb9f",
+  //   "sideBar.background": "#2669819f",
+  //   "statusBar.background": "#1d82a79f"
+  // },
   "workbench.quickOpen.closeOnFocusLost": true,
   "workbench.sideBar.location": "right",
   "workbench.startupEditor": "newUntitledFile",
@@ -204,10 +205,77 @@
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   "cSpell.language": "en",
-  "vsicons.dontShowNewVersionMessage": true,
-  "workbench.colorTheme": "Oceanic Next (dimmed bg)",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "breadcrumbs.enabled": true,
   "workbench.editor.showTabs": true,
-  "cSpell.userWords": ["haspopup"]
+  "cSpell.userWords": [
+    "bgcolor",
+    "clsx",
+    "comparator",
+    "creatable",
+    "datacenter",
+    "datacenters",
+    "dayjs",
+    "dcim",
+    "debounced",
+    "denormalize",
+    "denormalized",
+    "describedby",
+    "dropdown",
+    "etixlabs",
+    "firmwares",
+    "formik",
+    "geobox",
+    "haspopup",
+    "inputmode",
+    "is",
+    "lifecycle",
+    "middlewares",
+    "mixins",
+    "nowrap",
+    "organisation",
+    "orgs",
+    "oulet",
+    "out",
+    "protobuf",
+    "qrcode",
+    "react",
+    "refetch",
+    "refetching",
+    "relogin",
+    "repo",
+    "rerender",
+    "reselect",
+    "selectable",
+    "synapsia",
+    "unmount",
+    "workspaces",
+    "xlocker"
+  ],
+  "versionlens.showVersionLensesAtStartup": false,
+  "terminal.integrated.fontSize": 13,
+  "terminal.integrated.rendererType": "dom",
+  "vsicons.dontShowNewVersionMessage": true,
+  "workbench.iconTheme": "vscode-icons",
+  "editor.suggestSelection": "first",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "workbench.colorTheme": "One Monokai",
+  "gitlens.codeLens.enabled": false,
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "tabnine.experimentalAutoImports": true,
+  "[shellscript]": {
+    "files.eol": "\n"
+  },
+  "sqltools.highlightQuery": false,
+  "gitlens.mode.active": "zen",
+  "cSpell.enabled": true,
+  "workbench.editorAssociations": [
+    {
+      "viewType": "jupyter.notebook.ipynb",
+      "filenamePattern": "*.ipynb"
+    }
+  ]
 }
