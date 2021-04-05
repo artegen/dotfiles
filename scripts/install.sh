@@ -1,13 +1,12 @@
-# Maybe, you'll need to do first things commented out in the bottom, if your machine is completely new.
+#!/usr/bin/env bash
 
 # Exit the script on any command with non 0 return code
 set -e
 
-
 # Error messages are redirected to stderr
-function handle_error {
-  echo "$(basename $0): ERROR! An error was encountered executing line $1." 1>&2;
-  echo 'Exiting with error.' 1>&2;
+function handle_error() {
+  echo "$(basename $0): ERROR! An error was encountered executing line $1." 1>&2
+  echo 'Exiting with error.' 1>&2
   exit 1
 }
 
@@ -17,22 +16,15 @@ trap 'set +x; handle_error $LINENO $BASH_COMMAND' ERR
 # Echo every command being executed
 set -x
 
-
 success() {
-    # Print output in green
-    printf "\e[0;32m  [✔] $1\e[0m\n"
+  # Print output in green
+  printf "\e[0;32m  [✔] $1\e[0m\n"
 }
 
-
-# Symbolic links are not aliases. They don't contain the inode name of the original object,
-# so if its path changes the link is lost. But you can replace original object in this case.
-# Hard links (3rd type) contain inode, but not the path,
-# and you can't delete the object until you remove all the links.
-symlink_dotfiles () {
+symlink_dotfiles() {
   echo '› Symlinking dotfiles'
 
-  for src in $(find -H "$(pwd -P)" -type f -maxdepth 2 -name '.*' -not -name '.DS_Store' -not -name '.gitmodules')
-  do
+  for src in $(find -H "$(pwd -P)" -type f -maxdepth 2 -name '.*' -not -name '.DS_Store' -not -name '.gitmodules'); do
     dst="$HOME/$(basename "${src}")"
     ln -sf "$src" "$dst"
     success "linked $src to $dst"
@@ -45,15 +37,12 @@ symlink_dotfiles () {
   ln -sf "$HOME/.dotfiles/vscode/keybindings.json" "$HOME/Library/Application Support/Code/User/keybindings.json"
 }
 
-
 symlink_dotfiles
-
 
 cd preferences/
 
 # Check for/install Homebrew
-if test ! $(which brew)
-then
+if test ! $(which brew); then
   echo "› Installing Homebrew"
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
@@ -70,13 +59,9 @@ brew bundle
 
 brew cleanup
 
-
-
 #  Set up mac OS
 # echo "› Setting up mac OS"
 # sh my-macos.sh
-
-
 
 echo "› Installing dependencies"
 
@@ -101,11 +86,7 @@ nvm install lts
 
 curl -o- -L https://yarnpkg.com/install.sh | bash
 
-cd  ../vscode/ && sh vscode-pkglist.sh -i
-
-
-
-
+cd ../vscode/ && sh vscode-pkglist.sh -i
 
 echo ''
 echo success 'All installed!'

@@ -1,34 +1,21 @@
-# copy to ~/.ssh/config
+# Copied to ~/.ssh/config
 
 Host github.com
 	ControlMaster auto
 	ControlPersist 120
 
 Host *
-	# Always use SSH2.
+	# Use SSH2
 	Protocol 2
 
-	# Use a shared channel for all sessions to the same host,
-	# instead of always opening a new one. This leads to much
-	# quicker connection times.
-	ControlMaster auto
-	# ControlPath ~/.ssh/control/%r@%h:%p
-	ControlPersist 1800
-
-	# also this stuff
 	Compression yes
 	TCPKeepAlive yes
 	ServerAliveInterval 20
 	ServerAliveCountMax 10
 	AddKeysToAgent yes
 
-Host devbitbucket.cyberport.de
-  User sbuzko_ext
+	# Use a shared channel for all sessions to the same host
+	ControlMaster auto
+	ControlPath ~/.ssh/control/%r@%h:%p
+	ControlPersist 1800
 
-Host git.kruschecompany.com
-  Preferredauthentications publickey
-  IdentityFile ~/.ssh/id_rsa-work-2
-
-# Host git.etixlabs.com
- # # Hostname ssh.git.etixlabs.com
- # Port 443
