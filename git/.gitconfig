@@ -1,23 +1,33 @@
 [include]
   path=~/.config/.gitconfig.local
-[color]
-  ui=true
+# [color]
+#   ui=true
 [push]
   default=upstream
 [fetch]
 	prune=true
 [merge]
 	tool="code --wait"
+	# Include summaries of merged commits in newly created merge commit messages
+	log = true
 [core]
+  attributesfile=~/.gitattributes
   autocrlf=input
   editor="code --wait"
 	excludesfile=~/.gitignore
-  attributesfile=~/.gitattributes
-[rerere]
-  enabled=true
-  autoupdate=true
+	# Make `git rebase` safer on macOS.
+	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+	trustctime = false
+	# Treat spaces before tabs and all kinds of trailing whitespace as an error.
+	# [default] trailing-space: looks for spaces at the end of a line
+	# [default] space-before-tab: looks for spaces before tabs at the beginning of a line
+	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+[branch]
+	# Show most recently changed branches first.
+	sort = -committerdate
 [commit]
-  verbose=true
+	# https://help.github.com/articles/signing-commits-using-gpg/
+	# gpgsign = true
 [pager]
 	# npm install -g diff-so-fancy
 	diff=diff-so-fancy | less --tabs=4 -RFX
@@ -25,11 +35,24 @@
 [interactive]
 	diffFilter="diff-so-fancy"
 [diff]
-    tool=default-difftool
+  tool=default-difftool
+	# Detect copies as well as renames.
+	renames = copies
 [difftool "default-difftool"]
-    cmd=code --wait --diff $LOCAL $REMOTE
+  cmd=code --wait --diff $LOCAL $REMOTE
+[diff "bin"]
+	# Use `hexdump` to diff binary files.
+	textconv = hexdump -v -C
 [help]
 	autocorrect=1  # correct typos
+[init]
+  defaultBranch = main
+# 	templatedir = ~/.git_template
+
+# [filter "lfs"]  # large files, https://git-lfs.github.com/
+# 	clean = git-lfs clean %f
+# 	smudge = git-lfs smudge %f
+# 	required = true
 
 
 [alias]
@@ -193,11 +216,3 @@
   f=fetch
   fa=fetch --all
   fr=fetch origin/${1:-master} && git rebase origin/${1:-master}
-
-# [init]
-# 	templatedir = ~/.git_template
-
-# [filter "lfs"]  # large files, https://git-lfs.github.com/
-# 	clean = git-lfs clean %f
-# 	smudge = git-lfs smudge %f
-# 	required = true

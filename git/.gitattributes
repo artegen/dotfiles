@@ -1,7 +1,7 @@
-# From https://github.com/Danimoth/gitattributes/blob/master/Web.gitattributes
+#Sources: https://github.com/Danimoth/gitattributes/blob/master/Web.gitattributes
+#https://stackoverflow.com/questions/21472971/what-is-the-purpose-of-text-auto-in-gitattributes-file
 
-# Handle line endings automatically for files detected as text
-# and leave all files detected as binary untouched.
+#leave all files detected as binary untouched.
 * text=auto
 
 #
@@ -80,7 +80,6 @@ Procfile text
 *.md text
 LICENSE text
 AUTHORS text
-
 
 #
 ## These files are binary and should be left untouched
