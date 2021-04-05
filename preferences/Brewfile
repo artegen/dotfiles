@@ -1,4 +1,3 @@
-
 # Not on homebrew:
 # teamsql, DBeaver
 # openvpn, tunnelblick, Wireshark
@@ -33,32 +32,28 @@ brew 'wget'
 brew 'vim', args: ['--with-override-system-vi']
 brew 'grep'
 brew 'openssh'
-# z hopping around folders
-brew 'z'
 # `hub fork`, `hub create`, `hub checkout <PRurl>`, https://github.com/github/hub
 brew 'hub'
 # mtr - ping & traceroute.
 brew 'mtr'
-    # allow mtr to run without sudo
-    # mtrlocation=$(brew info mtr | grep Cellar | sed -e 's/ (.*)//'
-    #  e.g. `/Users/name/.homebrew/Cellar/mtr/0.86`
-    # sudo chmod 4755 $mtrlocation/sbin/mtr
-    # sudo chown root $mtrlocation/sbin/mtr
-
+brew 'starship'
 brew "bat" # cat(1) with syntax highlighting and Git integration
 brew "exa" # for 'ls'
 brew 'the_silver_searcher'
+brew 'z'
 brew 'fzf'
 brew 'pv'
 brew 'rename'
 brew 'tree'
 brew 'terminal-notifier'
-brew 'pidcat'   # colored logcat
-brew 'ncdu' # find where your diskspace went
+brew 'pidcat' # colored logcat
+brew 'ncdu'   # find where your diskspace went
 brew 'zsh'
-brew 'git-lfs'  # https://git-lfs.github.com/
+brew 'git-lfs' # https://git-lfs.github.com/
 brew 'jq'
-
+brew 'ack'
+brew 'gnupg' # GnuPG to enable PGP-signing commits
+brew 'screen'
 
 cask_args appdir: '/Applications'
 
@@ -78,4 +73,28 @@ cask 'insomnia'
 tap 'caskroom/fonts'
 cask 'font-fira-code'
 
-
+# Install some CTF tools. https://ctftime.org/ctf-wtf/
+brew 'aircrack-ng'
+brew 'bfg'
+brew 'binutils'
+brew 'binwalk'
+brew 'cifer'
+brew 'dex2jar'
+brew 'dns2tcp'
+brew 'fcrackzip'
+brew 'foremost'
+brew 'hashpump'
+brew 'hydra'
+brew 'john'
+brew 'knock'
+brew 'netpbm'
+brew 'nmap'
+brew 'pngcheck'
+brew 'socat'
+brew 'sqlmap'
+brew 'tcpflow'
+brew 'tcpreplay'
+brew 'tcptrace'
+brew 'ucspi-tcp' # `tcpserver` etc.
+brew 'xpdf'
+brew 'xz'

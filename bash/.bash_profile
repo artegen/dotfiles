@@ -33,9 +33,16 @@ if [ "$TERM" != dumb ] && [ -n "$GRC" ]; then
     done
 fi
 
+eval "$(starship init bash)"
+
 # z for cd. `brew install z`
 zpath="$(brew --prefix)/etc/profile.d/z.sh"
 [ -s $zpath ] && source $zpath
+
+# allow mtr to run without sudo
+# mtrlocation=$(brew info mtr | grep Cellar | sed -e 's/ (.*)//')
+# sudo chmod 4755 "$mtrlocation/sbin/mtr"
+# sudo chown root "$mtrlocation/sbin/mtr"
 
 # Enable tab completion for `g` by marking it as an alias for `git`, then alias g=git will autocomplete
 if type _git &>/dev/null; then

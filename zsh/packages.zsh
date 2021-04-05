@@ -1,6 +1,3 @@
-# Load theme settings
-# source "${ZDOTDIR:-$HOME}/config/powerlevel9k.zsh"
-
 #Load module settings
 source "${ZDOTDIR:-$HOME}/config/history.zsh"
 source "${ZDOTDIR:-$HOME}/config/history-substring-search.zsh"

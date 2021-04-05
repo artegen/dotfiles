@@ -1,16 +1,15 @@
-
 #Export new path for zsh configuration files
 export ZDOTDIR="$HOME/.dotfiles/zsh"
-
 
 # uncomment to profile prompt startup with zprof
 # zmodload zsh/zprof
 # see below for stop command
 
-
 # Load default dotfiles
 source ~/.bash_profile
 
+# theme
+eval "$(starship init zsh)"
 
 # Set TERM early for guake
 # export TERM="xterm-256color"
@@ -58,13 +57,11 @@ setopt AUTO_PUSHD
 setopt PUSHD_IGNORE_DUPS
 setopt PUSHD_SILENT
 
-
 # Set Tmuxinator alias
 # alias mux="tmuxinator start"
 
 # Virtualenvwrapper, python
 # source "$HOME/.local/bin/virtualenvwrapper_lazy.sh"
-
 
 # # all of our zsh files
 # typeset -U config_files
@@ -99,16 +96,12 @@ setopt PUSHD_SILENT
 
 # fpath=( "$HOME/.functions" $fpath )
 
-
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 
 # Ensure that a non-login, non-interactive shell has a defined environment.
 if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "$HOME/.bash_profile" ]]; then
   source "$HOME/.bash_profile"
 fi
-
-
 
 bindkey '^[^[[D' backward-word
 bindkey '^[^[[C' forward-word
@@ -117,7 +110,6 @@ bindkey '^[[5C' end-of-line
 bindkey '^[[3~' delete-char
 bindkey '^[^N' newtab
 bindkey '^?' backward-delete-char
-
 
 # # uncomment to finish profiling
 # # zprof
