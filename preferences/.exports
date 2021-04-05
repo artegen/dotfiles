@@ -1,20 +1,12 @@
 #!/usr/bin/env bash
 
 PATH=/usr/local/bin:/usr/sbin:/usr/local/sbin:$PATH
-PATH=$PATH:/bin
-PATH=$PATH:$HOME/.dotfiles/bin:$HOME/.bin
 
 # The top-most paths override
-PATH=$HOME/.yarn/bin:$PATH  # for using yarn
-PATH=./node_modules/.bin:$PATH  # first project's local modules
-PATH=$HOME/.npm-global/bin:$PATH  # common global utils
-# specific utils for node versions, it's not ideal managing global deps witn nvm.
-# careful! This will require to switch npm config prefix if using nvm
-# don't leave nvm with incompatible prefix or it will not work in new sessions.
-PATH=$HOME/.nvm/versions/node/*/bin:$PATH
-
-# PATH=~/.npm-global/bin/flow:$PATH  # for flow support in vscode
-# PATH=~/.nvm/versions/node/v8.5.0/bin/node:$PATH
+PATH=$HOME/.yarn/bin:$PATH       # for using yarn
+PATH=./node_modules/.bin:$PATH   # first project's local modules
+PATH=$HOME/.npm-global/bin:$PATH # common global utils
+PATH="$HOME/.nvm/versions/node/*/bin":$PATH
 
 # Add Visual Studio Code (code)
 PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
@@ -22,9 +14,10 @@ PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 ANDROID_HOME=$HOME/Library/Android/sdk
 PATH=$PATH:$ANDROID_HOME/tools
 PATH=$PATH:$ANDROID_HOME/platform-tools
-JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
 PATH=$PATH:$JAVA_HOME
 PATH=$HOME/.fastlane/bin:$PATH
+
 PATH=$PATH:/usr/local/opt/openssl/bin
 
 export PATH
@@ -33,124 +26,72 @@ export AWS_SDK_LOAD_CONFIG=1
 export AWS_SHARED_CREDENTIALS_FILE=~/.aws/credentials
 export AWS_CONFIG_FILE=~/.aws/config
 
-# to help editor linters etc with finding my PATHS
-# case $- in
-#    *i*) source ~/.local
-# esac
-
 export MANPATH="/usr/local/man:/usr/local/*/man:$MANPATH"
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X"
-
-export PAGER="less -X"
-
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-
-##
-## hooking in other apps…
-##
 
 # NVM (should load after the system's node PATH)
 if [ -d $HOME/.nvm ]; then
   export NVM_DIR="$HOME/.nvm"
   export NVM_LAZY_LOAD=true
-  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"   # it's huge!
 fi
 
 # Enable persistent REPL history for `node`.
-export NODE_REPL_HISTORY=~/.node_history;
+export NODE_REPL_HISTORY=~/.node_history
 # Allow 32³ entries; the default is 1000.
-export NODE_REPL_HISTORY_SIZE='32768';
+export NODE_REPL_HISTORY_SIZE='32768'
 # Use sloppy mode by default, matching web browsers.
-export NODE_REPL_MODE='sloppy';
-
+export NODE_REPL_MODE='sloppy'
 
 # Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
-export PYTHONIOENCODING='UTF-8';
-
-
-##
-## HISTORY
-##
+export PYTHONIOENCODING='UTF-8'
 
 # Use standard ISO 8601 timestamp
 # %F equivalent to %Y-%m-%d
 # %T equivalent to %H:%M:%S (24-hours format)
 export HISTTIMEFORMAT='%F %T '
-
-# keep history up to date, across sessions, in realtime
-#  http://unix.stackexchange.com/a/48113
-export HISTCONTROL="erasedups:ignoreboth"       # no duplicate entries
-export HISTSIZE=2000                           # big big history (default is 500)
-export HISTFILESIZE=$HISTSIZE                   # big big history
-type shopt &> /dev/null && shopt -s histappend  # append to history, don't overwrite it
-
+# Increase Bash history size. Allow 32³ entries; the default is 500.
+export HISTSIZE='32768'
+export HISTFILESIZE="${HISTSIZE}"
+# Omit duplicates and commands that begin with a space from history.
+export HISTCONTROL='ignoreboth'
 # Don't record some commands
 export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
-
 # Save multi-line commands as one command in bash
-type shopt &> /dev/null && shopt -s cmdhist
-
+type shopt &>/dev/null && shopt -s cmdhist
 # Save and reload the history after each command finishes
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
-
 # ^ the only downside with this is [up] on the readline will go over all history not just this bash session.
-
-# Increase Bash history size. Allow 32³ entries; the default is 500.
-# export HISTSIZE='32768';
-# export HISTFILESIZE="${HISTSIZE}";
-# # Omit duplicates and commands that begin with a space from history.
-# export HISTCONTROL='ignoreboth';
-
 
 # Prefer US English and use UTF-8
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US"
 
-
 # Default editor for local and remote sessions
 if [[ -n "$SSH_CONNECTION" ]]; then
   # on the server
-  if [ command -v vim >/dev/null 2>&1 ]; then
+  if command -v vim >/dev/null 2>&1; then
     export EDITOR='vim'
   else
     export EDITOR='vi'
   fi
 else
   # local
-  export EDITOR='code' # change if needed
+  export EDITOR='code'
 fi
 
-
-# export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-
-# here's LS_COLORS, find separate file with the map of colors .dircolors
-# github.com/trapd00r/LS_COLORS
-# command -v gdircolors >/dev/null 2>&1 || alias gdircolors="dircolors"
-# eval "$(gdircolors -b ~/.dircolors)"
-
-
-# Clear duplicates from path arrays for zsh.
-# typeset -gU cdpath fpath mailpath path
-
 # Enable ssh-agent (based on systemd service)
-# export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 # Temp directory variable setup.
-# if [[ ! -d "$TMPDIR" ]]; then
-#   export TMPDIR="/tmp/$USER"
-#   mkdir -p -m 700 "$TMPDIR"
-# fi
-# TMPPREFIX="${TMPDIR%/}/zsh"
-
-
-# Set Less options. Mouse enabled.
-# export LESS='-g -i -M -R -S -w -z-4'
+if [[ ! -d "$TMPDIR" ]]; then
+  export TMPDIR="/tmp/$USER"
+  mkdir -p -m 700 "$TMPDIR"
+fi
+export TMPPREFIX="${TMPDIR%/}/zsh"
 
 # Default pager
-export PAGER='less'
+export PAGER="less -X"
 
 # less options
 less_opts=(
@@ -176,19 +117,5 @@ export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
 export LESS_TERMCAP_ue=$'\E[0m'           # end underline
 export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 
-
 #   Set default blocksize for ls, df, du
-#   from this: http://hints.macworld.com/comment.php?mode=view&cid=24491
-#   ------------------------------------------------------------
 export BLOCKSIZE=1k
-
-
-# SSH
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# Add travis gem
-# TRAVIS="$HOME/.travis/travis.sh"
-# [ -f "$TRAVIS" ] && source $TRAVIS
-
-# Atom
-# export ATOM_USER=${ATOM_USER:-???}
