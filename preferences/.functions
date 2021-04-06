@@ -80,3 +80,17 @@ function get-pass() {
 findPid() { lsof -t -c "$@"; }
 
 my_ps() { ps "$@" -u $USER -o pid,%cpu,%mem,start,time,bsdtime,command; } # owned by current user
+
+function start_ssh_agent() {
+	SSH_ENV="$HOME/.ssh/environment"
+	/usr/bin/ssh-agent | sed 's/^echo/#echo/' >"${SSH_ENV}"
+	chmod 600 "${SSH_ENV}"
+	. "${SSH_ENV}" >/dev/null
+}
+
+function ec2list() {
+	aws ec2 describe-instances \
+		--filters "Name=instance-state-name,Values=running" "Name=tag:Name,Values=$1" \
+		--query 'Reservations[].Instances[].[Tags[?Key==`Name`] | [0].Value,PublicDnsName] | sort_by(@, &[0])' \
+		--output text
+}

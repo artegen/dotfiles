@@ -4,6 +4,9 @@ Host github.com
 	ControlMaster auto
 	ControlPersist 120
 
+Host git.example.com
+  IdentityFile ~/.ssh/id_rsa-2
+
 Host *
 	# Use SSH2
 	Protocol 2
@@ -18,4 +21,3 @@ Host *
 	ControlMaster auto
 	ControlPath ~/.ssh/control/%r@%h:%p
 	ControlPersist 1800
-

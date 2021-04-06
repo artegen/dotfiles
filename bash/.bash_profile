@@ -13,13 +13,10 @@ set -o noclobber
 # Better cd
 # Autocorrect on directory names to match a glob.
 shopt -s dirspell 2>/dev/null
-
 # Turn on recursive globbing (enables ** to recurse all directories, e.g. `echo **/*.txt`)
 shopt -s globstar 2>/dev/null
-
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob 2>/dev/null
-
 # Correct spelling errors in arguments supplied to cd
 shopt -s cdspell 2>/dev/null
 
@@ -33,7 +30,8 @@ if [ "$TERM" != dumb ] && [ -n "$GRC" ]; then
     done
 fi
 
-eval "$(starship init bash)"
+# theme
+# eval "$(starship init bash)"
 
 # z for cd. `brew install z`
 zpath="$(brew --prefix)/etc/profile.d/z.sh"
@@ -57,6 +55,11 @@ if which brew &>/dev/null && [ -r "$(brew --prefix)/etc/profile.d/bash_completio
 elif [ -f /etc/bash_completion ]; then
     source /etc/bash_completion
 fi
+
+# setup dk alias completion
+# https://github.com/cykerway/complete-alias
+# source "$BASH_COMPLETION_COMPAT_DIR/complete_alias"
+# complete -F _complete_alias dk
 
 # # hub completion
 if which hub >/dev/null; then
