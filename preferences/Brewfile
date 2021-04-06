@@ -14,9 +14,8 @@ tap "homebrew/core"
 # brew 'postgresql' # install via http://postgresapp.com/
 # brew 'pgcli'
 # brew 'node' # use nvm
-brew 'nvm' # nvm use 8
-# GraphiQL
 # brew 'mongodb' # use mongodb compass
+brew 'go'
 # brew 'python'
 brew 'python3'
 brew 'ruby'
@@ -32,10 +31,8 @@ brew 'wget'
 brew 'vim', args: ['--with-override-system-vi']
 brew 'grep'
 brew 'openssh'
-# `hub fork`, `hub create`, `hub checkout <PRurl>`, https://github.com/github/hub
-brew 'hub'
-# mtr - ping & traceroute.
-brew 'mtr'
+brew 'hub' # `hub fork`, `hub create`, `hub checkout <PRurl>`, https://github.com/github/hub
+brew 'mtr' # mtr - ping & traceroute.
 brew 'starship'
 brew "bat" # cat(1) with syntax highlighting and Git integration
 brew "exa" # for 'ls'
@@ -54,13 +51,14 @@ brew 'jq'
 brew 'ack'
 brew 'gnupg' # GnuPG to enable PGP-signing commits
 brew 'screen'
+brew 'awscli'
 
 cask_args appdir: '/Applications'
 
 cask 'virtualbox'
 cask 'visual-studio-code'
 cask 'postico'
-cask 'dbeaver-community'
+# cask 'dbeaver-community'
 cask 'skype'
 cask 'firefox'
 cask 'google-chrome'
@@ -68,7 +66,10 @@ cask 'slack'
 cask 'spectacle'
 cask 'iterm2'
 cask 'postman'
-cask 'insomnia'
+# cask 'insomnia'
+# cask 'graphiql'
+cask 'gpg-suite'
+cask 'rescuetime'
 
 tap 'caskroom/fonts'
 cask 'font-fira-code'

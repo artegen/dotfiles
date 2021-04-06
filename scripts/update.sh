@@ -1,7 +1,4 @@
-#  updates and installables from the Mac App Store
-# echo "› sudo softwareupdate -i -a"
-# sudo softwareupdate -i -a
-
+#!/usr/bin/env bash
 
 # Update installed Homebrew + its installed packages
 brew -v update
@@ -15,4 +12,3 @@ brew cleanup
 brew cask cleanup
 brew prune
 brew doctor
-
