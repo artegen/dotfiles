@@ -57,7 +57,7 @@ brew cleanup
 
 #  Set up mac OS
 log "Setting up mac OS"
-./configs/macos.sh
+sh ./configs/macos.sh
 
 # Additional packages
 log "Installing more packages"
