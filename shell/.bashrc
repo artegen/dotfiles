@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-#Load the shell dotfiles
-#~/.config/.local can be used for settings you don’t want to commit,
-for file in ~/.{bash_prompt,exports,aliases,functions,docker_aliases,config/.local}; do
-    [ -r "$file" ] && [ -f "$file" ] && source "$file"
+for file in ~/.{exports,aliases,functions,config/.local}; do
+    source "$file"
 done
 unset file
 
@@ -35,7 +33,7 @@ if [[ -z "$ZSH_VERSION" ]]; then
     eval "$(starship init bash)"
 fi
 
-# z for cd. `brew install z`
+# z for cd
 zpath="$(brew --prefix)/etc/profile.d/z.sh"
 [ -s $zpath ] && source $zpath
 

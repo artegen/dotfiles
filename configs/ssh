@@ -1,11 +1,9 @@
-# Copied to ~/.ssh/config
-
 Host github.com
 	ControlMaster auto
 	ControlPersist 120
 
 Host git.example.com
-  IdentityFile ~/.ssh/id_rsa-2
+  	IdentityFile ~/.ssh/id_rsa-2
 
 Host *
 	# Use SSH2
