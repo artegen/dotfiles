@@ -7,7 +7,7 @@ link() {
   file=$1
   link=$2
 
-  mkdir -p "$(dirname "${link}")"
+  # mkdir -p "$(dirname "${link}")"
   ln -vf -s "${file}" "${link}"
 }
 

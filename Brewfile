@@ -23,12 +23,12 @@ brew 'ruby'
 brew 'coreutils'
 brew 'moreutils'
 brew 'findutils'
-brew 'gnu-sed', args: ['--with-default-names']
+brew 'gnu-sed'
 brew 'bash'
 brew 'bash-completion'
 brew 'wget'
 # More recent versions of some OS X tools
-brew 'vim', args: ['--with-override-system-vi']
+brew 'vim' # , args: ['--with-override-system-vi']
 brew 'grep'
 brew 'openssh'
 brew 'hub' # `hub fork`, `hub create`, `hub checkout <PRurl>`, https://github.com/github/hub
@@ -61,7 +61,7 @@ cask 'postico'
 # cask 'dbeaver-community'
 cask 'skype'
 cask 'firefox'
-cask 'google-chrome'
+# cask 'google-chrome'
 cask 'slack'
 cask 'spectacle'
 cask 'iterm2'
@@ -71,7 +71,7 @@ cask 'postman'
 cask 'gpg-suite'
 cask 'rescuetime'
 
-tap 'caskroom/fonts'
+tap "homebrew/cask-fonts"
 cask 'font-fira-code'
 
 # Install some CTF tools. https://ctftime.org/ctf-wtf/
