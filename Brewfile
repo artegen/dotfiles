@@ -1,8 +1,9 @@
 # Not on homebrew:
 # teamsql, DBeaver
-# openvpn, tunnelblick, Wireshark
-# Itsycal, Be Focused, Google Backup and sync
+# tunnelblick, Wireshark
+# Be Focused, focus matrix, Google Backup and sync
 # RecordIt
+# For these see also .exports
 # RN: Xcode, # brew 'cocoapods' # cask 'java8' # react-native needs this version for android studio to build apk # cask 'intellij-idea' # cask 'android-studio' # mas 'Apple Configurator 2', id: 1037126344 # cask 'fastlane'
 
 tap "homebrew/bundle"
@@ -13,7 +14,7 @@ tap "homebrew/core"
 # brew 'docker-compose' # use Docker Desktop https://docs.docker.com/v17.09/docker-for-mac/install/
 # brew 'postgresql' # install via http://postgresapp.com/
 # brew 'pgcli'
-# brew 'node' # use nvm
+brew 'node' # system's latest node.js
 # brew 'mongodb' # use mongodb compass
 brew 'go'
 # brew 'python'
@@ -69,7 +70,10 @@ cask 'postman'
 # cask 'insomnia'
 # cask 'graphiql'
 cask 'gpg-suite'
+cask 'openvpn-connect'
 cask 'rescuetime'
+cask 'itsycal'
+cask 'flux'
 
 tap "homebrew/cask-fonts"
 cask 'font-fira-code'
