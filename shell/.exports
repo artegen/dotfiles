@@ -1,22 +1,23 @@
 #!/usr/bin/env bash
 
+# Overrides
 PATH=/usr/local/bin:/usr/sbin:/usr/local/sbin:$PATH
 
-# The top-most paths override
-PATH=$HOME/.yarn/bin:$PATH       # for using yarn
-PATH=./node_modules/.bin:$PATH   # first project's local modules
-PATH=$HOME/.npm-global/bin:$PATH # common global utils
-PATH="$HOME/.nvm/versions/node/*/bin":$PATH
+PATH=$HOME/.yarn/bin:$PATH     # for using yarn
+PATH=./node_modules/.bin:$PATH # first project's local modules
+# PATH=$HOME/.npm-global/bin:$PATH # global node modules. Use lts node.js for the system with separate modules. Use NVM for managing versions in dev.
+PATH="$HOME/.nvm/versions/node/*/bin":$PATH # node.js versions bins
 
-# Add Visual Studio Code (code)
+# Additions
+# Visual Studio Code (code)
 PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
-ANDROID_HOME=$HOME/Library/Android/sdk
-PATH=$PATH:$ANDROID_HOME/tools
-PATH=$PATH:$ANDROID_HOME/platform-tools
-JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
-PATH=$PATH:$JAVA_HOME
-PATH=$HOME/.fastlane/bin:$PATH
+# ANDROID_HOME=$HOME/Library/Android/sdk
+# PATH=$PATH:$ANDROID_HOME/tools
+# PATH=$PATH:$ANDROID_HOME/platform-tools
+# JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+# PATH=$PATH:$JAVA_HOME
+# PATH=$HOME/.fastlane/bin:$PATH
 
 PATH=$PATH:/usr/local/opt/openssl/bin
 
@@ -25,23 +26,6 @@ export PATH
 export AWS_SDK_LOAD_CONFIG=1
 export AWS_SHARED_CREDENTIALS_FILE=~/.aws/credentials
 export AWS_CONFIG_FILE=~/.aws/config
-
-export MANPATH="/usr/local/man:/usr/local/*/man:$MANPATH"
-# Don’t clear the screen after quitting a manual page
-export MANPAGER="less -X"
-
-# NVM (should load after the system's node PATH)
-if [ -d $HOME/.nvm ]; then
-  export NVM_DIR="$HOME/.nvm"
-  export NVM_LAZY_LOAD=true
-fi
-
-# Enable persistent REPL history for `node`.
-export NODE_REPL_HISTORY=~/.node_history
-# Allow 32³ entries; the default is 1000.
-export NODE_REPL_HISTORY_SIZE='32768'
-# Use sloppy mode by default, matching web browsers.
-export NODE_REPL_MODE='sloppy'
 
 # Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
 export PYTHONIOENCODING='UTF-8'
@@ -60,7 +44,7 @@ export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 # Save multi-line commands as one command in bash
 type shopt &>/dev/null && shopt -s cmdhist
 # Save and reload the history after each command finishes
-export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+# export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 # ^ the only downside with this is [up] on the readline will go over all history not just this bash session.
 
 # Prefer US English and use UTF-8
@@ -83,12 +67,29 @@ fi
 # Enable ssh-agent (based on systemd service)
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
+# NVM (should load after the system's node PATH)
+if [ -d $HOME/.nvm ]; then
+  export NVM_DIR="$HOME/.nvm"
+  export NVM_LAZY_LOAD=true
+fi
+
+# Enable persistent REPL history for `node`.
+export NODE_REPL_HISTORY=~/.node_history
+# Allow 32³ entries; the default is 1000.
+export NODE_REPL_HISTORY_SIZE='32768'
+# Use sloppy mode by default, matching web browsers.
+export NODE_REPL_MODE='sloppy'
+
 # Temp directory variable setup.
 if [[ ! -d "$TMPDIR" ]]; then
   export TMPDIR="/tmp/$USER"
   mkdir -p -m 700 "$TMPDIR"
 fi
 export TMPPREFIX="${TMPDIR%/}/zsh"
+
+export MANPATH="/usr/local/man:/usr/local/*/man:$MANPATH"
+# Don’t clear the screen after quitting a manual page
+export MANPAGER="less -X"
 
 # Default pager
 export PAGER="less -X"
