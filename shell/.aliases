@@ -17,6 +17,7 @@ alias fnd="find . -name "
 alias findgrep="find . -print0 | xargs -0 grep"
 alias ln="ln -v" # print name of each linked file
 
+alias sh='bash'
 alias bashrc='source ~/.bashrc'
 alias dos2unix='perl -pi -e "tr/\r//d"'
 alias unix2dos='perl -pi -e "s/\n$/\r\n/g"'

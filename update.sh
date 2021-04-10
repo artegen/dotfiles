@@ -4,11 +4,9 @@
 brew -v update
 
 # uninstall all Homebrew formulae not listed in Brewfile
-$ brew bundle cleanup --force
 # Unless the --force option is passed, formulae will be listed rather than actually uninstalled.
+# brew bundle cleanup --force
 
-brew upgrade --force-bottle --cleanup
-brew cleanup
-brew cask cleanup
-brew prune
+brew upgrade # --greedy, for casks without autoupdates active
+
 brew doctor

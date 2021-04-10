@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-for file in ~/.{exports,aliases,functions,config/.local}; do
+for file in ~/.{exports,aliases,functions}; do
     source "$file"
 done
 unset file
