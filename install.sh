@@ -37,15 +37,37 @@ symlink_dotfiles() {
 
 symlink_dotfiles
 
+# some software needs Xcode
+log "Checking Xcode install"
+xcode-select --install 2>&1 | grep installed >/dev/null
+if [[ $? ]]; then
+    log "Installing Xcode"
+    xcode-select --install
+    log "Press a key after Xcode has been installed to continue..."
+else
+    log "Xcode already installed"
+fi
+
 if test ! "$(which brew)"; then
     log "Installing Homebrew"
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+    brew update
 fi
 
-brew update
 brew tap Homebrew/bundle
 log "Installing brew packages"
 brew bundle
+brew doctor # all setup correctly?
+
+# Change shell for the root user, ex. `sh script.sh` uses it
+BREW_BASH_PATH=$(which -a bash | head -n 1)
+if grep -Fxq "/etc/shells" "$BREW_BASH_PATH"; then
+    echo "latest homebrew bash version already configured"
+else
+    echo "$BREW_BASH_PATH" | sudo tee -a /etc/shells
+    sudo chsh -s "$BREW_BASH_PATH"
+fi
 
 log "Setting up mac OS"
 bash ./configs/macos.sh
