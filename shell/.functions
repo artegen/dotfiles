@@ -94,3 +94,7 @@ function ec2list() {
 		--query 'Reservations[].Instances[].[Tags[?Key==`Name`] | [0].Value,PublicDnsName] | sort_by(@, &[0])' \
 		--output text
 }
+
+reswap() {
+	sudo swapoff -a && sudo swapon -a
+}

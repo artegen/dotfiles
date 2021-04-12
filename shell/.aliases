@@ -78,7 +78,7 @@ function tre() {
 
 # Grep
 export GREP_COLORS='mt=37;45'
-alias grep="grep --color=auto"
+alias grep="egrep --color=auto"
 # `cat` with colors. requires: pip install Pygments
 alias catc='pygmentize -O style=monokai -f console256 -g'
 
@@ -98,6 +98,7 @@ alias server_ip='hostname -I' # current local IP address
 alias dig="dig +nocmd any +multiline +noall +answer"
 alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+alias netstat="netstat -anp"
 
 alias memHogsTop='top -l 1 -o rsize | head -20'
 alias memHogsPs='ps wwaxm -o pid,stat,vsize,rss,time,command | head -10'
