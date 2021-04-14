@@ -37,7 +37,7 @@ symlink_dotfiles() {
 
 symlink_dotfiles
 
-# some software needs Xcode
+# Install OS dependencies, full Xcode, not just git/CLI tools
 log "Checking Xcode install"
 xcode-select --install 2>&1 | grep installed >/dev/null
 if [[ $? ]]; then

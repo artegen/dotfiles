@@ -1,27 +1,15 @@
 #!/usr/bin/env bash
 
-# Overrides
+export ZSHRC="$HOME/.zshrc"
+
 PATH=/usr/local/bin:/usr/sbin:/usr/local/sbin:$PATH
-
-PATH=$HOME/.yarn/bin:$PATH     # for using yarn
-PATH=./node_modules/.bin:$PATH # first project's local modules
-# PATH=$HOME/.npm-global/bin:$PATH # global node modules. Use lts node.js for the system with separate modules. Use NVM for managing versions in dev.
-PATH="$HOME/.nvm/versions/node/*/bin":$PATH # node.js versions bins
-
-# Additions
-# Visual Studio Code (code)
+PATH="$HOME/.fzf/bin:$PATH"
 PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-
-# ANDROID_HOME=$HOME/Library/Android/sdk
-# PATH=$PATH:$ANDROID_HOME/tools
-# PATH=$PATH:$ANDROID_HOME/platform-tools
-# JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
-# PATH=$PATH:$JAVA_HOME
-# PATH=$HOME/.fastlane/bin:$PATH
-
 PATH=$PATH:/usr/local/opt/openssl/bin
-
 export PATH
+
+export VIMRC="$HOME/.vimrc"
+export GTAGSLABEL=pygments
 
 export AWS_SDK_LOAD_CONFIG=1
 export AWS_SHARED_CREDENTIALS_FILE=~/.aws/credentials
@@ -29,6 +17,10 @@ export AWS_CONFIG_FILE=~/.aws/config
 
 # Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
 export PYTHONIOENCODING='UTF-8'
+# export PYENV_ROOT="$HOME/.pyenv"
+# export PATH="$PYENV_ROOT/bin:$PATH"
+# export PYTHONSTARTUP="${HOME}/.pythonrc"
+# export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
 # Use standard ISO 8601 timestamp
 # %F equivalent to %Y-%m-%d
@@ -67,6 +59,11 @@ fi
 # Enable ssh-agent (based on systemd service)
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
+export PATH=$HOME/.yarn/bin:$PATH # for using yarn
+# PATH=./node_modules/.bin:$PATH # first project's local modules
+# PATH=$HOME/.npm-global/bin:$PATH # global node modules. Use lts node.js for the system with separate modules. Use NVM for managing versions in dev.
+export PATH="$HOME/.nvm/versions/node/*/bin":$PATH # node.js versions bins
+
 # NVM (should load after the system's node PATH)
 if [ -d $HOME/.nvm ]; then
   export NVM_DIR="$HOME/.nvm"
@@ -79,6 +76,13 @@ export NODE_REPL_HISTORY=~/.node_history
 export NODE_REPL_HISTORY_SIZE='32768'
 # Use sloppy mode by default, matching web browsers.
 export NODE_REPL_MODE='sloppy'
+
+# ANDROID_HOME=$HOME/Library/Android/sdk
+# PATH=$PATH:$ANDROID_HOME/tools
+# PATH=$PATH:$ANDROID_HOME/platform-tools
+# JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+# PATH=$PATH:$JAVA_HOME
+# PATH=$HOME/.fastlane/bin:$PATH
 
 # Temp directory variable setup.
 if [[ ! -d "$TMPDIR" ]]; then

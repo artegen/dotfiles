@@ -132,7 +132,6 @@ brew 'rsync'
 # brew 'stone-soup'
 # brew 'telnet'
 # brew 'the_silver_searcher'
-# brew 'tig'
 # brew 'watchman'
 # brew 'wavpack'
 # brew 'universal-ctags/universal-ctags/universal-ctags', args: ['HEAD']

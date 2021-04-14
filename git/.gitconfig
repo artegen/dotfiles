@@ -178,10 +178,8 @@
 
   # Stash (s)
   st=stash
-  s=stash --include-untracked
+  s = stash --all
   sth = stash --keep-index
-  sthu = stash --include-untracked
-  stha = stash --all
   sa=stash apply
   sx=stash drop
   sl=stash list

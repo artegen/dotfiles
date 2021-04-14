@@ -216,6 +216,9 @@ defaults write com.apple.finder QuitMenuItem -bool true
 # Finder: disable window animations and Get Info animations
 defaults write com.apple.finder DisableAllAnimations -bool true
 
+# Finder: allow text selection in Quick Look
+defaults write com.apple.finder QLEnableTextSelection -bool true
+
 # To set Desktop as the default location for new Finder windows
 # use `PfDe` and `file://${HOME}/Desktop/`
 defaults write com.apple.finder NewWindowTarget -string "PfLo"

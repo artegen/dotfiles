@@ -19,10 +19,11 @@ alias ln="ln -v" # print name of each linked file
 
 alias sh='bash'
 alias bashrc='source ~/.bashrc'
+alias reset="reset && resource"
+alias resource="source \$ZSHRC"
 alias dos2unix='perl -pi -e "tr/\r//d"'
 alias unix2dos='perl -pi -e "s/\n$/\r\n/g"'
 alias path='echo $PATH | tr -s ":" "\n"'
-alias vi="vim"
 alias h="history"
 alias j="jobs"
 alias cl='clear'
@@ -76,19 +77,27 @@ function tre() {
   tree -aC -I '.git|node_modules' --dirsfirst "$@" | less -FRNX
 }
 
-# Grep
 export GREP_COLORS='mt=37;45'
 alias grep="egrep --color=auto"
-# `cat` with colors. requires: pip install Pygments
-alias catc='pygmentize -O style=monokai -f console256 -g'
 
-# GIT aliases and functions
+if which pygmentize >/dev/null; then
+  # `cat` with colors. requires: pip install Pygments
+  alias catc='pygmentize -O style=monokai -f console256 -g'
+fi
+
 alias g="git"
 # Undo a `git push`
 alias undopush="git push -f origin HEAD^:master"
 # git root
 alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
 alias co="!git stash push -m \"co backup\"; git stash apply; git checkout '$1'"
+
+if which vim >/dev/null; then
+  alias v=vim
+  alias vi=vim
+  alias vg="vim -g"
+  alias vless="vim -R -c "set number" -u /usr/share/vim/vim74/macros/less.vim"
+fi
 
 alias ip="ipconfig getifaddr en0"
 alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
