@@ -69,6 +69,12 @@ function la() {
     }'
 }
 
+if command -v colordiff >/dev/null 2>&1; then
+  alias diff='colordiff -Nuar'
+else
+  alias diff='diff -Nuar'
+fi
+
 # `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
 # the `.git` directory, listing directories first. The output gets piped into
 # `less` with options to preserve color and line numbers, unless the output is
@@ -96,7 +102,18 @@ if which vim >/dev/null; then
   alias v=vim
   alias vi=vim
   alias vg="vim -g"
-  alias vless="vim -R -c "set number" -u /usr/share/vim/vim74/macros/less.vim"
+  # alias vless="vim -R -c "set number" -u /usr/share/vim/vim74/macros/less.vim"
+fi
+
+# Color support for ripgrep
+if command -v rg >/dev/null 2>&1; then
+  alias rg='rg --color=auto'
+fi
+
+# Wget will use the supplied file as the HSTS database
+if command -v wget >/dev/null 2>&1; then
+  # shellcheck disable=SC2139
+  alias wget="wget --hsts-file=${XDG_CACHE_HOME:-$HOME/.cache}/wget-hsts"
 fi
 
 alias ip="ipconfig getifaddr en0"

@@ -1,142 +1,147 @@
 #!/usr/bin/env bash
 # sources: https://hackernoon.com/handy-docker-aliases-4bd85089a3b8
 
-alias dm='docker-machine'
-alias dmx='docker-machine ssh'
-alias dk='docker'
-alias dki='docker images'
-alias dks='docker service'
-alias dkrm='docker rm'
-alias dkl='docker logs'
-alias dklf='docker logs -f'
-alias dkflush='docker rm `docker ps --no-trunc -aq`'
-alias dkflushi='docker rmi $(docker images --filter "dangling=true" -q --no-trunc)'
-alias dkt='docker stats --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.NetIO}}"'
-alias dkps="docker ps --format '{{.ID}} ~ {{.Names}} ~ {{.Status}} ~ {{.Image}}'"
-alias dockps='docker ps --format "table {{.ID}}\t{{.Image}}\t{{.Status}}\t{{.Names}}"'
-alias dkprt='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}"'
+if command -v docker >/dev/null 2>&1; then
 
-# log for any container by name
-dkln() {
-  docker logs -f "$(docker ps | grep "$1" | awk '{print $1}')"
-}
+  alias dm='docker-machine'
+  alias dmx='docker-machine ssh'
+  alias dk='docker'
+  alias dki='docker images'
+  alias dks='docker service'
+  alias dkrm='docker rm'
+  alias dkl='docker logs'
+  alias dklf='docker logs -f'
+  alias dkflush='docker rm `docker ps --no-trunc -aq`'
+  alias dkflushi='docker rmi $(docker images --filter "dangling=true" -q --no-trunc)'
+  alias dkt='docker stats --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.NetIO}}"'
+  alias dkps="docker ps --format '{{.ID}} ~ {{.Names}} ~ {{.Status}} ~ {{.Image}}'"
+  alias dockps='docker ps --format "table {{.ID}}\t{{.Image}}\t{{.Status}}\t{{.Names}}"'
+  alias dkprt='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}"'
 
-# publish
-dkp() {
-  if [ ! -f .dockerignore ]; then
-    echo "Warning, .dockerignore file is missing."
-    read -p "Proceed anyway?"
-  fi
+  # log for any container by name
+  dkln() {
+    docker logs -f "$(docker ps | grep "$1" | awk '{print $1}')"
+  }
 
-  if [ ! -f package.json ]; then
-    echo "Warning, package.json file is missing."
-    read -p "Are you in the right directory?"
-  fi
+  # publish
+  dkp() {
+    if [ ! -f .dockerignore ]; then
+      echo "Warning, .dockerignore file is missing."
+      read -p "Proceed anyway?"
+    fi
 
-  VERSION=$(jq .version package.json | sed 's/\"//g')
-  NAME=$(jq .name package.json | sed 's/\"//g')
-  LABEL="$1/$NAME:$VERSION"
+    if [ ! -f package.json ]; then
+      echo "Warning, package.json file is missing."
+      read -p "Are you in the right directory?"
+    fi
 
-  docker build --build-arg NPM_TOKEN=${NPM_TOKEN} -t $LABEL .
+    VERSION=$(jq .version package.json | sed 's/\"//g')
+    NAME=$(jq .name package.json | sed 's/\"//g')
+    LABEL="$1/$NAME:$VERSION"
 
-  read -p "Press enter to publish"
-  docker push $LABEL
-}
+    docker build --build-arg NPM_TOKEN=${NPM_TOKEN} -t $LABEL .
 
-# publish no-cache
-dkpnc() {
-  if [ ! -f .dockerignore ]; then
-    echo "Warning, .dockerignore file is missing."
-    read -p "Proceed anyway?"
-  fi
+    read -p "Press enter to publish"
+    docker push $LABEL
+  }
 
-  if [ ! -f package.json ]; then
-    echo "Warning, package.json file is missing."
-    read -p "Are you in the right directory?"
-  fi
+  # publish no-cache
+  dkpnc() {
+    if [ ! -f .dockerignore ]; then
+      echo "Warning, .dockerignore file is missing."
+      read -p "Proceed anyway?"
+    fi
 
-  VERSION=$(jq .version package.json | sed 's/\"//g')
-  NAME=$(jq .name package.json | sed 's/\"//g')
-  LABEL="$1/$NAME:$VERSION"
+    if [ ! -f package.json ]; then
+      echo "Warning, package.json file is missing."
+      read -p "Are you in the right directory?"
+    fi
 
-  docker build --build-arg NPM_TOKEN=${NPM_TOKEN} --no-cache=true -t $LABEL .
-  read -p "Press enter to publish"
-  docker push $LABEL
-}
+    VERSION=$(jq .version package.json | sed 's/\"//g')
+    NAME=$(jq .name package.json | sed 's/\"//g')
+    LABEL="$1/$NAME:$VERSION"
 
-# publish LATEST
-dkpl() {
-  if [ ! -f .dockerignore ]; then
-    echo "Warning, .dockerignore file is missing."
-    read -p "Proceed anyway?"
-  fi
+    docker build --build-arg NPM_TOKEN=${NPM_TOKEN} --no-cache=true -t $LABEL .
+    read -p "Press enter to publish"
+    docker push $LABEL
+  }
 
-  if [ ! -f package.json ]; then
-    echo "Warning, package.json file is missing."
-    read -p "Are you in the right directory?"
-  fi
+  # publish LATEST
+  dkpl() {
+    if [ ! -f .dockerignore ]; then
+      echo "Warning, .dockerignore file is missing."
+      read -p "Proceed anyway?"
+    fi
 
-  NAME=$(jq .name package.json | sed 's/\"//g')
-  LATEST="$1/$NAME:latest"
+    if [ ! -f package.json ]; then
+      echo "Warning, package.json file is missing."
+      read -p "Are you in the right directory?"
+    fi
 
-  docker build --build-arg NPM_TOKEN=${NPM_TOKEN} --no-cache=true -t $LATEST .
-  read -p "Press enter to publish"
-  docker push $LATEST
-}
+    NAME=$(jq .name package.json | sed 's/\"//g')
+    LATEST="$1/$NAME:latest"
 
-dkclean() {
-  docker rm "$(docker ps --all -q -f status=exited)"
-  docker volume rm "$(docker volume ls -qf dangling=true)"
-}
+    docker build --build-arg NPM_TOKEN=${NPM_TOKEN} --no-cache=true -t $LATEST .
+    read -p "Press enter to publish"
+    docker push $LATEST
+  }
 
-dkprune() {
-  docker system prune -af
-}
+  dkclean() {
+    docker rm "$(docker ps --all -q -f status=exited)"
+    docker volume rm "$(docker volume ls -qf dangling=true)"
+  }
 
-dktop() {
-  docker stats --format "table {{.Container}}\t{{.Name}}\t{{.CPUPerc}}  {{.MemPerc}}\t{{.NetIO}}\t{{.BlockIO}}"
-}
+  dkprune() {
+    docker system prune -af
+  }
 
-dkstats() {
-  if [ $# -eq 0 ]
-    then docker stats --no-stream;
-    else docker stats --no-stream | grep "$1";
-  fi
-}
+  dktop() {
+    docker stats --format "table {{.Container}}\t{{.Name}}\t{{.CPUPerc}}  {{.MemPerc}}\t{{.NetIO}}\t{{.BlockIO}}"
+  }
 
-dke() {
-  docker exec -it "$1" /bin/sh
-}
+  dkstats() {
+    if [ $# -eq 0 ]; then
+      docker stats --no-stream
+    else
+      docker stats --no-stream | grep "$1"
+    fi
+  }
 
-dkexe() {
-  docker exec -it "$1" $2
-}
+  dke() {
+    docker exec -it "$1" /bin/sh
+  }
 
-dkreboot() {
-  osascript -e 'quit app "Docker"'
-  countdown 2
-  open -a Docker
-  echo "Restarting Docker engine"
-  countdown 120
-}
+  dkexe() {
+    docker exec -it "$1" $2
+  }
 
-dkstate() {
-  docker inspect "$1" | jq .[0].State
-}
+  dkreboot() {
+    osascript -e 'quit app "Docker"'
+    countdown 2
+    open -a Docker
+    echo "Restarting Docker engine"
+    countdown 120
+  }
 
-dksb() {
-  docker service scale "$1"=0
-  sleep 2
-  docker service scale "$1"="$2"
-}
+  dkstate() {
+    docker inspect "$1" | jq .[0].State
+  }
 
-# call mongo with the arguments provided
-mongo() {
-  mongoLabel=$(docker ps | grep mongo | awk '{print $NF}')
-  docker exec -it $mongoLabel mongo "$@"
-}
+  dksb() {
+    docker service scale "$1"=0
+    sleep 2
+    docker service scale "$1"="$2"
+  }
 
-redis() {
-  redisLabel=$(docker ps | grep redis | awk '{print $NF}')
-  docker exec -it $redisLabel redis-cli
-}
+  # call mongo with the arguments provided
+  mongo() {
+    mongoLabel=$(docker ps | grep mongo | awk '{print $NF}')
+    docker exec -it $mongoLabel mongo "$@"
+  }
+
+  redis() {
+    redisLabel=$(docker ps | grep redis | awk '{print $NF}')
+    docker exec -it $redisLabel redis-cli
+  }
+
+fi
