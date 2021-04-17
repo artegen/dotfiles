@@ -15,7 +15,7 @@ symlink_dotfiles() {
     log 'Symlinking dotfiles'
     WDIR="$HOME/.dotfiles"
 
-    for dir in "$WDIR/shell" "$WDIR/git" "$WDIR/configs"; do
+    for dir in "$WDIR/shell" "$WDIR/git" "$WDIR/configs" "$WDIR/zsh"; do
         for file in "$dir"/.*; do
             base="$(basename "$file")"
             [[ $base =~ ^(.|..|.DS_Store)$ ]] && continue # skip these files
@@ -28,14 +28,18 @@ symlink_dotfiles() {
     declare -A files
     files=(
         ["configs/ssh"]=".ssh/config"
-        # ["code/settings.json"]=".config/Code/User/settings.json"
     )
     for file in "${!files[@]}"; do
         link "$(pwd)/${file}" "$HOME/${files[${file}]}"
     done
 }
 
+log "Installing Oh-my-zsh"
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
 symlink_dotfiles
+
+mkdir -p "$HOME"/.{config,cache,local/share} && cd "$HOME/.config" && touch .gitconfig.local
 
 # Install OS dependencies, full Xcode, not just git/CLI tools
 log "Checking Xcode install"
@@ -82,3 +86,4 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.37.2/install.sh | b
 curl -o- -L https://yarnpkg.com/install.sh | bash
 
 success 'All installed!'
+exit 0
