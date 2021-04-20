@@ -7,7 +7,6 @@ link() {
     file=$1
     link=$2
 
-    # mkdir -p "$(dirname "${link}")"
     ln -vf -s "${file}" "${link}"
 }
 
@@ -28,6 +27,7 @@ symlink_dotfiles() {
     declare -A files
     files=(
         ["configs/ssh"]=".ssh/config"
+        ["configs/starship.toml"]=".config/starship.toml"
     )
     for file in "${!files[@]}"; do
         link "$(pwd)/${file}" "$HOME/${files[${file}]}"
@@ -37,19 +37,18 @@ symlink_dotfiles() {
 log "Installing Oh-my-zsh"
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-symlink_dotfiles
+mkdir -p "$HOME"/.{ssh,config,cache,local/share} && chmod 600 !* &&
+    cd "$HOME/.config" && touch gitconfig.local
 
-mkdir -p "$HOME"/.{config,cache,local/share} && cd "$HOME/.config" && touch .gitconfig.local
+symlink_dotfiles
 
 # Install OS dependencies, full Xcode, not just git/CLI tools
 log "Checking Xcode install"
-xcode-select --install 2>&1 | grep installed >/dev/null
-if [[ $? ]]; then
-    log "Installing Xcode"
-    xcode-select --install
-    log "Press a key after Xcode has been installed to continue..."
-else
+xcode-select --install 2>/dev/null
+if [[ ! $? ]]; then
     log "Xcode already installed"
+else
+    log "Press a key after Xcode has been installed to continue..."
 fi
 
 if test ! "$(which brew)"; then
@@ -85,5 +84,13 @@ git clone --recursive https://github.com/zsh-users/antigen.git "$HOME/.dotfiles/
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.37.2/install.sh | bash
 curl -o- -L https://yarnpkg.com/install.sh | bash
 
+npm install -g \
+    diff-so-fancy
+
 success 'All installed!'
-exit 0
+
+log "Checking git user config"
+nano ~/.config/gitconfig.local
+g conf | user
+
+return 0
