@@ -1,216 +1,218 @@
-[include]
-  path=~/.config/.gitconfig.local
-# [color]
-#   ui=true
+[alias]
+conf=config --list
+chu="!f() { git config user.name $1 && git config user.email $2; }; f"
+cld="!f() { repoName=$(basename $1); dir=${repoName%.git} && git clone --depth=1 $1 $dir && cd $dir; }; f"
+contribs=shortlog --summary --numbered # List contributors with number of commits
+co=checkout
+cop=checkout --patch
+
+rem=remote -v   # ls-remote origin
+rema=remote add # ${1-origin} ${2-url}
+rems=remote set-url
+remp=remote prune origin # cleans up locally tracking branches for which the remote branch has been deleted.
+
+pu=push -u origin master # push local master and create master branch on origin
+# pull a branch and rebase the current branch on it
+pb="!f() { branchName=${1-master}; git checkout $branchName && git pull && git checkout - && git rebase -i $branchName; }; f"
+
+# Tags
+# git tag v2.5 1b2e1d63ff, git tag -a v1 -m "Version 1 release"
+# git show v1.1.1
+# git tag -l "v1.8.5*", git tag, ls-remote -t origin, git show-ref --tags
+# Remove the old tag with this name and tag the latest commit with it.
+retag="!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
+# Delete simultaniously local and remote. If smb has this tag in it's local the tag will remain. Tags will keep a seperate old commit history after rebase.
+tx="!r() { git tag -d $1 && git push origin :refs/tags/$1; }; r"
+ft=fetch --tags
+pt=push --tags
+
+# Branch (b)
+b=branch
+ba=branch --all --verbose
+bls=branch -vv
+bs=show-branch
+# branch with latest commit
+bl=for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+bc=checkout -b # create
+
+# Switch to a branch, creating it if necessary
+bchcr="!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+bx=branch -D                            # force delete even if not merged
+bxr="!f() { git push origin  :$1; }; f" # remove remote branch
+# Remove branches that have already been merged with master
+bxm=co master && "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+bm=branch --move # rename
+
+# Find branches containing commit
+fb="!f() { git branch -a --contains $1; }; f"
+# Find tags containing commit
+ft="!f() { git describe --always --contains $1; }; f"
+
+# Commit (c)
+c=commit
+cam=add -A && git commit -am
+# Add everything, but whitespace changes
+awos=diff --ignore-all-space | git apply --cached
+can=commit --amend --no-edit --all
+cem=commit --amend -m
+
+chp=cherry-pick
+chpa=cherry-pick --abort
+crev=revert
+cr="!f() { git reset HEAD~$1 || git reset HEAD^; }; f"
+rh=reset --hard
+
+# Data (d)
+d=ls-files | wc -l # count of files
+dc=ls-files --cached
+dd=ls-files --deleted
+dx=ls-files --deleted
+dm=ls-files --modified
+do=ls-files --other --exclude-standard
+dk=ls-files --killed
+di=status --porcelain --short --ignored | sed -n '"s/^!! //p"'
+
+# Grep (g)
+g=grep
+gi=grep --ignore-case
+gl=grep --files-with-matches
+gL=grep --files-without-matches
+gv=grep --invert-match
+gw=grep --word-regexp
+
+# Index (i)
+ia=add
+iap=add --patch # partially add
+iu=add --update
+id=diff --no-ext-diff --cached
+idw=diff --no-ext-diff --cached --word-diff
+ir=reset
+irp=reset --patch
+ix=rm -r --cached
+
+df=diff --color --color-words --abbrev
+# `git dfi $number` shows the diff between the state `$number` revisions ago and the current state
+dfi=!"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+# Show the diff between the latest commit and the current state
+dlast=!"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+
+# Log (l)
+l=log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+l2=log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+lgo=log --oneline
+sh=show
+
+# Push (p)
+p=push
+pf=push --force-with-lease
+pa=push --all #all branches
+pat=push --all && git push --tags
+pc=!git push --set-upstream origin "$(git-branch-current 2>/dev/null)"
+undo=!git push -f origin HEAD^:master
+
+# Rebase (r)
+r=rebase
+ri=rebase -i
+ra=rebase --abort
+rc=rebase --continue
+rs=rebase --skip
+rp=rebase -p
+# Interactive rebase with the given number of latest commits
+rin = "!r() { git rebase -i HEAD~$1; }; r"
+
+# Stash (s)
+st=stash
+s = stash --all
+sth = stash --keep-index
+sa=stash apply
+sx=stash drop
+sl=stash list
+sd=stash show --patch --stat
+sp=stash pop
+ss=stash save
+
+rl=reflog --all #all registered git objects (when e.g. stash list doesn't work)
+
+# Working Copy (w)
+# View the current working tree status using the short format
+ws=status -s
+wd=diff --no-ext-diff
+wdw=diff --no-ext-diff --word-diff
+wrs=reset --soft
+wc=clean -n
+wcf=clean -f
+wcfd=clean -df
+wx=rm -r
+wxf=rm -rf
+
+# Merge (m)
+m=merge
+mnf=merge --no-ff
+mc=merge --continue
+mnc=merge --no-commit
+mf=merge --ff
+ma=merge --abort
+mt=mergetool
+
+# Fetch (f)
+f=fetch
+fa=fetch --all
+fr=fetch origin/${1:-master} && git rebase origin/${1:-master}
+
 [push]
-  default=upstream
+# default=upstream
+# automatically push relevant tags when pushing branches
+followTags = true
 [fetch]
-	prune=true
+prune=true
 [merge]
-	tool="code --wait"
-	# Include summaries of merged commits in newly created merge commit messages
-	log = true
+tool="code --wait"
+# Include summaries of merged commits in newly created merge commit messages
+log=true
 [core]
-  attributesfile=~/.gitattributes
-  autocrlf=input
-  editor="code --wait"
-	excludesfile=~/.gitignore
-	# Make `git rebase` safer on macOS.
-	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
-	trustctime = false
-	# Treat spaces before tabs and all kinds of trailing whitespace as an error.
-	# [default] trailing-space: looks for spaces at the end of a line
-	# [default] space-before-tab: looks for spaces before tabs at the beginning of a line
-	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+attributesfile=~/.gitattributes
+autocrlf=input
+editor="code --wait"
+excludesfile=~/.gitignore
 [branch]
-	# Show most recently changed branches first.
-	sort = -committerdate
+# Show most recently changed branches first.
+sort=-committerdate
 [commit]
-	# https://help.github.com/articles/signing-commits-using-gpg/
-	# gpgsign = true
+# https://help.github.com/articles/signing-commits-using-gpg/
+# gpgsign = true
 [pager]
-	# npm install -g diff-so-fancy
-	diff=diff-so-fancy | less --tabs=4 -RFX
-	show=diff-so-fancy | less --tabs=4 -RFX
+diff=diff-so-fancy | less --tabs=4 -RFX
+show=diff-so-fancy | less --tabs=4 -RFX
 [interactive]
-	diffFilter="diff-so-fancy"
+diffFilter="diff-so-fancy"
 [diff]
-  tool=default-difftool
-	# Detect copies as well as renames.
-	renames = copies
+tool=default-difftool
+# Detect copies as well as renames.
+renames = copies
 [difftool "default-difftool"]
-  cmd=code --wait --diff $LOCAL $REMOTE
+cmd=code --wait --diff $LOCAL $REMOTE
 [diff "bin"]
-	# Use `hexdump` to diff binary files.
-	textconv = hexdump -v -C
+# Use `hexdump` to diff binary files.
+textconv = hexdump -v -C
 [help]
-	autocorrect=1  # correct typos
+autocorrect=10 # correct typos
 [init]
-  defaultBranch = main
+defaultBranch = main
 # 	templatedir = ~/.git_template
+[pretty]
+custom = "%C(magenta)%h%C(red)%d %C(yellow)%ar %C(green)%s %C(yellow)(%an)"
+#                     │        │            │            │             └─ author name
+#                     │        │            │            └─ message
+#                     │        │            └─ date (relative)
+#                     │        └─ decorations (branch, heads or tags)
+#                     └─ hash (abbreviated)
 
 # [filter "lfs"]  # large files, https://git-lfs.github.com/
 # 	clean = git-lfs clean %f
 # 	smudge = git-lfs smudge %f
 # 	required = true
 
-
-[alias]
-  conf=config --list
-  cl=clone
-	cld="!f() { repoName=${2-$(basename $1)};  git clone --depth=1 $1 $repoName; cd $repoName;  code .; }; f"
-	contribs=shortlog --summary --numbered  # List contributors with number of commits
-  co=checkout
-  cop=checkout --patch
-
-  rem=remote -v # ls-remote origin
-  rema=remote add  # ${1-origin} ${2-url}
-  rems=remote set-url
-  remp=remote prune origin  # cleans up locally tracking branches for which the remote branch has been deleted.
-
-	pu=push -u origin master # push local master and create master branch on origin
-  # pull a branch and rebase the current branch on it
-  pb="!f() { branchName=${1-master}; git checkout $branchName && git pull && git checkout - && git rebase -i $branchName; }; f"
-
-  # Tags
-  # git tag v2.5 1b2e1d63ff, git tag -a v1 -m "Version 1 release"
-  # git show v1.1.1
-	# git tag -l "v1.8.5*", git tag, ls-remote -t origin, git show-ref --tags
-  # Remove the old tag with this name and tag the latest commit with it.
-	retag="!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
-  # Delete simultaniously local and remote. If smb has this tag in it's local the tag will remain. Tags will keep a seperate old commit history after rebase.
-	tx="!r() { git tag -d $1 && git push origin :refs/tags/$1; }; r"
-  ft=fetch --tags
-  pt=push --tags
-
-  # Branch (b)
-  b=branch
-  ba=branch --all --verbose
-  bls=branch -vv
-  bs=show-branch
-  # branch with latest commit
-  bl=for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'
-  bc=checkout -b # create
-
-	# Switch to a branch, creating it if necessary
-	bchcr="!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
-  bx=branch -D # force delete even if not merged
-  bxr="!f() { git push origin  :$1; }; f" # remove remote branch
-	# Remove branches that have already been merged with master
-	bxm=co master && "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
-  bm=branch --move # rename
-
-  # Find branches containing commit
-	fb="!f() { git branch -a --contains $1; }; f"
-	# Find tags containing commit
-	ft="!f() { git describe --always --contains $1; }; f"
-
-  # Commit (c)
-  c=commit
-  cam=add -A && git commit -am
-  # Add everything, but whitespace changes
-  awos=diff --ignore-all-space | git apply --cached
-  can=commit --amend --no-edit --all
-  cem=commit --amend -m
-
-  chp=cherry-pick
-  chpa=cherry-pick --abort
-  crev=revert
-	cr="!f() { git reset HEAD~$1 || git reset HEAD^; }; f"
-  rh=reset --hard
-
-  # Data (d)
-  d=ls-files | wc -l # count of files
-  dc=ls-files --cached
-  dd=ls-files --deleted
-  dx=ls-files --deleted
-  dm=ls-files --modified
-  do=ls-files --other --exclude-standard
-  dk=ls-files --killed
-  di=status --porcelain --short --ignored | sed -n '"s/^!! //p"'
-
-  # Grep (g)
-  g=grep
-  gi=grep --ignore-case
-  gl=grep --files-with-matches
-  gL=grep --files-without-matches
-  gv=grep --invert-match
-  gw=grep --word-regexp
-
-  # Index (i)
-  ia=add
-  iap=add --patch # partially add
-  iu=add --update
-  id=diff --no-ext-diff --cached
-  idw=diff --no-ext-diff --cached --word-diff
-  ir=reset
-  irp=reset --patch
-  ix=rm -r --cached
-
-  df=diff --color --color-words --abbrev
-  # `git dfi $number` shows the diff between the state `$number` revisions ago and the current state
-	dfi=!"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
-	# Show the diff between the latest commit and the current state
-	dlast=!"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
-
-  # Log (l)
-  l=log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-  l2=log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-	lgo=log --oneline
-  sh=show
-
-  # Push (p)
-  p=push
-  pf=push --force-with-lease
-  pa=push --all  #all branches
-  pat=push --all && git push --tags
-  pc=!git push --set-upstream origin "$(git-branch-current 2> /dev/null)"
-
-  # Rebase (r)
-  r=rebase
-  ri=rebase -i
-  ra=rebase --abort
-  rc=rebase --continue
-  rs=rebase --skip
-  rp=rebase -p
-  # Interactive rebase with the given number of latest commits
-	rin = "!r() { git rebase -i HEAD~$1; }; r"
-
-  # Stash (s)
-  st=stash
-  s = stash --all
-  sth = stash --keep-index
-  sa=stash apply
-  sx=stash drop
-  sl=stash list
-  sd=stash show --patch --stat
-  sp=stash pop
-  ss=stash save
-
-  rl=reflog --all #all registered git objects (when e.g. stash list doesn't work)
-
-  # Working Copy (w)
-	# View the current working tree status using the short format
-  ws=status -s
-  wd=diff --no-ext-diff
-  wdw=diff --no-ext-diff --word-diff
-  wrs=reset --soft
-  wc=clean -n
-  wcf=clean -f
-  wcfd=clean -df
-  wx=rm -r
-  wxf=rm -rf
-
-  # Merge (m)
-  m=merge
-  mnf=merge --no-ff
-  mc=merge --continue
-  mnc=merge --no-commit
-  mf=merge --ff
-  ma=merge --abort
-  mt=mergetool
-
-  # Fetch (f)
-  f=fetch
-  fa=fetch --all
-  fr=fetch origin/${1:-master} && git rebase origin/${1:-master}
+[user]
+useConfigOnly = true
+[include]
+path=~/.config/gitconfig.local
