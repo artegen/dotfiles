@@ -22,6 +22,9 @@ set -o ignoreeof
 # Immediate notification of background job termination
 set -o notify
 
+# vim-style keymap
+# set -o vi
+
 # generic colouriser
 GRC=$(which grc)
 if [ "$TERM" != dumb ] && [ -n "$GRC" ]; then
@@ -52,7 +55,11 @@ fi
 complete -cf sudo
 
 # tab completions
-source /usr/local/etc/profile.d/bash_completion.sh
+export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && source /usr/local/etc/profile.d/bash_completion.sh
+
+alias k=kubectl
+complete -F __start_kubectl k
 
 # z for cd
 zpath="$(brew --prefix)/etc/profile.d/z.sh"
@@ -79,11 +86,47 @@ fi
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
+if which pyenv >/dev/null; then
+    eval "$(pyenv init -)"
+    # eval "$(pyenv virtualenv-init -)"
+fi
+
 # Disable homebrew auto update whenever brew command is run
 if command -v brew >/dev/null 2>&1; then
     HOMEBREW_NO_AUTO_UPDATE=1
     export HOMEBREW_NO_AUTO_UPDATE
 fi
+
+# ssh agent
+ssh_env=~/.ssh/agent.env
+
+agent_load_env() { test -f "$ssh_env" && . "$ssh_env" >/dev/null; }
+
+agent_start() {
+    (
+        umask 077
+        ssh-agent >|"$ssh_env"
+    )
+    . "$ssh_env" >/dev/null
+}
+
+agent_load_env
+
+# agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2= agent not running
+agent_run_state=$(
+    ssh-add -l >/dev/null 2>&1
+    echo $?
+)
+
+ssh_state=$agent_run_state
+if [ ! "$SSH_AUTH_SOCK" ] || [ "$ssh_state" = 2 ]; then
+    agent_start
+    ssh-add
+elif [ "$SSH_AUTH_SOCK" ] && [ "$ssh_state" = 1 ]; then
+    ssh-add
+fi
+
+unset ssh_env ssh_state
 
 # allow mtr to run without sudo
 # mtrlocation=$(brew info mtr | grep Cellar | sed -e 's/ (.*)//')

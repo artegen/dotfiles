@@ -98,3 +98,7 @@ function ec2list() {
 reswap() {
 	sudo swapoff -a && sudo swapon -a
 }
+
+freq() {
+	sort | uniq -c | sort -nr | head #top 10 lines by frequency
+}

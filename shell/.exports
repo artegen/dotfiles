@@ -7,7 +7,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 
 PATH=/usr/local/bin:/usr/sbin:/usr/local/sbin:$PATH
-PATH="$HOME/.fzf/bin:$PATH"
+PATH=$HOME/.fzf/bin:$PATH
 PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 PATH=$PATH:/usr/local/opt/openssl/bin
 export PATH

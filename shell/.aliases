@@ -2,7 +2,7 @@
 
 [[ -f ./.docker_aliases ]] && source ./.docker_aliases
 
-alias mv='mv -v'
+alias mv='mv -vi'
 alias rm='rm -i -v'
 trash() { mv "$@" ~/.Trash; }
 alias cp='cp -v'
@@ -23,7 +23,7 @@ alias cl='clear'
 alias path='echo $PATH | tr -s ":" "\n"'
 alias h="history"
 alias j="jobs"
-alias py='python3'
+alias py='python'
 alias pip='pip3'                            # use \pip for pip2
 alias pipup='pip install -U pip setuptools' # upgrade
 

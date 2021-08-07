@@ -33,18 +33,12 @@ bindkey "^S" history-incremental-pattern-search-forward
 zle -N edit-command-line
 bindkey "^E" edit-command-line
 
-eval "$(pyenv init -)"
-# eval "$(pyenv virtualenv-init -)"
-
 source ~/.bashrc
 
 # Ensure that a non-login, non-interactive shell has a defined environment.
 if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "$HOME/.bash_profile" ]]; then
   source "$HOME/.bashrc"
 fi
-
-[[ -f "$HOME/.iterm2_shell_integration.zsh" ]] && source "$HOME/.iterm2_shell_integration.zsh"
-[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
 
 # theme
 eval "$(starship init zsh)"
@@ -61,7 +55,8 @@ fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 # Reload the plugin to highlight the commands each time Iterm2 starts
-# source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
 
 # Enable command correction
 setopt CORRECT

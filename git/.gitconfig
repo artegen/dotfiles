@@ -36,12 +36,10 @@ bl=for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname
 bc=checkout -b # create
 
 # Switch to a branch, creating it if necessary
-bchcr="!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+bcocr="!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
 bx=branch -D                            # force delete even if not merged
 bxr="!f() { git push origin  :$1; }; f" # remove remote branch
-# Remove branches that have already been merged with master
-bxm=co master && "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
-bm=branch --move # rename
+bm=branch --move                        # rename
 
 # Find branches containing commit
 fb="!f() { git branch -a --contains $1; }; f"
@@ -50,7 +48,7 @@ ft="!f() { git describe --always --contains $1; }; f"
 
 # Commit (c)
 c=commit
-cam=add -A && git commit -am
+cam=!"add -A . && git commit -m"
 # Add everything, but whitespace changes
 awos=diff --ignore-all-space | git apply --cached
 can=commit --amend --no-edit --all
@@ -159,46 +157,61 @@ f=fetch
 fa=fetch --all
 fr=fetch origin/${1:-master} && git rebase origin/${1:-master}
 
+[pull]
+rebase=true # avoid merge commits in the history
 [push]
-# default=upstream
+default=current
 # automatically push relevant tags when pushing branches
-followTags = true
+followTags=true
+
 [fetch]
 prune=true
+
 [merge]
 tool="code --wait"
 # Include summaries of merged commits in newly created merge commit messages
 log=true
+
 [core]
 attributesfile=~/.gitattributes
 autocrlf=input
 editor="code --wait"
 excludesfile=~/.gitignore
+
 [branch]
 # Show most recently changed branches first.
 sort=-committerdate
+
 [commit]
 # https://help.github.com/articles/signing-commits-using-gpg/
 # gpgsign = true
+
 [pager]
 diff=diff-so-fancy | less --tabs=4 -RFX
 show=diff-so-fancy | less --tabs=4 -RFX
+
 [interactive]
 diffFilter="diff-so-fancy"
+
 [diff]
 tool=default-difftool
 # Detect copies as well as renames.
 renames = copies
+
 [difftool "default-difftool"]
 cmd=code --wait --diff $LOCAL $REMOTE
+
 [diff "bin"]
 # Use `hexdump` to diff binary files.
 textconv = hexdump -v -C
+
 [help]
 autocorrect=10 # correct typos
+
 [init]
 defaultBranch = main
 # 	templatedir = ~/.git_template
+
 [pretty]
 custom = "%C(magenta)%h%C(red)%d %C(yellow)%ar %C(green)%s %C(yellow)(%an)"
 #                     │        │            │            │             └─ author name
@@ -207,12 +220,8 @@ custom = "%C(magenta)%h%C(red)%d %C(yellow)%ar %C(green)%s %C(yellow)(%an)"
 #                     │        └─ decorations (branch, heads or tags)
 #                     └─ hash (abbreviated)
 
-# [filter "lfs"]  # large files, https://git-lfs.github.com/
-# 	clean = git-lfs clean %f
-# 	smudge = git-lfs smudge %f
-# 	required = true
-
 [user]
 useConfigOnly = true
+
 [include]
 path=~/.config/gitconfig.local
