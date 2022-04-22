@@ -1,107 +1,115 @@
 #Sources: https://github.com/Danimoth/gitattributes/blob/master/Web.gitattributes
 #https://stackoverflow.com/questions/21472971/what-is-the-purpose-of-text-auto-in-gitattributes-file
 
-#leave all files detected as binary untouched.
-* text=auto
+# We'll let Git's auto-detection algorithm infer if a file is text. If it is,
+# enforce LF line endings regardless of OS or git configurations.
+* text=auto eol=lf
 
-#
-# The above will handle all files NOT found below
-#
+# Isolate binary files in case the auto-detection algorithm fails and
+# marks them as text files (which could brick them).
+*.{png,jpg,jpeg,gif,webp,woff,woff2} binary
 
-#
-## These files are text and should be normalized (Convert crlf => lf)
-#
+# #leave all files detected as binary untouched.
+# * text=auto
 
-# source code
-*.php text
-*.css text
-*.sass text
-*.scss text
-*.less text
-*.styl text
-*.js text
-*.coffee text
-*.json text
-*.htm text
-*.html text
-*.xml text
-*.svg -crlf
-*.txt text
-*.ini text
-*.inc text
-*.pl text
-*.rb text
-*.py text
-*.scm text
-*.sql text
-*.sh text
-*.bat text
+# #
+# # The above will handle all files NOT found below
+# #
 
-# templates
-*.ejs text
-*.hbt text
-*.jade text
-*.haml text
-*.hbs text
-*.dot text
-*.tmpl text
-*.phtml text
+# #
+# ## These files are text and should be normalized (Convert crlf => lf)
+# #
 
-# server config
-.htaccess text
-.nginx.conf text
+# # source code
+# *.php text
+# *.css text
+# *.sass text
+# *.scss text
+# *.less text
+# *.styl text
+# *.js text
+# *.coffee text
+# *.json text
+# *.htm text
+# *.html text
+# *.xml text
+# *.svg -crlf
+# *.txt text
+# *.ini text
+# *.inc text
+# *.pl text
+# *.rb text
+# *.py text
+# *.scm text
+# *.sql text
+# *.sh text
+# *.bat text
 
-# git config
-.gitattributes text
-.gitignore text
-.gitconfig text
+# # templates
+# *.ejs text
+# *.hbt text
+# *.jade text
+# *.haml text
+# *.hbs text
+# *.dot text
+# *.tmpl text
+# *.phtml text
 
-# code analysis config
-.jshintrc text
-.jscsrc text
-.jshintignore text
-.csslintrc text
+# # server config
+# .htaccess text
+# .nginx.conf text
 
-# misc config
-*.yaml text
-*.yml text
-.editorconfig text
-*.env text
+# # git config
+# .gitattributes text
+# .gitignore text
+# .gitconfig text
 
-# build config
-*.npmignore text
-*.bowerrc text
+# # code analysis config
+# .jshintrc text
+# .jscsrc text
+# .jshintignore text
+# .csslintrc text
 
-# Heroku
-Procfile text
-.slugignore text
+# # misc config
+# *.yaml text
+# *.yml text
+# .editorconfig text
+# *.env text
 
-# Documentation
-*.md text
-LICENSE text
-AUTHORS text
+# # build config
+# *.npmignore text
+# *.bowerrc text
 
-#
-## These files are binary and should be left untouched
-#
+# # Heroku
+# Procfile text
+# .slugignore text
 
-# (binary is a macro for -text -diff)
-*.png binary
-*.jpg binary
-*.jpeg binary
-*.gif binary
-*.ico binary
-*.mov binary
-*.mp4 binary
-*.mp3 binary
-*.flv binary
-*.fla binary
-*.swf binary
-*.gz binary
-*.zip binary
-*.7z binary
-*.ttf binary
-*.eot binary
-*.woff binary
-*.pyc binary
-*.pdf binary
+# # Documentation
+# *.md text
+# LICENSE text
+# AUTHORS text
+
+# #
+# ## These files are binary and should be left untouched
+# #
+
+# # (binary is a macro for -text -diff)
+# *.png binary
+# *.jpg binary
+# *.jpeg binary
+# *.gif binary
+# *.ico binary
+# *.mov binary
+# *.mp4 binary
+# *.mp3 binary
+# *.flv binary
+# *.fla binary
+# *.swf binary
+# *.gz binary
+# *.zip binary
+# *.7z binary
+# *.ttf binary
+# *.eot binary
+# *.woff binary
+# *.pyc binary
+# *.pdf binary

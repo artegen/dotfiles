@@ -48,7 +48,7 @@ ft="!f() { git describe --always --contains $1; }; f"
 
 # Commit (c)
 c=commit
-cam=!"add -A . && git commit -m"
+cam=!"git add -A . && git commit -m"
 # Add everything, but whitespace changes
 awos=diff --ignore-all-space | git apply --cached
 can=commit --amend --no-edit --all
@@ -105,7 +105,7 @@ p=push
 pf=push --force-with-lease
 pa=push --all #all branches
 pat=push --all && git push --tags
-pc=!git push --set-upstream origin "$(git-branch-current 2>/dev/null)"
+pcb=!git push --set-upstream origin "$(git-branch-current 2>/dev/null)"
 undo=!git push -f origin HEAD^:master
 
 # Rebase (r)
