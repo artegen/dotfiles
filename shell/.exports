@@ -11,15 +11,15 @@ PATH=$HOME/.fzf/bin:$PATH
 PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 PATH=$PATH:/usr/local/opt/openssl/bin
 export PATH
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 export VIMRC="$HOME/.vimrc"
 export GTAGSLABEL=pygments
 
 # AWS
 export AWS_CLI_FILE_ENCODING=UTF-8
-export AWS_DEFAULT_REGION="us-east-2"
-export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
-export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
+# export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
+# export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
 export AWS_SDK_LOAD_CONFIG=1
 
 # Docker
@@ -27,9 +27,10 @@ export AWS_SDK_LOAD_CONFIG=1
 # export MACHINE_STORAGE_PATH="$XDG_DATA_HOME/docker-machine"
 
 # Kubernetes
-export KUBECONFIG=$HOME/.kube/infm
+export KUBECONFIG=$HOME/.kube/config
 # export MINIKUBE_HOME="$XDG_CONFIG_HOME/minikube"
 # export KUBEHOME="$XDG_CONFIG_HOME/kube"
+export KUBE_EDITOR='code --wait'
 
 # Python
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
@@ -64,7 +65,7 @@ export PGSERVICEFILE=$XDG_CONFIG_HOME/postgres/pg_service.conf
 
 # Terraform
 export TF_PLUGIN_CACHE_DIR="$XDG_CACHE_HOME/terraform.d/plugin-cache"
-export TF_CLI_CONFIG_FILE="$XDG_CONFIG_HOME/terraform.d/saurabhqa.tfrc"
+# export TF_CLI_CONFIG_FILE="$XDG_CONFIG_HOME/terraform.d/--.tfrc"
 
 # ZSH
 # export CLICOLOR=1

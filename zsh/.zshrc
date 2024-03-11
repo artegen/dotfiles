@@ -43,6 +43,9 @@ fi
 # theme
 eval "$(starship init zsh)"
 
+source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+PS1='$(kube_ps1)'$PS1
+
 # Set proper TERM for tmux
 if [ -n "$TMUX" ]; then
   export TERM=tmux-256color
@@ -121,3 +124,7 @@ setopt HIST_BEEP              # Beep when accessing nonexistent history.
 
 # # uncomment to finish profiling
 # # zprof
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/terraform terraform
+export PATH="/usr/local/opt/postgresql@15/bin:$PATH"

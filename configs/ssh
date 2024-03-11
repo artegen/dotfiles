@@ -1,19 +1,26 @@
 Host github.com
 	ControlMaster auto
 	ControlPersist 120
-
+	IdentityFile ~/.ssh/id_ed25519_bsch
+# https://stackoverflow.com/questions/69622565/how-to-switch-between-ssh-keys-to-use-in-a-github-account
 Host git.example.com
   	IdentityFile ~/.ssh/id_rsa-2
+
+Host sourcecode.socialcoding.bosch.com
+  	IdentityFile ~/.ssh/id_rsa_bsch
 
 Host *
 	# Use SSH2
 	Protocol 2
+	IgnoreUnknown AddKeysToAgent,UseKeychain
+	UseKeychain yes
+	AddKeysToAgent yes
+	IdentitiesOnly yes
 
 	Compression yes
 	TCPKeepAlive yes
 	ServerAliveInterval 20
 	ServerAliveCountMax 10
-	AddKeysToAgent yes
 
 	# Use a shared channel for all sessions to the same host
 	ControlMaster auto

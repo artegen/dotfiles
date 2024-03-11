@@ -3,7 +3,7 @@
 [[ -f ./.docker_aliases ]] && source ./.docker_aliases
 
 alias mv='mv -vi'
-alias rm='rm -i -v'
+alias rm='rm -vi'
 trash() { mv "$@" ~/.Trash; }
 alias cp='cp -v'
 cpp() { rsync -WavP --human-readable --progress "$1" "$2"; } # Copy w/ progress

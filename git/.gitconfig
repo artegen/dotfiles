@@ -37,9 +37,9 @@ bc=checkout -b # create
 
 # Switch to a branch, creating it if necessary
 bcocr="!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
-bx=branch -D                            # force delete even if not merged
-bxr="!f() { git push origin  :$1; }; f" # remove remote branch
-bm=branch --move                        # rename
+bxf=branch -D                                                     # force delete even if not merged
+bx="!f() { git branch -d $1 && git push origin --delete $1; }; f" # remove local and remote branch
+bm=branch --move                                                  # rename
 
 # Find branches containing commit
 fb="!f() { git branch -a --contains $1; }; f"
@@ -222,6 +222,8 @@ custom = "%C(magenta)%h%C(red)%d %C(yellow)%ar %C(green)%s %C(yellow)(%an)"
 
 [user]
 useConfigOnly = true
+name = serge-buzko
+email = bus2be@bosch.com
 
 [include]
 path=~/.config/gitconfig.local
