@@ -222,8 +222,8 @@ custom = "%C(magenta)%h%C(red)%d %C(yellow)%ar %C(green)%s %C(yellow)(%an)"
 
 [user]
 useConfigOnly = true
-name = serge-buzko
-email = bus2be@bosch.com
+name = artegen
+email = sbuz.co@gmail.com
 
 [include]
 path=~/.config/gitconfig.local
