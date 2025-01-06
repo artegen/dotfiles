@@ -6,7 +6,7 @@ Host github.com
 Host git.example.com
   	IdentityFile ~/.ssh/id_rsa-2
 
-Host sourcecode.socialcoding.bosch.com
+Host sourcecode.socialcoding.com
   	IdentityFile ~/.ssh/id_rsa_bsch
 
 Host *
