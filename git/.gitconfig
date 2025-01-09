@@ -172,12 +172,6 @@ tool="code --wait"
 # Include summaries of merged commits in newly created merge commit messages
 log=true
 
-[core]
-attributesfile=~/.gitattributes
-autocrlf=input
-editor="code --wait"
-excludesfile=~/.gitignore
-
 [branch]
 # Show most recently changed branches first.
 sort=-committerdate
@@ -221,9 +215,19 @@ custom = "%C(magenta)%h%C(red)%d %C(yellow)%ar %C(green)%s %C(yellow)(%an)"
 #                     └─ hash (abbreviated)
 
 [user]
-useConfigOnly = true
+# useConfigOnly = true
 name = artegen
 email = sbuz.co@gmail.com
 
-[include]
-path=~/.config/gitconfig.local
+# [include]
+# path=~/.config/gitconfig.local
+
+[core]
+attributesfile=~/.gitattributes
+autocrlf=input
+editor="code --wait"
+excludesfile=~/.gitignore
+sshCommand = ssh -i ~/.ssh/id_rsa_artegen
+
+[includeIf "gitdir:~/Dev/_new/"]
+  path = ~/.gitconfig.new
