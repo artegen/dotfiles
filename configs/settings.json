@@ -1,0 +1,318 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["/package.json"],
+      "url": "http://json.schemastore.org/package"
+    },
+    {
+      "fileMatch": ["/swagger.json"],
+      "url": "http://json.schemastore.org/swagger-2.0"
+    }
+  ],
+
+  "files.associations": {
+    ".*": "shellscript",
+    "**/bin/*": "shellscript",
+    "*ssh*": "shellscript",
+    "brewfile": "shellscript",
+    "*jenkins*": "groovy",
+    "**/fastlane/*": "ruby"
+  },
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.hg": true,
+    "**/.svn": true,
+    "**/CVS": true
+  },
+  "files.watcherExclude": {
+    "**/.git/objects": true,
+    "**/dist": true,
+    "**/dll": true,
+    "**/node_modules": true,
+    "**/flow-typed": true,
+    "*.log": true
+  },
+  "search.exclude": {
+    "**/bower_components": true,
+    "**/node_modules": true,
+    "**/flow-typed": true,
+    "**/dist*": true,
+    "**/.cache": true,
+    "*.log": true
+  },
+
+  "[shellscript]": {
+    "files.eol": "\n",
+    "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode"
+  },
+
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter-notebook"
+  },
+
+  "aws.telemetry": false,
+  "bookmarks.navigateThroughAllFiles": true,
+  "sqltools.highlightQuery": false,
+  "csv-preview.separator": ";",
+
+  "gitlens.codeLens.enabled": false,
+
+  "debug.allowBreakpointsEverywhere": false,
+  "debug.inlineValues": true,
+  "diffEditor.ignoreTrimWhitespace": true,
+  "diffEditor.renderIndicators": true,
+  "diffEditor.renderSideBySide": true,
+
+  "files.encoding": "utf8",
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+
+  "editor.fontSize": 13,
+  "editor.fontWeight": "500",
+  "editor.autoClosingBrackets": "always",
+  "editor.codeLens": true,
+  "editor.emptySelectionClipboard": true,
+  "editor.fontFamily": "Fira Code",
+  "editor.fontLigatures": true,
+  "editor.folding": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "editor.glyphMargin": true,
+  "editor.hideCursorInOverviewRuler": false,
+  "editor.lineNumbers": "on",
+  "editor.minimap.maxColumn": 80,
+  "editor.renderControlCharacters": false,
+  "editor.renderLineHighlight": "line",
+  "editor.renderWhitespace": "none",
+  "editor.stablePeek": false,
+  "editor.tabCompletion": "onlySnippets",
+  "editor.trimAutoWhitespace": true,
+  "editor.useTabStops": true,
+  "editor.wordWrap": "bounded",
+  "editor.wordWrapColumn": 120,
+
+  "editor.suggestSelection": "first",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "editor.wordBasedSuggestions": "off",
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.snippetSuggestions": "top",
+  "editor.quickSuggestionsDelay": 300,
+  "editor.acceptSuggestionOnCommitCharacter": true,
+  "editor.acceptSuggestionOnEnter": "smart",
+
+  "window.newWindowDimensions": "inherit",
+  "window.openFilesInNewWindow": "default",
+  "window.openFoldersInNewWindow": "on",
+  "window.restoreWindows": "all",
+  "window.titleBarStyle": "custom",
+
+  // "workbench.colorCustomizations": {
+  //   "tab.activeBackground": "#1245589f",
+  //   "activityBar.background": "#1d82a79f",
+  //   "editorGroup.background": "#1245589f",
+  //   // "sideBar.background": "#c7e1eb9f",
+  //   "sideBar.background": "#2669819f",
+  //   "statusBar.background": "#1d82a79f"
+  // },
+  "workbench.fontAliasing": "antialiased",
+  "workbench.editor.labelFormat": "short",
+  "workbench.quickOpen.closeOnFocusLost": true,
+  "workbench.sideBar.location": "right",
+  "workbench.startupEditor": "newUntitledFile",
+  "workbench.editor.showTabs": "multiple",
+  "workbench.iconTheme": "vscode-icons",
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "breadcrumbs.enabled": true,
+
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "explorer.openEditors.visible": 0,
+  "problems.autoReveal": true,
+  "extensions.autoUpdate": true,
+  "extensions.ignoreRecommendations": true,
+
+  "telemetry.enableCrashReporter": true,
+  "telemetry.enableTelemetry": true,
+
+  "terminal.integrated.shell.osx": "/usr/local/bin/zsh",
+  "terminal.integrated.confirmOnExit": true,
+  "terminal.integrated.scrollback": 30000,
+  "terminal.integrated.fontSize": 13,
+  "terminal.integrated.rendererType": "dom",
+  "terminal.integrated.drawBoldTextInBrightColors": false,
+
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "git.autofetch": true,
+  "git.promptToSaveFilesBeforeCommit": "staged",
+
+  "html.format.enable": false,
+  "html.suggest.html5": true,
+  "html.validate.scripts": true,
+  "html.validate.styles": true,
+  "css.validate": false,
+  "scss.validate": false,
+
+  "javascript.format.enable": false,
+  "javascript.validate.enable": false,
+  "json.format.enable": false,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+
+  "tslint.autoFixOnSave": true,
+  "tslint.enable": true,
+  "typescript.format.enable": false,
+  // "typescript.npm": "/Users/mac/.nvm/versions/node/v8.5.0/bin/npm",
+  "typescript.referencesCodeLens.enabled": false,
+  "typescript.tsserver.log": "off",
+
+  "emmet.showSuggestionsAsSnippets": true,
+  "emmet.includeLanguages": { "javascript": "javascriptreact" },
+  "emmet.excludeLanguages": [],
+  "emmet.syntaxProfiles": {},
+  "emmet.triggerExpansionOnTab": true,
+
+  "eslint.run": "onSave",
+  "eslint.workingDirectories": [],
+  "eslint.alwaysShowStatus": true,
+  "prettier.singleQuote": true,
+  // "prettier.stylelintIntegration": true, stylelint can't fix issues
+
+  "python.venvPath": "~/.virtualenvs",
+  "python.linting.pylintEnabled": false,
+  "python.linting.flake8Enabled": true,
+  "python.formatting.provider": "yapf",
+  "python.formatting.formatOnSave": true,
+
+  "vsicons.dontShowNewVersionMessage": true,
+
+  "cSpell.enabled": true,
+  "cSpell.language": "en",
+  "cSpell.userWords": [
+    "bgcolor",
+    "clsx",
+    "comparator",
+    "creatable",
+    "datacenter",
+    "datacenters",
+    "dayjs",
+    "dcim",
+    "debounced",
+    "denormalize",
+    "denormalized",
+    "describedby",
+    "dropdown",
+    "etixlabs",
+    "firmwares",
+    "formik",
+    "geobox",
+    "haspopup",
+    "inputmode",
+    "is",
+    "lifecycle",
+    "middlewares",
+    "mixins",
+    "nowrap",
+    "organisation",
+    "orgs",
+    "oulet",
+    "out",
+    "protobuf",
+    "qrcode",
+    "react",
+    "refetch",
+    "refetching",
+    "relogin",
+    "repo",
+    "rerender",
+    "reselect",
+    "selectable",
+    "synapsia",
+    "unmount",
+    "workspaces",
+    "xlocker"
+  ],
+  "tabnine.experimentalAutoImports": true,
+  "workbench.panel.defaultLocation": "right",
+  "git-graph.openToTheRepoOfTheActiveTextEditorDocument": true,
+  "redhat.telemetry.enabled": false,
+  "jenkins-jack.jenkins.connections": [
+    {
+      "name": "default",
+      "uri": "http://127.0.0.1:8080",
+      "username": null,
+      "password": null,
+      "active": true
+    }
+  ],
+  "vs-kubernetes": {
+    "vscode-kubernetes.minikube-path.mac": "/Users/admin/.vs-kubernetes/tools/minikube/darwin-amd64/minikube",
+    "vs-kubernetes.minikube-show-information-expiration": "2025-06-09T13:32:55.486Z"
+  },
+  "notebook.cellToolbarLocation": {
+    "default": "right",
+    "jupyter-notebook": "left"
+  },
+  "editor.minimap.enabled": false,
+  "yaml.customTags": [
+    "!And",
+    "!And sequence",
+    "!If",
+    "!If sequence",
+    "!Not",
+    "!Not sequence",
+    "!Equals",
+    "!Equals sequence",
+    "!Or",
+    "!Or sequence",
+    "!FindInMap",
+    "!FindInMap sequence",
+    "!Base64",
+    "!Join",
+    "!Join sequence",
+    "!Cidr",
+    "!Ref",
+    "!Sub",
+    "!Sub sequence",
+    "!GetAtt",
+    "!GetAZs",
+    "!ImportValue",
+    "!ImportValue sequence",
+    "!Select",
+    "!Select sequence",
+    "!Split",
+    "!Split sequence"
+  ],
+  "yaml.schemas": {
+    "file:///Users/admin/Library/Application%20Support/Code/User/globalStorage/amazonwebservices.aws-toolkit-vscode/sam.schema.json": [
+      "ebdp1-infrastructure-scripts/management/monitoring/cloudwatch-alarms-to-teams/template.yaml"
+    ]
+  },
+  "editor.guides.indentation": false,
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+  },
+  "java.imports.gradle.wrapper.checksums": [
+    {
+      "sha256": "50726ef76b6599d458dd37169a6b42d86d3790c83f6065a398e3e672448d18c6",
+      "allowed": true
+    },
+    {
+      "sha256": "f69235d8dde4c7b725ba4480107a7e6ea090890d2014102ed9de6edc8742e7a3",
+      "allowed": true
+    }
+  ],
+  "workbench.colorTheme": "One Monokai",
+  "hediet.vscode-drawio.resizeImages": null,
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "workbench.editor.empty.hint": "hidden",
+  "cSpell.enableFiletypes": ["shellscript"],
+  "window.zoomLevel": 1
+}
